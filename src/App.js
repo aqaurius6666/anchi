@@ -22,43 +22,44 @@ const App = () => {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName='Home'
-        activeColor='#5544aa'
-        inactiveColor='#a1a1a1'
         barStyle={{
-          backgroundColor: '#ccccff'
+          backgroundColor: '#b1b1ff',
         }}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, size, color }) => {
             let iconName;
-            size = focused ? 26 : 20;
-            color = focused ? '#b1b1ff' : '#ccccff'
+            size = focused ? 24 : 20;
+            color = focused ? '#4444aa' : '#fff'
             switch (route.name) {
               case 'Home':
                 iconName = 'th-large';
                 break;
               case 'Favorite':
-                iconName = 'heart';
+                iconName = 'book-open';
                 break;
               case 'Settings':
                 iconName = 'cog';
                 break;
               case 'User':
-                iconName = 'user';
+                iconName = 'user-alt';
                 break;
               default:
                 iconName = 'th-large';
             }
             return (
-              <FontAwsome5 name={iconName} size={size} color={color}
+              <FontAwsome5 
+              name={iconName} 
+              size={size} 
+              color={color}
               />
             )
           },
         })}
-        // tabBarIcon={true}
       >
         <Tab.Screen
           name="Home"
           component={Home}
+          
         />
         <Tab.Screen
           name="Favorite"
