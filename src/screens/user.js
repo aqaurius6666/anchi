@@ -3,14 +3,13 @@ import {
     Text,
     View,
 } from 'react-native';
+import GlobalStyle from '../styles/GlobalStyle';
 
 function User({ navigation }) {
 
     return (
-        <View>
-            <Text>
-                This is the content of ScreenA
-            </Text>
+        <View style={GlobalStyle.content}>
+            <Text style={[GlobalStyle.CustomFont]}> This is the content of User </Text>
         </View>
     );
 }
