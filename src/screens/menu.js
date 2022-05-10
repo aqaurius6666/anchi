@@ -5,13 +5,13 @@ import {
 } from 'react-native';
 import GlobalStyle from '../styles/GlobalStyle';
 
-function Settings({ navigation }) {
+function Menu({ navigation }) {
 
     return (
         <View style={GlobalStyle.content}>
-            <Text style={[GlobalStyle.CustomFont]}> This is the content of Settings </Text>
+            <Text style={[GlobalStyle.CustomFont]}> This is the content of Menu </Text>
         </View>
     );
 }
 
-export default Settings;
+export default Menu;

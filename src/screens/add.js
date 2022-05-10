@@ -3,15 +3,16 @@ import {
     Text,
     View,
 } from 'react-native';
+import CButton from '../components/CButton';
 import GlobalStyle from '../styles/GlobalStyle';
 
-function User({ navigation }) {
+function Add({ navigation }) {
 
     return (
         <View style={GlobalStyle.content}>
-            <Text style={[GlobalStyle.CustomFont]}> This is the content of User </Text>
+            <Text style={[GlobalStyle.CustomFont]}> This is the content of Add </Text>
         </View>
     );
 }
 
-export default User;
+export default Add;
