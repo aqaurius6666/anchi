@@ -6,20 +6,24 @@ export default StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
     },
+
     CustomFont: {
-        fontFamily: 'SVNChickenNoodleSoup-Regular',
-        fontSize: 34,
+        // fontFamily: 'SVNChickenNoodleSoup-Regular',
+        fontFamily: 'iCielLudema-Regular',
+        fontSize: 20,
     },
+
     content: {
         alignItems: 'center',
         alignContent: 'center',
-        padding: 10,
+        // padding: 10,
     },
 
     CustomFont2: {
         fontFamily: 'LavishlyYours-Regular',
         // fontWeight: '700',
     },
+
     ButtonText: {
         fontFamily: 'LavishlyYours-Regular',
         fontSize: 30,

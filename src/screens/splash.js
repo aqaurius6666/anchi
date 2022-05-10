@@ -11,7 +11,7 @@ function Splash({ navigation }) {
     
     React.useEffect(() => {
         setTimeout(() => {
-            navigation.replace('An Chi');
+            navigation.replace('AnimTab1');
         }, 2000);
     }, []);
 
@@ -19,7 +19,7 @@ function Splash({ navigation }) {
         <View style={styles.body}>
             <Image
                 style={styles.logo}
-                source={require('../../assets/logo.png')}
+                source={require('../../assets/logo1.png')}
             />
             <Text style={[GlobalStyle.CustomFont, styles.text]}> AnChi </Text>
         </View>
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#b1b1ff',
+        backgroundColor: '#6464af',
     },
     logo: {
         width: 100,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 52,
-        color: '#000',
+        color: '#fff',
     },
 });
 
