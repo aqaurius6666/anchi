@@ -15,6 +15,7 @@ export default StyleSheet.create({
   },
 
   content: {
+    flex: 1,
     alignItems: 'center',
     alignContent: 'center',
     // padding: 10,
