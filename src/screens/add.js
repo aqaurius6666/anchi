@@ -7,11 +7,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {connect} from 'react-redux';
+
 import MiniSearchbox from '../components/MiniSearchbox';
-
-import Tag from '../components/Tag';
-
 import GlobalStyle from '../styles/GlobalStyle';
+
+import {addFood} from '../redux/actions';
 
 class AddScreen extends React.Component {
   constructor(props) {
@@ -74,6 +75,7 @@ class AddScreen extends React.Component {
 
   _addFood = () => {
     console.log('pressed Add ', this.state.newFood);
+    this.props.addFood(this.state.newFood);
     this.setState({
       ...this.state,
       newFood: {title: '', description: '', ingredients: [], tags: []},
@@ -157,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddScreen;
+export default connect(null, {addFood})(AddScreen);

@@ -23,7 +23,6 @@ class MiniSearchbox extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.state);
     if (
       this.props.list !== prevProps.list ||
       this.props.selected !== prevProps.selected
@@ -64,9 +63,7 @@ class MiniSearchbox extends React.Component {
 
   _onAddSelection = newSelection => {
     this.props.onAddItem(newSelection);
-    this._onChange('');
-    // const newSelectedList = [...this.state.selected, newSelection];
-    // this.setState({...this.state, selected: newSelectedList});
+    // this._onChange('');
   };
 
   render() {
@@ -104,12 +101,12 @@ class MiniSearchbox extends React.Component {
         </View>
         <View style={styles.tagContainer}>
           {this.state.showing.map(item => {
-            return <Tag title={item} />;
+            return <Tag title={item} key={item} />;
           })}
         </View>
         <View style={styles.tagContainer}>
           {this.state.selected.map(item => {
-            return <Tag title={item} type="tinted" />;
+            return <Tag title={item} key={item} type="tinted" />;
           })}
         </View>
       </View>
