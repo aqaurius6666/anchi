@@ -14,6 +14,7 @@ import Home from './screens/home';
 import Add from './screens/add';
 import Menu from './screens/menu';
 import Splash from './screens/splash';
+import Detail from './screens/detail';
 import GlobalStyle from './styles/GlobalStyle';
 
 // import { LogBox } from 'react-native';
@@ -174,6 +175,10 @@ const App = () => {
           }}
         />
         <RootStack.Screen name="AnimTab1" component={AnimTab1} />
+        <RootStack.Screen
+          name="Detail"
+          component={Detail}
+        />
         {/* <RootStack.Screen
           name="Task"
           component={Task}

@@ -12,7 +12,7 @@ function Splash({ navigation }) {
     React.useEffect(() => {
         setTimeout(() => {
             navigation.replace('AnimTab1');
-        }, 2000);
+        }, 1000);
     }, []);
 
     return (

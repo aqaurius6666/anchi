@@ -11,12 +11,17 @@ export default StyleSheet.create({
     // fontFamily: 'SVNChickenNoodleSoup-Regular',
     fontFamily: 'iCielLudema-Regular',
     fontSize: 18,
+    color: '#000'
   },
 
   content: {
     alignItems: 'center',
     alignContent: 'center',
     // padding: 10,
+    backgroundColor: '#fff',
+    // borderBottomColor: '#646464',
+    // borderBottomWidth: 1,
+    flex: 1,
   },
 
   CustomFont2: {
@@ -38,7 +43,7 @@ export default StyleSheet.create({
     fontFamily: 'iCielLudema-Bold',
     fontSize: 32,
     color: '#000',
-    padding: 4,
+    marginTop: 4,
   },
 
   SubtitleBox: {
@@ -55,6 +60,7 @@ export default StyleSheet.create({
   DescBox: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 20,
   },
   Desc: {
     fontFamily: 'iCielLudema-Regular',
@@ -62,6 +68,7 @@ export default StyleSheet.create({
     color: '#000',
     paddingTop: 4,
     textAlign: 'center',
+    lineHeight: 24,
   },
 
   textField: {

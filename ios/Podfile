@@ -19,6 +19,8 @@ target 'app' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'RNCMaskedView', :path => '../node_modules/@react-native-community/masked-view'
+
   target 'appTests' do
     inherit! :complete
     # Pods for testing
