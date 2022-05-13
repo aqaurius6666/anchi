@@ -12,7 +12,7 @@ import {connect} from 'react-redux';
 import MiniSearchbox from '../components/MiniSearchbox';
 import GlobalStyle from '../styles/GlobalStyle';
 
-import {addFood} from '../redux/actions';
+import {addFood, addIngredient} from '../redux/actions';
 
 class AddScreen extends React.Component {
   constructor(props) {
@@ -20,6 +20,7 @@ class AddScreen extends React.Component {
 
     this.ingredients = ['egg', 'flour', 'beef', 'pork', 'bánh mì'];
     this.tags = ['spice', 'diary', 'peanut'];
+    console.log(this.props.ingredients);
 
     this.state = {
       newFood: {
@@ -59,6 +60,10 @@ class AddScreen extends React.Component {
     }
   };
 
+  _onCreateIngredient = item => {
+    this.props.addIngredient(item);
+  };
+
   _onAddTag = item => {
     if (!this.state.newFood.tags.includes(item)) {
       this.setState({
@@ -74,7 +79,6 @@ class AddScreen extends React.Component {
   };
 
   _addFood = () => {
-    console.log('pressed Add ', this.state.newFood);
     this.props.addFood(this.state.newFood);
     this.setState({
       ...this.state,
@@ -85,10 +89,6 @@ class AddScreen extends React.Component {
   render() {
     return (
       <View style={GlobalStyle.content}>
-        <Text style={[GlobalStyle.CustomFont]}>
-          {' '}
-          This is the content of Add{' '}
-        </Text>
         <Text style={GlobalStyle.Title}>New food</Text>
         <View>
           <Text style={styles.inputLabel}>Title:</Text>
@@ -109,9 +109,10 @@ class AddScreen extends React.Component {
           />
           <Text style={styles.inputLabel}>Ingredients:</Text>
           <MiniSearchbox
-            list={this.ingredients}
+            list={this.props.ingredients}
             selected={this.state.newFood.ingredients}
             onAddItem={this._onAddIngredient}
+            onCreateItem={this._onCreateIngredient}
           />
           <Text style={styles.inputLabel}>Tags:</Text>
           <MiniSearchbox
@@ -159,4 +160,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, {addFood})(AddScreen);
+const mapStateToProps = state => ({
+  ingredients: state.ingredients,
+});
+
+export default connect(mapStateToProps, {addFood, addIngredient})(AddScreen);
