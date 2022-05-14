@@ -18,10 +18,7 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     alignContent: 'center',
-    // padding: 10,
     backgroundColor: '#fff',
-    // borderBottomColor: '#646464',
-    // borderBottomWidth: 1,
     flex: 1,
   },
 
@@ -67,9 +64,13 @@ export default StyleSheet.create({
     fontFamily: 'iCielLudema-Regular',
     fontSize: 18,
     color: '#000',
-    paddingTop: 4,
-    textAlign: 'center',
     lineHeight: 24,
+  },
+
+  DetailSection: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#8686b7',
+    padding: '2%',
   },
 
   textField: {

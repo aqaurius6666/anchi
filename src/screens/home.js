@@ -3,26 +3,111 @@ import { Text, View, Image, StyleSheet, useWindowDimensions } from 'react-native
 import CustomButton, { CustomButtonOutline } from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
 import { Icons } from '../components/icons';
-import { Icon as GIcon } from 'react-native-gradient-icon';
 
-const eg = {
+const eg1 = {
   id: 1,
   title: 'Bánh táo',
   image: require('../../assets/eg/Mini-Apple-Pies.png'),
   tags: ['Bánh ngọt', 'Tráng miệng', 'Hoa quả'],
   desc: 'Apple Pie - bánh Pie nhân táo là một món bánh bảo dễ cũng đúng mà bảo khó cũng không sai. Dễ là bởi vì làm rất nhanh, không có nhiều thao tác, chỉ nhồi, cán bột rồi cho nhân vào, mang đi nướng. Khả năng hỏng (theo nghĩa không ăn được) – là cực thấp. Còn khó là bởi vì tuy không có nhiều khâu, nhưng ở mỗi khâu đều cần cẩn thận và kĩ thuật tốt, lệch đi một tẹo thôi là bánh có thể không đạt yêu cầu rồi.',
   ingre: ['Trứng', 'Táo', 'Bột mỳ', 'Sữa', 'Đường'],
+  address: ['Indochina Plaza Hà Nội, 241 Xuân Thủy, Dịch Vọng, Cầu Giấy, Hà Nội',
+    'Số 78 Láng Hạ, Đống Đa, Hà Nội',
+    '1A Hai Bà Trưng, Hoàn Kiếm, Hà Nội',
+  ],
 };
 
-const MainCard = (props) => {
+const eg2 = {
+  id: 1,
+  title: 'Nam An Cake',
+  image: require('../../assets/eg/R.jpg'),
+  tags: ['Bánh ngọt', 'Hoa quả'],
+  desc: 'Với Nam An Cake, chúng tôi mang đến nguồn thực phẩm tốt, sạch, phong phú và nhiều dinh dưỡng, thân thiện với môi trường nhằm chia sẻ những lo lắng của khách hàng khi chọn mua thực phẩm hàng ngày cho gia đình. Vì vậy, Nam An Market là nơi mua sắm tin cậy, thân thiện để quý khách khám phá, trải nghiệm sự đa dạng của văn hóa ẩm thực và nghệ thuật thưởng thức.',
+  address: '21 Thảo Điền, Phường Thảo Điền, Thành phố Thủ Đức',
+  menu: ['Bánh táo', 'Bánh chuối', 'Bánh xoài', 'Bánh dâu', 'Bánh việt quất'],
+  note: {
+    'Thú cưng': true,
+    'Ăn tại quán': false,
+    'Hút thuốc': false,
+  }
+}
+
+const FoodCard = (props) => {
+  const eg = props.eg;
+
+  return (
+    <View style={styles.detailView}>
+      <View style={GlobalStyle.TitleBox}>
+        <Text style={GlobalStyle.Title}>{eg.title}</Text>
+      </View>
+      <View style={GlobalStyle.SubtitleBox}>
+        <Text style={GlobalStyle.Subtitle}>{eg.tags.join('・')}</Text>
+      </View>
+      <View style={GlobalStyle.DescBox}>
+        <Text
+          numberOfLines={4}
+          ellipsizeMode={'tail'}
+          style={[GlobalStyle.Desc, styles.desc]}>
+          {eg.desc}
+        </Text>
+        <Text
+          style={[GlobalStyle.CustomFont, styles.seeMore]}
+          onPress={() => {
+            props.navigation.push('Detail', { detail: eg, food: true });
+          }}
+        >
+          {'>>  '}Xem thêm
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+const StoreCard = (props) => {
+  const eg = props.eg;
+
+  return (
+    <View style={styles.detailView}>
+      <View style={GlobalStyle.TitleBox}>
+        <Text style={GlobalStyle.Title}>{eg.title}</Text>
+      </View>
+      <View style={GlobalStyle.SubtitleBox}>
+        <Text style={GlobalStyle.Subtitle}>{eg.tags.join('・')}</Text>
+      </View>
+      <View style={GlobalStyle.DescBox}>
+        <Text
+          numberOfLines={4}
+          ellipsizeMode={'tail'}
+          style={[GlobalStyle.Desc, styles.desc]}>
+          {eg.desc}
+        </Text>
+        <Text
+          style={[GlobalStyle.CustomFont, styles.seeMore]}
+          onPress={() => {
+            props.navigation.push('Detail', { detail: eg, food: false });
+          }}
+        >
+          {'>>  '}Xem thêm
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+function Home({ navigation }) {
   const window = useWindowDimensions();
+  const [food, setFood] = useState(true);
+  const [eg, setEg] = useState(eg1);
 
   return (
     <View style={[GlobalStyle.content, styles.content]}>
       <CustomButton
-        icon_name="hamburger"
+        icon_name={food ? "hamburger" : "store"}
         style={styles.typeIcon}
-        onPress={props.toggleDetail}
+        onPress={() => {
+          food ? setEg(eg2) : setEg(eg1);
+          setFood(!food);
+        }}
         colors={['#D289FF', '#7170D3', '#fff']}
         type={Icons.FontAwesome5}
       />
@@ -32,34 +117,10 @@ const MainCard = (props) => {
           width: window.width,
           height: window.width,
         }}
-        source={eg.image}
+        source={food ? eg.image : eg.image}
       />
 
-      <View style={styles.detailView}>
-        <View style={GlobalStyle.TitleBox}>
-          <Text style={GlobalStyle.Title}>{eg.title}</Text>
-        </View>
-        <View style={GlobalStyle.SubtitleBox}>
-          <Text style={GlobalStyle.Subtitle}>{eg.tags.join('・')}</Text>
-        </View>
-        <View style={GlobalStyle.DescBox}>
-          <Text
-            numberOfLines={4}
-            ellipsizeMode={'tail'}
-            style={[GlobalStyle.Desc, styles.desc]}>
-            {eg.desc}
-          </Text>
-          <Text
-            style={[GlobalStyle.CustomFont, styles.seeMore]}
-            onPress={() => {
-              props.navigation.navigate('Detail')
-              console.log('hi')
-            }}
-          >
-            {'>>  '}Xem thêm
-          </Text>
-        </View>
-      </View>
+      {food ? <FoodCard navigation={navigation} eg={eg} /> : <StoreCard navigation={navigation} eg={eg} />}
 
       <View
         style={styles.bottomTab}
@@ -78,33 +139,7 @@ const MainCard = (props) => {
         />
 
       </View>
-
     </View>
-  );
-};
-
-function Home({ navigation }) {
-  const [showDetail, setShowDetail] = useState(true);
-
-  const toggleDetail = () => {
-    setShowDetail(!showDetail);
-  };
-
-  return (
-    showDetail ?
-      (
-        <MainCard toggleDetail={toggleDetail} navigation={navigation}/>
-      ) : (
-        <View>
-          <Text>another page</Text>
-          <CustomButton
-            icon_name="hamburger"
-            style={styles.typeIcon}
-            colors={['#D289FF', '#7170D3', '#fff']}
-            onPress={toggleDetail}
-          />
-        </View>
-      )
   )
 };
 
@@ -125,6 +160,7 @@ const styles = StyleSheet.create({
 
   desc: {
     overflow: 'hidden',
+    textAlign: 'center',
   },
 
   seeMore: {

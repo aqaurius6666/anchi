@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import {
     Text,
     View,
@@ -6,48 +6,151 @@ import {
     StyleSheet,
     useWindowDimensions,
     ScrollView,
-    SafeAreaView
+    SafeAreaView,
+    Linking
 } from 'react-native';
-import CustomButton from '../components/CustomButton';
+import CustomButton, { CustomButtonOutline } from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
+// import { Icons } from '../components/icons';
+import LinearGradient from 'react-native-linear-gradient';
 
-const eg = {
-    id: 1,
-    title: 'Bánh táo',
-    image: require('../../assets/eg/Mini-Apple-Pies.png'),
-    tags: ['Bánh ngọt', 'Tráng miệng', 'Hoa quả'],
-    desc: 'Apple Pie - bánh Pie nhân táo là một món bánh bảo dễ cũng đúng mà bảo khó cũng không sai. Dễ là bởi vì làm rất nhanh, không có nhiều thao tác, chỉ nhồi, cán bột rồi cho nhân vào, mang đi nướng. Khả năng hỏng (theo nghĩa không ăn được) – là cực thấp. Còn khó là bởi vì tuy không có nhiều khâu, nhưng ở mỗi khâu đều cần cẩn thận và kĩ thuật tốt, lệch đi một tẹo thôi là bánh có thể không đạt yêu cầu rồi.',
-    ingre: ['Trứng', 'Táo', 'Bột mỳ', 'Sữa', 'Đường'],
+const ggMap = 'https://www.google.com/maps/search/';
+
+function FoodDetail({ eg }) {
+    return (
+        <View style={styles.detailView}>
+            <View style={GlobalStyle.DetailSection}>
+                <Text style={GlobalStyle.Title}>{eg.title}</Text>
+            </View>
+            <View style={GlobalStyle.DetailSection}>
+                <Text style={GlobalStyle.Subtitle}>{eg.tags.join('・')}</Text>
+            </View>
+            <View style={GlobalStyle.DetailSection}>
+                <Text
+                    style={[GlobalStyle.Desc, styles.desc]}>
+                    {'      ' + eg.desc}
+                </Text>
+            </View>
+            <View style={GlobalStyle.DetailSection}>
+                <Text style={[GlobalStyle.Desc, styles.desc]}>
+                    Nguyên liệu ({eg.ingre.length}) :
+                    {eg.ingre.map(e => { return '\n- ' + e })}
+                </Text>
+            </View>
+            <View style={GlobalStyle.DetailSection}>
+                <Text style={[GlobalStyle.Desc, styles.desc, styles.bottomPad]}>
+                    Địa chỉ ({eg.address.length}) : {'\n'}
+                    {eg.address.map((e, index) => {
+                        return (
+                            <Text
+                                style={styles.link}
+                                onPress={() => { if (Linking.canOpenURL(ggMap + e)) Linking.openURL(ggMap + e) }}
+                                key={index}
+                                numberOfLines={1}
+                                ellipsizeMode={'tail'}
+                            >- {e + '\n'}</Text>
+                        )
+                    })}
+                </Text>
+            </View>
+        </View>
+    );
 };
 
-const Detail = props => {
-    const window = useWindowDimensions();
+function StoreDetail({ eg }) {
 
     return (
-        <SafeAreaView>
+        <View style={styles.detailView}>
+            <View style={GlobalStyle.DetailSection}>
+                <Text style={GlobalStyle.Title}>{eg.title}</Text>
+            </View>
+            <View style={GlobalStyle.DetailSection}>
+                <Text style={GlobalStyle.Subtitle}>{eg.tags.join('・')}</Text>
+            </View>
+            <View style={GlobalStyle.DetailSection}>
+                <Text
+                    style={[GlobalStyle.Desc, styles.desc, styles.link]}
+                    onPress={() => { if (Linking.canOpenURL(ggMap + eg.address)) Linking.openURL(ggMap + eg.address) }}
+                >
+                    Địa chỉ: {eg.address}
+                </Text>
+            </View>
+            <View style={GlobalStyle.DetailSection}>
+                <Text
+                    style={[GlobalStyle.Desc, styles.desc]}>
+                    {'      ' + eg.desc}
+                </Text>
+            </View>
+            <View style={GlobalStyle.DetailSection}>
+                <Text style={[GlobalStyle.Desc, styles.desc]}>
+                    Thực đơn ({eg.menu.length}) :
+                    {eg.menu.map(e => { return '\n- ' + e })}
+                </Text>
+            </View>
+            <View style={GlobalStyle.DetailSection}>
+                <Text style={[GlobalStyle.Desc, styles.desc, styles.bottomPad]}>
+                    Lưu ý:{'\n'}
+                    {Object.keys(eg.note).map(e => {
+                        return (eg.note[e] ? '✅ ' : '❌ ') + (e + '\n');
+                    })}
+                </Text>
+            </View>
+        </View>
+    );
+};
+
+function Detail({ navigation, route }) {
+    const window = useWindowDimensions();
+
+    const { detail, food } = route.params;
+    const eg = detail;
+
+    return (
+        <SafeAreaView style={GlobalStyle.content}>
+            <CustomButtonOutline
+                icon_name="md-arrow-back-sharp"
+                style={styles.typeIcon}
+                onPress={() => {
+                    navigation.pop();
+                }}
+                colors={['#D289FF', '#7170D3', '#fff']}
+                type='ionicon'
+                size={36}
+            />
+
+            <View style={styles.bottomTab}>
+                <LinearGradient
+                    colors={['#ffffff60', '#ffffff']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 0.9 }}
+                    style={styles.linearGradient}
+                >
+                    <CustomButtonOutline
+                        icon_name="ios-heart"
+                        type="ionicon"
+                        colors={['#62F6FF', '#6AF25E', '#fff']}
+                        size={36}
+                    />
+                    <CustomButtonOutline
+                        icon_name="md-close"
+                        type="ionicon"
+                        colors={['#FFA06A', '#F40159', '#fff']}
+                        size={36}
+                    />
+                </LinearGradient>
+            </View>
+
             <ScrollView style={[styles.content]}>
                 <Image
                     style={{
                         width: window.width,
-                        height: window.width - 40,
+                        height: window.width,
                     }}
                     source={eg.image}
                 />
 
-                <View style={styles.detailView}>
-                    <View style={GlobalStyle.TitleBox}>
-                        <Text style={GlobalStyle.Title}>{eg.title}</Text>
-                    </View>
-                    <View style={GlobalStyle.SubtitleBox}>
-                        <Text style={GlobalStyle.Subtitle}>{eg.tags.join('・')}</Text>
-                    </View>
-                    <View style={GlobalStyle.DescBox}>
-                        <Text
-                            style={[GlobalStyle.Desc, styles.desc]}>
-                            {eg.desc}
-                        </Text>
-                    </View>
-                </View>
+                {food ? <FoodDetail eg={eg} /> : <StoreDetail eg={eg} />}
+
             </ScrollView>
         </SafeAreaView>
     );
@@ -57,14 +160,46 @@ const styles = StyleSheet.create({
     content: {
         display: 'flex',
     },
+    typeIcon: {
+        position: 'absolute',
+        top: 18,
+        left: 18,
+        zIndex: 1,
+        elevation: 10,
+    },
 
     desc: {
-        overflow: 'hidden',
+        fontSize: 15,
     },
 
     detailView: {
-        width: '80%',
     },
+
+    bottomPad: {
+        paddingBottom: '14%',
+    },
+
+    bottomTab: {
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        flexDirection: 'row',
+        width: '100%',
+        position: 'absolute',
+        bottom: 0,
+        zIndex: 1,
+    },
+    linearGradient: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        flexDirection: 'row',
+        paddingTop: '1%',
+        paddingBottom: '4%'
+    },
+    link: {
+        textDecorationLine: 'underline',
+        color: '#6464af',
+    }
 });
 
 export default Detail;
