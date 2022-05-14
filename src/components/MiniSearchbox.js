@@ -17,13 +17,12 @@ class MiniSearchbox extends React.Component {
       list: this.props.list ?? [],
       showing: [],
       searchText: '',
-      buttonDisabled: true,
+      ready: false,
       selected: this.props.selected ?? [],
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.state);
     if (
       this.props.list !== prevProps.list ||
       this.props.selected !== prevProps.selected
@@ -52,21 +51,23 @@ class MiniSearchbox extends React.Component {
       newShowing = [];
     }
 
-    const disabled = !this.state.list.includes(normalisedText);
+    const ready = this.state.list.includes(normalisedText);
 
     this.setState({
       ...this.state,
       showing: newShowing,
       searchText: text,
-      buttonDisabled: disabled,
+      ready: ready,
     });
   };
 
   _onAddSelection = newSelection => {
     this.props.onAddItem(newSelection);
-    this._onChange('');
-    // const newSelectedList = [...this.state.selected, newSelection];
-    // this.setState({...this.state, selected: newSelectedList});
+    // this._onChange('');
+  };
+
+  _onCreateSelection = newSelection => {
+    this.props.onCreateItem(newSelection);
   };
 
   render() {
@@ -80,36 +81,38 @@ class MiniSearchbox extends React.Component {
             }}
             value={this.state.searchText}
           />
-          <TouchableOpacity
-            style={[
-              styles.confirmButton,
-              this.state.buttonDisabled
-                ? styles.disabledButton
-                : styles.enabledButton,
-            ]}
-            disabled={this.state.buttonDisabled}
-            onPress={() => {
-              this._onAddSelection(this.state.searchText.toLowerCase());
-            }}>
-            <Text
-              style={[
-                styles.confirmButtonText,
-                this.state.buttonDisabled
-                  ? styles.disabledButtonText
-                  : styles.enabledButtonText,
-              ]}>
-              Add
-            </Text>
-          </TouchableOpacity>
+          {this.state.ready ? (
+            <TouchableOpacity
+              style={[styles.confirmButton, styles.enabledButton]}
+              onPress={() => {
+                this._onAddSelection(this.state.searchText.toLowerCase());
+              }}>
+              <Text
+                style={[styles.confirmButtonText, styles.enabledButtonText]}>
+                Add
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[styles.confirmButton, styles.createNewButton]}
+              onPress={() => {
+                this._onCreateSelection(this.state.searchText.toLowerCase());
+              }}>
+              <Text
+                style={[styles.confirmButtonText, styles.createNewButtonText]}>
+                New
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
         <View style={styles.tagContainer}>
           {this.state.showing.map(item => {
-            return <Tag title={item} />;
+            return <Tag title={item} key={item} />;
           })}
         </View>
         <View style={styles.tagContainer}>
           {this.state.selected.map(item => {
-            return <Tag title={item} type="tinted" />;
+            return <Tag title={item} key={item} type="tinted" />;
           })}
         </View>
       </View>
@@ -133,7 +136,6 @@ const styles = StyleSheet.create({
   confirmButton: {
     width: 50,
     height: 20,
-    borderColor: '#D289FF',
     borderWidth: 2,
     borderRadius: 4,
     marginVertical: 4,
@@ -144,19 +146,20 @@ const styles = StyleSheet.create({
   enabledButton: {
     borderColor: '#D289FF',
   },
-  disabledButton: {
-    borderWidth: 0,
+  createNewButton: {
+    backgroundColor: '#62ffc6',
+    borderColor: '#62ffc6',
   },
   confirmButtonText: {
     fontSize: 12,
     fontWeight: 'bold',
-    color: '#D289FF',
   },
   enabledButtonText: {
     color: '#D289FF',
   },
-  disabledButtonText: {
-    display: 'none',
+  createNewButtonText: {
+    color: '#000',
+    fontWeight: 'normal',
   },
   tagContainer: {
     flexDirection: 'row',

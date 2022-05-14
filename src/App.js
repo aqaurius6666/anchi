@@ -6,6 +6,9 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon, { Icons } from './components/icons';
 import Colors from './constants/colors';
 import LinearGradient from 'react-native-linear-gradient';
+import {Provider} from 'react-redux';
+import {store, persistor} from './redux/store';
+import {PersistGate} from 'redux-persist/integration/react';
 
 import * as Animatable from 'react-native-animatable';
 import Favorite from './screens/favorite';

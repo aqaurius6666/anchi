@@ -2,14 +2,22 @@
 
 import {combineReducers} from 'redux';
 
-import {GET_FOOD_LIST, ADD_FOOD} from './actions';
+import {ADD_FOOD, ADD_INGREDIENT} from './actions';
 
 const foodListReducer = (state = [], action) => {
   switch (action.type) {
-    case GET_FOOD_LIST: {
+    case ADD_FOOD: {
+      return [...state, action.payload];
+    }
+    default: {
       return state;
     }
-    case ADD_FOOD: {
+  }
+};
+
+const ingredientsReducer = (state = [], action) => {
+  switch (action.type) {
+    case ADD_INGREDIENT: {
       return [...state, action.payload];
     }
     default: {
@@ -20,6 +28,7 @@ const foodListReducer = (state = [], action) => {
 
 const reducer = combineReducers({
   foodList: foodListReducer,
+  ingredients: ingredientsReducer,
 });
 
 export default reducer;
