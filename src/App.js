@@ -6,9 +6,9 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon, { Icons } from './components/icons';
 import Colors from './constants/colors';
 import LinearGradient from 'react-native-linear-gradient';
-import {Provider} from 'react-redux';
-import {store, persistor} from './redux/store';
-import {PersistGate} from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
+import { store, persistor } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import * as Animatable from 'react-native-animatable';
 import Favorite from './screens/favorite';
@@ -176,35 +176,37 @@ const App = () => {
   };
 
   return (
-    // <Provider store={Store}>
-    <NavigationContainer>
-      <RootStack.Navigator
-        initialRouteName="Splash"
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <RootStack.Screen
-          name="Splash"
-          component={Splash}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <RootStack.Screen name="AnimTab1" component={AnimTab1} />
-        <RootStack.Screen
-          name="Detail"
-          component={Detail}
-          options={{
-            transitionSpec: {
-              open: config,
-              close: config,
-            },
-          }}
-        />
-      </RootStack.Navigator>
-    </NavigationContainer>
-    // </Provider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <RootStack.Navigator
+            initialRouteName="Splash"
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <RootStack.Screen
+              name="Splash"
+              component={Splash}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <RootStack.Screen name="AnimTab1" component={AnimTab1} />
+            <RootStack.Screen
+              name="Detail"
+              component={Detail}
+              options={{
+                transitionSpec: {
+                  open: config,
+                  close: config,
+                },
+              }}
+            />
+          </RootStack.Navigator>
+        </NavigationContainer>
+      </PersistGate>
+    </Provider>
   );
 };
 
