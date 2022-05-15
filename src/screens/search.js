@@ -10,12 +10,12 @@ class SearchScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props.foodList);
+    console.log(this.props.food);
 
     return (
       <View style={GlobalStyle.content}>
         <Text style={{color: '#000'}}>SearchScreen's content</Text>
-        {this.props.foodList.map(item => (
+        {this.props.food.map(item => (
           <View key={item.title}>
             <Text style={{color: '#000'}}>{item.title}</Text>
             <Text style={{color: '#000'}}>{item.description}</Text>
@@ -27,7 +27,7 @@ class SearchScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  foodList: state.foodList,
+  food: state.food,
 });
 
 export default connect(mapStateToProps)(SearchScreen);
