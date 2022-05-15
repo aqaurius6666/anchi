@@ -9,19 +9,19 @@ export default function FavList(props) {
             onPress={props.onPressDetail}
             style={styles.favList}
         >
-            <Image
-                style={{
-                    width: 50,
-                    height: 50,
-                    // paddingLeft: 10,
-                    borderRadius: 25,
-                }}
-                source={props.image}
-            />
-            <Text style={GlobalStyle.Desc}>{props.title}</Text>
+            <View
+                style={styles.rightView}
+            >
+                <Image
+                    style={styles.image}
+                    source={props.image}
+                />
+                <Text style={[GlobalStyle.Desc, styles.text]} numberOfLines={1} >    {props.title}</Text>
+            </View>
             <TouchableOpacity
                 onPress={props.onPressDelete}
                 hitSlop={10}
+                style={styles.delete}
             >
                 <Icon
                     type={Icons.Feather}
@@ -36,13 +36,31 @@ export default function FavList(props) {
 
 const styles = StyleSheet.create({
     favList: {
-        height: 60,
+        height: 64,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-evenly',
-        elevation: 10,
+        justifyContent: 'space-around',
+        elevation: 4,
         backgroundColor: '#fff',
         margin: 10,
         borderRadius: 10,
+    },
+    rightView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 5,
+        paddingLeft: '5%',
+    },
+    text: {
+        width: '70%'
+    },
+    delete: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    image: {
+        height: 50,
+        width: 50,
+        borderRadius: 25,
     }
 })
