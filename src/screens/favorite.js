@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, Animated } from 'react-native';
 import CustomButton, { CustomButtonOutline } from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
 import { Icons } from '../components/icons';
@@ -103,16 +103,20 @@ function Favorite({ navigation }) {
       </View>
       <SafeAreaView style={styles.favBox}>
         {food ?
-          <FlatList
+          <Animated.FlatList
             data={eg1}
             renderItem={renderItem}
             keyExtractor={e => e.id}
+            nestedScrollEnabled={false}
           />
           :
-          <FlatList
+          <Animated.FlatList
             data={eg2}
             renderItem={renderItem}
             keyExtractor={e => e.id}
+            showsVerticalScrollIndicator={true}
+            fadingEdgeLength={10}
+            initialNumToRender={4}
           />
         }
       </SafeAreaView>
@@ -126,10 +130,13 @@ const styles = StyleSheet.create({
   },
   favBox: {
     backgroundColor: '#6464af20',
-    marginTop: '10%',
+    marginTop: '6%',
     marginBottom: '26%',
     width: '90%',
     flex: 1,
+    paddingHorizontal: '2%',
+    paddingVertical: '2%',
+    borderRadius: 10,
   },
   typeIcon: {
     position: 'absolute',
