@@ -15,6 +15,7 @@ import Favorite from './screens/favorite';
 import Search from './screens/search';
 import Home from './screens/home';
 import Add from './screens/add';
+import Add1 from './screens/add1';
 import Menu from './screens/menu';
 import Splash from './screens/splash';
 import Detail from './screens/detail';
@@ -32,7 +33,7 @@ const TabArr = [
     label: 'Add',
     type: Icons.Feather,
     icon: 'plus-square',
-    component: Add,
+    component: Add1,
   },
   {
     route: 'Favorite',

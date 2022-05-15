@@ -9,7 +9,9 @@ function Menu({ navigation }) {
 
     return (
         <View style={GlobalStyle.content}>
-            <Text style={[GlobalStyle.CustomFont]}> This is the content of Menu </Text>
+            <View>
+                
+            </View>
         </View>
     );
 }
