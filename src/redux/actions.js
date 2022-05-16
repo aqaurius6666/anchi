@@ -1,16 +1,32 @@
-export const ADD_FOOD = 'ADD_FOOD';
-export const ADD_INGREDIENT = 'ADD_INGREDIENT';
+export const CREATE_FOOD = 'CREATE_FOOD';
+export const CREATE_INGREDIENT = 'CREATE_INGREDIENT';
+export const CREATE_TAG = 'CREATE_TAG';
+export const FLUSH_LOCAL = 'FLUSH_LOCAL';
 
-export const addFood = newFood => dispatch => {
+export const createFood = newFood => dispatch => {
   dispatch({
-    type: ADD_FOOD,
+    type: CREATE_FOOD,
     payload: newFood,
   });
 };
 
-export const addIngredient = newIngredient => dispatch => {
+export const createIngredient = newIngredient => dispatch => {
   dispatch({
-    type: ADD_INGREDIENT,
+    type: CREATE_INGREDIENT,
     payload: newIngredient,
+  });
+};
+
+export const createTag = newTag => dispatch => {
+  dispatch({
+    type: CREATE_TAG,
+    payload: newTag,
+  });
+};
+
+export const flushLocal = () => dispatch => {
+  dispatch({
+    type: FLUSH_LOCAL,
+    payload: null,
   });
 };

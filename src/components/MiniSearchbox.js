@@ -40,18 +40,19 @@ class MiniSearchbox extends React.Component {
     let newShowing = [];
     if (text !== '') {
       const startswith = this.state.list.filter(item =>
-        item.startsWith(normalisedText),
+        item.title.startsWith(normalisedText),
       );
       const includes = this.state.list.filter(
         item =>
-          item.includes(normalisedText) && !item.startsWith(normalisedText),
+          item.title.includes(normalisedText) &&
+          !item.title.startsWith(normalisedText),
       );
       newShowing = startswith.concat(includes);
     } else {
       newShowing = [];
     }
 
-    const ready = this.state.list.includes(normalisedText);
+    const ready = this.state.list.some(item => item.title === normalisedText);
 
     this.setState({
       ...this.state,
@@ -63,7 +64,6 @@ class MiniSearchbox extends React.Component {
 
   _onAddSelection = newSelection => {
     this.props.onAddItem(newSelection);
-    // this._onChange('');
   };
 
   _onCreateSelection = newSelection => {
@@ -106,14 +106,14 @@ class MiniSearchbox extends React.Component {
           )}
         </View>
         <View style={styles.tagContainer}>
-          {this.state.showing.map(item => {
-            return <Tag title={item} key={item} />;
-          })}
+          {this.state.showing.map(item => (
+            <Tag title={item.title} key={item.id} />
+          ))}
         </View>
         <View style={styles.tagContainer}>
-          {this.state.selected.map(item => {
-            return <Tag title={item} key={item} type="tinted" />;
-          })}
+          {this.state.selected.map(item => (
+            <Tag title={item.title} key={item.id} type="tinted" />
+          ))}
         </View>
       </View>
     );

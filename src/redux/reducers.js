@@ -2,7 +2,12 @@
 
 import {combineReducers} from 'redux';
 
-import {ADD_FOOD, ADD_INGREDIENT} from './actions';
+import {
+  CREATE_FOOD,
+  CREATE_INGREDIENT,
+  CREATE_TAG,
+  FLUSH_LOCAL,
+} from './actions';
 
 import {
   FOOD_DATA,
@@ -15,7 +20,7 @@ import {
 
 const foodReducer = (state = FOOD_DATA, action) => {
   switch (action.type) {
-    case ADD_FOOD: {
+    case CREATE_FOOD: {
       return [...state, action.payload];
     }
     default: {
@@ -34,6 +39,13 @@ const restaurantReducer = (state = RESTAURANT_DATA, action) => {
 
 const tagsReducer = (state = TAG_DATA, action) => {
   switch (action.type) {
+    case CREATE_TAG: {
+      const newKey = state.lastKey + 1;
+      return {
+        lastKey: newKey,
+        data: [...state.data, {title: action.payload, id: newKey}],
+      };
+    }
     default: {
       return state;
     }
@@ -42,8 +54,12 @@ const tagsReducer = (state = TAG_DATA, action) => {
 
 const ingredientsReducer = (state = INGREDIENT_DATA, action) => {
   switch (action.type) {
-    case ADD_INGREDIENT: {
-      return [...state, action.payload];
+    case CREATE_INGREDIENT: {
+      const newKey = state.lastKey + 1;
+      return {
+        lastKey: newKey,
+        data: [...state.data, {title: action.payload, id: newKey}],
+      };
     }
     default: {
       return state;
@@ -67,13 +83,24 @@ const blacklistReducer = (state = BLACKLIST_DATA, action) => {
   }
 };
 
-const reducer = combineReducers({
+const rootReducer = combineReducers({
   food: foodReducer,
   restaurant: restaurantReducer,
-  tag: tagsReducer,
+  tags: tagsReducer,
   ingredients: ingredientsReducer,
   favorite: favoriteReducer,
   blacklist: blacklistReducer,
 });
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case FLUSH_LOCAL: {
+      return rootReducer(undefined, action);
+    }
+    default: {
+      return rootReducer(state, action);
+    }
+  }
+};
 
 export default reducer;

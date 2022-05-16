@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -10,132 +10,123 @@ import LinearGradient from 'react-native-linear-gradient';
 import {connect} from 'react-redux';
 
 import MiniSearchbox from '../components/MiniSearchbox';
+import FlushButton from '../components/FlushButton';
 import GlobalStyle from '../styles/GlobalStyle';
 
-import {addFood, addIngredient} from '../redux/actions';
+import {createFood, createIngredient, createTag} from '../redux/actions';
 
-class AddScreen extends React.Component {
-  constructor(props) {
-    super(props);
+function add(props) {
+  const [newFood, setNewFood] = useState({
+    title: '',
+    description: '',
+    ingredients: [],
+    tags: [],
+  });
 
-    this.ingredients = ['egg', 'flour', 'beef', 'pork', 'bánh mì'];
-    this.tags = ['spice', 'diary', 'peanut'];
-    console.log(this.props.ingredients);
+  console.log(props.tags);
 
-    this.state = {
-      newFood: {
-        title: '',
-        description: '',
-        ingredients: [],
-        tags: [],
-      },
-    };
+  function _onChangeTitle(text) {
+    setNewFood({...newFood, title: text});
   }
 
-  _onChangeTitle = text => {
-    this.setState({
-      ...this.state,
-      newFood: {...this.state.newFood, title: text},
-    });
-  };
+  function _onChangeDescription(text) {
+    setNewFood({...newFood, description: text});
+  }
 
-  _onChangeDescription = text => {
-    this.setState({
-      ...this.state,
-      newFood: {...this.state.newFood, description: text},
-    });
-  };
-
-  _onAddIngredient = item => {
-    if (!this.state.newFood.ingredients.includes(item)) {
-      this.setState({
-        ...this.state,
-        newFood: {
-          ...this.state.newFood,
-          ingredients: [...this.state.newFood.ingredients, item],
-        },
+  function _onAddIngredientNewFood(newItem) {
+    if (!newFood.ingredients.some(item => item.title === newItem)) {
+      const newItemObj = props.ingredients.data.find(
+        obj => obj.title === newItem,
+      );
+      setNewFood({
+        ...newFood,
+        ingredients: [...newFood.ingredients, newItemObj],
       });
     } else {
       console.log('The ingredient has already been added');
     }
-  };
+  }
 
-  _onCreateIngredient = item => {
-    this.props.addIngredient(item);
-  };
+  // TODO: check if item is already existed
+  function _onCreateIngredient(item) {
+    props.createIngredient(item);
+    console.log('create new ingredient');
+  }
 
-  _onAddTag = item => {
-    if (!this.state.newFood.tags.includes(item)) {
-      this.setState({
-        ...this.state,
-        newFood: {
-          ...this.state.newFood,
-          tags: [...this.state.newFood.tags, item],
-        },
+  function _onAddTagNewFood(newItem) {
+    if (!newFood.tags.some(item => item.title === newItem)) {
+      const newItemObj = props.tags.data.find(obj => obj.title === newItem);
+      setNewFood({
+        ...newFood,
+        tags: [...newFood.tags, newItemObj],
       });
     } else {
       console.log('The tag has already been added');
     }
-  };
-
-  _addFood = () => {
-    this.props.addFood(this.state.newFood);
-    this.setState({
-      ...this.state,
-      newFood: {title: '', description: '', ingredients: [], tags: []},
-    });
-  };
-
-  render() {
-    return (
-      <View style={GlobalStyle.content}>
-        <Text style={GlobalStyle.Title}>New food</Text>
-        <View>
-          <Text style={styles.inputLabel}>Title:</Text>
-          <TextInput
-            style={GlobalStyle.textField}
-            value={this.state.newFood.title}
-            onChangeText={this._onChangeTitle}
-          />
-          <Text style={styles.inputLabel}>Description</Text>
-          <TextInput
-            style={[
-              GlobalStyle.textField,
-              {textAlignVertical: 'top', height: 64},
-            ]}
-            value={this.state.newFood.description}
-            onChangeText={this._onChangeDescription}
-            multiline={true}
-          />
-          <Text style={styles.inputLabel}>Ingredients:</Text>
-          <MiniSearchbox
-            list={this.props.ingredients}
-            selected={this.state.newFood.ingredients}
-            onAddItem={this._onAddIngredient}
-            onCreateItem={this._onCreateIngredient}
-          />
-          <Text style={styles.inputLabel}>Tags:</Text>
-          <MiniSearchbox
-            list={this.tags}
-            selected={this.state.newFood.tags}
-            onAddItem={this._onAddTag}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              this._addFood();
-            }}>
-            <LinearGradient
-              colors={['#D289FF', '#7170D3']}
-              start={{x: 1, y: 0}}
-              end={{x: 0, y: 1}}
-              style={styles.normalButton}>
-              <Text style={styles.normalButtonText}>Add</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
   }
+
+  // TODO: check if item is already existed
+  function _onCreateTag(item) {
+    props.createTag(item);
+    console.log('create new tag');
+  }
+
+  function _createFood() {
+    props.createFood(newFood);
+    setNewFood({title: '', description: '', ingredients: [], tags: []});
+  }
+
+  return (
+    <View style={GlobalStyle.content}>
+      <Text style={GlobalStyle.Title}>New food</Text>
+      <View>
+        <Text style={styles.inputLabel}>Title:</Text>
+        <TextInput
+          style={GlobalStyle.textField}
+          value={newFood.title}
+          onChangeText={_onChangeTitle}
+        />
+        <Text style={styles.inputLabel}>Description</Text>
+        <TextInput
+          style={[
+            GlobalStyle.textField,
+            {textAlignVertical: 'top', height: 64},
+          ]}
+          value={newFood.description}
+          onChangeText={_onChangeDescription}
+          multiline={true}
+        />
+        <Text style={styles.inputLabel}>Ingredients:</Text>
+        <MiniSearchbox
+          list={props.ingredients.data}
+          selected={newFood.ingredients}
+          onAddItem={_onAddIngredientNewFood}
+          onCreateItem={_onCreateIngredient}
+        />
+        <Text style={styles.inputLabel}>Tags:</Text>
+        <MiniSearchbox
+          list={props.tags.data}
+          selected={newFood.tags}
+          onAddItem={_onAddTagNewFood}
+          onCreateItem={_onCreateTag}
+        />
+        <TouchableOpacity
+          onPress={() => {
+            _createFood();
+          }}
+          style={styles.normalButton}>
+          <LinearGradient
+            colors={['#D289FF', '#7170D3']}
+            start={{x: 1, y: 0}}
+            end={{x: 0, y: 1}}
+            style={styles.normalButtonGradient}>
+            <Text style={styles.normalButtonText}>Add</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
+      <FlushButton />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -145,12 +136,15 @@ const styles = StyleSheet.create({
   },
   normalButton: {
     height: 32,
-    borderRadius: 8,
-    alignSelf: 'flex-start',
-    paddingHorizontal: 12,
+    width: 60,
     marginHorizontal: 2,
     marginVertical: 4,
-    marginTop: 24,
+    marginTop: 32,
+  },
+  normalButtonGradient: {
+    height: '100%',
+    width: '100%',
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -162,6 +156,11 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   ingredients: state.ingredients,
+  tags: state.tags,
 });
 
-export default connect(mapStateToProps, {addFood, addIngredient})(AddScreen);
+export default connect(mapStateToProps, {
+  createFood,
+  createIngredient,
+  createTag,
+})(add);
