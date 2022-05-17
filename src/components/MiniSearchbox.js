@@ -70,6 +70,11 @@ class MiniSearchbox extends React.Component {
     this.props.onCreateItem(newSelection);
   };
 
+  _onChooseToAutofill = text => {
+    console.log('choose tag to autofill');
+    this.setState({...this.state, searchText: text, ready: true});
+  };
+
   render() {
     return (
       <View>
@@ -107,7 +112,11 @@ class MiniSearchbox extends React.Component {
         </View>
         <View style={styles.tagContainer}>
           {this.state.showing.map(item => (
-            <Tag title={item.title} key={item.id} />
+            <Tag
+              title={item.title}
+              key={item.id}
+              onPress={() => this._onChooseToAutofill(item.title)}
+            />
           ))}
         </View>
         <View style={styles.tagContainer}>

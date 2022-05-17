@@ -10,17 +10,17 @@ export const createFood = newFood => dispatch => {
   });
 };
 
-export const createIngredient = newIngredient => dispatch => {
-  dispatch({
-    type: CREATE_INGREDIENT,
-    payload: newIngredient,
-  });
-};
-
 export const createTag = newTag => dispatch => {
   dispatch({
     type: CREATE_TAG,
     payload: newTag,
+  });
+};
+
+export const createIngredient = newIngredient => dispatch => {
+  dispatch({
+    type: CREATE_INGREDIENT,
+    payload: newIngredient,
   });
 };
 

@@ -39,7 +39,7 @@ class Tag extends React.Component {
           start={{x: 1, y: 0}}
           end={{x: 0, y: 1}}
           style={styles.container}>
-          <Text style={styles.text}>{this.state.title}</Text>
+          <Text style={styles.text}>{this.state.title} </Text>
         </LinearGradient>
       </TouchableOpacity>
     );
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     marginHorizontal: 2,
     marginVertical: 4,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
