@@ -1,9 +1,28 @@
-import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { useRef, useState, } from 'react'
 
-function setting() {
+export default function setting() {
+  const timer = useRef(null);
+  const [counter, setCounter] = useState(0);
+
+  const addOne = () => {
+    setCounter((prevValue) => prevValue + 1);
+    timer.current = setTimeout(addOne, 200);
+  }
+
+  const stopTimer = () => {
+    clearTimeout(timer.current);
+  }
   return (
-    <div>setting</div>
+    <View>
+
+      <TouchableOpacity onPressIn={addOne} onPressOut={stopTimer}>
+        <Text>+</Text>
+      </TouchableOpacity>
+
+      <Text>setting</Text>
+    </View>
   )
 }
 
-export default setting;
+const styles = StyleSheet.create({})

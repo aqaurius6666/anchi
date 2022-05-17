@@ -13,6 +13,12 @@ export default StyleSheet.create({
     fontSize: 18,
     color: '#000'
   },
+  CustomFontBold: {
+    // fontFamily: 'SVNChickenNoodleSoup-Regular',
+    fontFamily: 'iCielLudema-Bold',
+    fontSize: 18,
+    color: '#000'
+  },
 
   content: {
     flex: 1,

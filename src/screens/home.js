@@ -3,6 +3,7 @@ import { Text, View, Image, StyleSheet, useWindowDimensions } from 'react-native
 import CustomButton, { CustomButtonOutline } from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
 import { Icons } from '../components/icons';
+import CustomDialog, { DislikeDialog, LikeDialog } from '../components/CustomDialog';
 
 const eg1 = {
   id: 1,
@@ -98,6 +99,8 @@ function Home({ navigation }) {
   const window = useWindowDimensions();
   const [food, setFood] = useState(true);
   const [eg, setEg] = useState(eg1);
+  const [like, setLike] = useState(false);
+  const [dislike, setDislike] = useState(false);
 
   return (
     <View style={[GlobalStyle.content, styles.content]}>
@@ -122,23 +125,46 @@ function Home({ navigation }) {
 
       {food ? <FoodCard navigation={navigation} eg={eg} /> : <StoreCard navigation={navigation} eg={eg} />}
 
-      <View
-        style={styles.bottomTab}
-      >
-        <CustomButtonOutline
-          icon_name="ios-heart"
-          type="ionicon"
-          colors={['#62F6FF', '#6AF25E', '#fff']}
-          size={36}
-        />
+
+      <View style={styles.bottomTab}>
         <CustomButtonOutline
           icon_name="md-close"
           type="ionicon"
           colors={['#FFA06A', '#F40159', '#fff']}
           size={36}
+          onLongPress={() => setDislike(true)}
+          onOK={() => setDislike(false)}
         />
-
+        <CustomButtonOutline
+          icon_name="ios-heart"
+          type="ionicon"
+          colors={['#62F6FF', '#6AF25E', '#fff']}
+          size={36}
+          onLongPress={() => setLike(true)}
+          onOK={() => setLike(false)}
+        />
       </View>
+      {
+        like ?
+          <LikeDialog
+            open={like}
+            onCancel={() => { setLike(false) }}
+            onOK={() => { setLike(false) }}
+            content={'Zô, vậy là bạn thích ' + eg.title + '.\nChần chừ chi mà hông đi ăn thôi nào!'}
+          />
+          : null
+      }
+
+      {
+        dislike ?
+          <DislikeDialog
+            open={dislike}
+            onCancel={() => { setDislike(false) }}
+            onOK={() => { setDislike(false) }}
+            content={'Zô, vậy là bạn hông thích ' + eg.tags[0] + '.\nVậy để mình thêm vào hố đen nhá!'}
+          />
+          : null
+      }
     </View>
   )
 };
@@ -179,7 +205,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     flexDirection: 'row',
-    width: '100%'
+    width: '100%',
+    // bottom: 80,
   }
 });
 

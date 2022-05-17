@@ -6,15 +6,19 @@ import {
     ScrollView,
     SafeAreaView,
     StyleSheet,
+    TouchableOpacity
 } from 'react-native';
 import GlobalStyle from '../styles/GlobalStyle';
+import { CustomButtonOutline } from '../components/CustomButton';
+import CustomDialog from '../components/CustomDialog';
 
 function Menu({ navigation }) {
 
-
     return (
-        <SafeAreaView>
-        </SafeAreaView>
+        <View style={GlobalStyle.content}>
+            {/* <CustomDialog open={true}/> */}
+
+        </View>
     );
 }
 
