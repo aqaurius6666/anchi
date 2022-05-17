@@ -150,7 +150,7 @@ function Home({ navigation }) {
             open={like}
             onCancel={() => { setLike(false) }}
             onOK={() => { setLike(false) }}
-            content={'Zô, vậy là bạn thích ' + eg.title + '.\nChần chừ chi mà hông đi ăn thôi nào!'}
+            content={'Zô, vậy là bạn thích ' + eg.title + '. Chần chừ chi mà hông đi ăn thôi nào!'}
           />
           : null
       }
@@ -161,7 +161,7 @@ function Home({ navigation }) {
             open={dislike}
             onCancel={() => { setDislike(false) }}
             onOK={() => { setDislike(false) }}
-            content={'Zô, vậy là bạn hông thích ' + eg.tags[0] + '.\nVậy để mình thêm vào hố đen nhá!'}
+            content={'Zô, vậy là bạn hông thích ' + eg.tags[0] + '. Vậy để mình thêm vào hố đen nhá!'}
           />
           : null
       }

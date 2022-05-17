@@ -1,47 +1,57 @@
 import React, { useState, useRef } from 'react';
 import {
-    Text,
     View,
-    Animated,
-    ScrollView,
-    SafeAreaView,
     StyleSheet,
-    TouchableOpacity
+    Image,
+    Text
 } from 'react-native';
 import GlobalStyle from '../styles/GlobalStyle';
-import { CustomButtonOutline } from '../components/CustomButton';
-import CustomDialog from '../components/CustomDialog';
 
 function Menu({ navigation }) {
 
     return (
-        <View style={GlobalStyle.content}>
-            {/* <CustomDialog open={true}/> */}
-
+        <View style={[GlobalStyle.content, styles.content]}>
+            <View style={styles.profileTab}>
+                <View style={styles.centerView}>
+                    <Image
+                        source={require('../../assets/profile/avatar.jpg')}
+                        style={[styles.image]}
+                    />
+                </View>
+                <View style={{ flex: 1 }}>
+                    <Text style={GlobalStyle.CustomFont} numberOfLines={1}>
+                        teamchitogemaidinh@gmail.com
+                    </Text>
+                    <Text style={[GlobalStyle.CustomFont, styles.seeMore]}>Chi tiết</Text>
+                </View>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    scrollContainer: {
+    content: {
+        paddingTop: '6%'
+    },
+    profileTab: {
+        alignItems: 'center',
         flexDirection: 'row',
-        width: '100%',
-        backgroundColor: '#000',
-        height: '80%',
+        paddingRight: '6%',
     },
-    scrollViewContainer: {
-        width: '100%',
+    centerView: {
+        alignItems: 'center',
+        flex: 1,
     },
-    customScrollBar: {
-        backgroundColor: '#ccc',
-        borderRadius: 3,
-        width: 6,
+    image: {
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+        borderWidth: 4,
+        borderColor: '#6464af',
     },
-    customScrollBarBackground: {
-        backgroundColor: '#232323',
-        borderRadius: 3,
-        height: '100%',
-        width: 6,
+    seeMore: {
+        color: '#646464',
+        textDecorationLine: 'underline',
     },
 });
 

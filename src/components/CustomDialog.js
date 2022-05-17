@@ -14,13 +14,14 @@ const CustomDialog = (props) => {
                     props.onCancel();
                 }}
             >
-                <View style={styles.centeredView}>
+                <View style={styles.centeredView}
+                    // onPress={() => props.onCancel()}
+                >
                     <View style={styles.modal}>
-
                         <Text style={[GlobalStyle.Title]}>
                             {props.heading}
                         </Text>
-                        <Text style={GlobalStyle.CustomFont}>
+                        <Text style={[GlobalStyle.CustomFont, styles.content]}>
                             {props.content}
                         </Text>
                         <View style={styles.bottomTab}>
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
         borderColor: '#6464af',
         borderRadius: 30,
         borderWidth: 1,
-        width: '72%',
+        width: '70%',
         // height: '40%',
         backgroundColor: '#fff',
         justifyContent: 'center',
@@ -97,6 +98,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         // bottom: 80,
+        paddingVertical: 10,
+    },
+    content: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 6,
     }
 });
 
