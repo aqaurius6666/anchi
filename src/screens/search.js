@@ -14,9 +14,8 @@ class SearchScreen extends React.Component {
 
     return (
       <View style={GlobalStyle.content}>
-        
         <Text style={{color: '#000'}}>SearchScreen's content</Text>
-        {this.props.food.map(item => (
+        {this.props.food.data.map(item => (
           <View key={item.title}>
             <Text style={{color: '#000'}}>{item.title}</Text>
             <Text style={{color: '#000'}}>{item.description}</Text>
