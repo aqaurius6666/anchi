@@ -11,13 +11,13 @@ export default StyleSheet.create({
     // fontFamily: 'SVNChickenNoodleSoup-Regular',
     fontFamily: 'iCielLudema-Regular',
     fontSize: 18,
-    color: '#000'
+    color: '#000',
   },
   CustomFontBold: {
     // fontFamily: 'SVNChickenNoodleSoup-Regular',
     fontFamily: 'iCielLudema-Bold',
     fontSize: 18,
-    color: '#000'
+    color: '#000',
   },
 
   content: {
@@ -25,7 +25,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     backgroundColor: '#fff',
-    flex: 1,
   },
 
   CustomFont2: {

@@ -17,6 +17,7 @@ function SearchScreen(props) {
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
+      <View style={{height: 36, width: 1}}></View>
     </View>
   );
 }
