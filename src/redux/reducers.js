@@ -9,16 +9,9 @@ import {
   FLUSH_LOCAL,
 } from './actions';
 
-import {
-  FOOD_DATA,
-  RESTAURANT_DATA,
-  TAG_DATA,
-  INGREDIENT_DATA,
-  FAVORITE_DATA,
-  BLACKLIST_DATA,
-} from './initialData';
+import {FAVORITE_DATA, BLACKLIST_DATA, InitialState} from './initialData/index';
 
-const foodReducer = (state = FOOD_DATA, action) => {
+const foodReducer = (state = InitialState.FOOD_DATA, action) => {
   switch (action.type) {
     case CREATE_FOOD: {
       return [...state, action.payload];
@@ -29,7 +22,7 @@ const foodReducer = (state = FOOD_DATA, action) => {
   }
 };
 
-const restaurantReducer = (state = RESTAURANT_DATA, action) => {
+const restaurantReducer = (state = InitialState.RESTAURANT_DATA, action) => {
   switch (action.type) {
     default: {
       return state;
@@ -37,7 +30,7 @@ const restaurantReducer = (state = RESTAURANT_DATA, action) => {
   }
 };
 
-const tagsReducer = (state = TAG_DATA, action) => {
+const tagsReducer = (state = InitialState.TAG_DATA, action) => {
   switch (action.type) {
     case CREATE_TAG: {
       const newKey = state.lastKey + 1;
@@ -52,7 +45,7 @@ const tagsReducer = (state = TAG_DATA, action) => {
   }
 };
 
-const ingredientsReducer = (state = INGREDIENT_DATA, action) => {
+const ingredientsReducer = (state = InitialState.INGREDIENT_DATA, action) => {
   switch (action.type) {
     case CREATE_INGREDIENT: {
       const newKey = state.lastKey + 1;

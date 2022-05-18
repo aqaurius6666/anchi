@@ -23,8 +23,6 @@ function add(props) {
     tags: [],
   });
 
-  console.log(props.tags);
-
   function _onChangeTitle(text) {
     setNewFood({...newFood, title: text});
   }

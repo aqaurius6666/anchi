@@ -1,29 +1,24 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View, FlatList} from 'react-native';
 import {connect} from 'react-redux';
+import {FoodCard} from '../components/FoodCard';
 
 import GlobalStyle from '../styles/GlobalStyle';
 
-class SearchScreen extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const renderItem = ({item}) => {
+  return <FoodCard data={item} />;
+};
 
-  render() {
-    console.log(this.props.food);
-
-    return (
-      <View style={GlobalStyle.content}>
-        <Text style={{color: '#000'}}>SearchScreen's content</Text>
-        {this.props.food.data.map(item => (
-          <View key={item.title}>
-            <Text style={{color: '#000'}}>{item.title}</Text>
-            <Text style={{color: '#000'}}>{item.description}</Text>
-          </View>
-        ))}
-      </View>
-    );
-  }
+function SearchScreen(props) {
+  return (
+    <View style={[GlobalStyle.content]}>
+      <FlatList
+        data={props.food.data}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+    </View>
+  );
 }
 
 const mapStateToProps = state => ({
