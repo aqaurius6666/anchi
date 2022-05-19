@@ -1,14 +1,20 @@
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React, {useEffect, useRef} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import Icon, {Icons} from './components/icons';
+import { NavigationContainer } from '@react-navigation/native';
+import { useColorScheme } from 'react-native';
+import {
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
+
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import Icon, { Icons } from './components/icons';
 import Colors from './constants/colors';
 import LinearGradient from 'react-native-linear-gradient';
-import {Provider} from 'react-redux';
-import {store, persistor} from './redux/store';
-import {PersistGate} from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
+import { store, persistor } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import * as Animatable from 'react-native-animatable';
 import Favorite from './screens/favorite';
@@ -68,26 +74,26 @@ const Tab = createBottomTabNavigator();
 const RootStack = createStackNavigator();
 
 const animate1 = {
-  0: {scale: 0.5, translateY: 7},
-  0.92: {translateY: -30},
-  1: {scale: 1.2, translateY: -14},
+  0: { scale: 0.5, translateY: 7 },
+  0.92: { translateY: -30 },
+  1: { scale: 1.2, translateY: -14 },
 };
 const animate2 = {
-  0: {scale: 1.2, translateY: -24},
-  1: {scale: 1, translateY: 7},
+  0: { scale: 1.2, translateY: -24 },
+  1: { scale: 1, translateY: 7 },
 };
 
 const circle1 = {
-  0: {scale: 0},
-  0.3: {scale: 0.9},
-  0.5: {scale: 0.2},
-  0.8: {scale: 0.7},
-  1: {scale: 1},
+  0: { scale: 0 },
+  0.3: { scale: 0.9 },
+  0.5: { scale: 0.2 },
+  0.8: { scale: 0.7 },
+  1: { scale: 1 },
 };
-const circle2 = {0: {scale: 1}, 1: {scale: 0}};
+const circle2 = { 0: { scale: 1 }, 1: { scale: 0 } };
 
 const TabButton = props => {
-  const {item, onPress, accessibilityState} = props;
+  const { item, onPress, accessibilityState } = props;
   const focused = accessibilityState.selected;
   const viewRef = useRef(null);
   const circleRef = useRef(null);
@@ -97,11 +103,11 @@ const TabButton = props => {
     if (focused) {
       viewRef.current.animate(animate1);
       circleRef.current.animate(circle1);
-      textRef.current.transitionTo({scale: 1});
+      textRef.current.transitionTo({ scale: 1 });
     } else {
       viewRef.current.animate(animate2);
       circleRef.current.animate(circle2);
-      textRef.current.transitionTo({scale: 0});
+      textRef.current.transitionTo({ scale: 0 });
     }
   }, [focused]);
 
@@ -115,8 +121,8 @@ const TabButton = props => {
           <Animatable.View ref={circleRef} style={styles.circle}>
             <LinearGradient
               colors={['#D289FF', '#7170D3']}
-              start={{x: 1, y: 0}}
-              end={{x: 0, y: 1}}
+              start={{ x: 1, y: 0 }}
+              end={{ x: 0, y: 1 }}
               style={styles.linearGradient}
             />
           </Animatable.View>
@@ -173,6 +179,8 @@ const App = () => {
       restSpeedThreshold: 0.01,
     },
   };
+
+  const scheme = useColorScheme();
 
   return (
     <Provider store={store}>

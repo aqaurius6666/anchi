@@ -98,7 +98,7 @@ function Favorite({ navigation }) {
         colors={['#D289FF', '#7170D3', '#fff']}
         type={Icons.FontAwesome5}
       />
-      <View style={[GlobalStyle.TitleBox, styles.titleBox]}>
+      <View style={[GlobalStyle.TitleBoxHeader]}>
         <Text style={GlobalStyle.Title}>Yêu thích</Text>
       </View>
       <SafeAreaView style={styles.favBox}>
@@ -125,9 +125,6 @@ function Favorite({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  titleBox: {
-    marginTop: '4%',
-  },
   favBox: {
     backgroundColor: '#6464af20',
     marginTop: '6%',

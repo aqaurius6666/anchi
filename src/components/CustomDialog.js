@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import colors from "../constants/colors";
 import GlobalStyle from "../styles/GlobalStyle";
 import { CustomButtonText } from "./CustomButton";
 
@@ -15,7 +16,7 @@ const CustomDialog = (props) => {
                 }}
             >
                 <View style={styles.centeredView}
-                    // onPress={() => props.onCancel()}
+                // onPress={() => props.onCancel()}
                 >
                     <View style={styles.modal}>
                         <Text style={[GlobalStyle.Title]}>
@@ -29,12 +30,47 @@ const CustomDialog = (props) => {
                             <CustomButtonText
                                 onPress={() => props.onCancel()}
                                 content={'Hừm...'}
-                                colors={['#FFA06A', '#F40159']}
+                                colors={[colors.dislike1, colors.dislike2]}
                             />
                             <CustomButtonText
                                 onPress={() => props.onOK()}
                                 content={'Géc gô !!'}
-                                colors={['#62F6FF', '#6AF25E']}
+                                colors={[colors.like1, colors.like2]}
+                            />
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+        </View>
+    );
+};
+
+const CustomDialogConfirm = (props) => {
+    return (
+        <View style={styles.centeredView}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={props.open}
+                onRequestClose={() => {
+                    props.onCancel();
+                }}
+            >
+                <View style={styles.centeredView}
+                // onPress={() => props.onCancel()}
+                >
+                    <View style={styles.modal}>
+                        <Text style={[GlobalStyle.Title]}>
+                            {props.heading}
+                        </Text>
+                        <Text style={[GlobalStyle.CustomFont, styles.content]}>
+                            {props.content}
+                        </Text>
+                        <View style={styles.bottomTab}>
+                            <CustomButtonText
+                                onPress={() => props.onOK()}
+                                content={'Hỉu !!'}
+                                colors={[colors.like1, colors.like2]}
                             />
                         </View>
                     </View>

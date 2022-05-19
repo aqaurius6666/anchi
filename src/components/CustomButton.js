@@ -99,7 +99,7 @@ export function CustomButtonOutline(props) {
 export function CustomButtonText(props) {
   return (
     <TouchableOpacity
-      style={[ props.style]}
+      style={[props.style]}
       onPress={props.onPress}
     >
       <LinearGradient
@@ -121,12 +121,6 @@ var styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff'
   },
-  // touch: {
-  //   height: 60,
-  //   width: 60,
-  //   borderRadius: 30,
-  //   backgroundColor: '#fff',
-  // },
   linearGradient: {
     height: 60,
     width: 60,

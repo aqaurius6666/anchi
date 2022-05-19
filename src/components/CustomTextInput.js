@@ -10,7 +10,8 @@ import GlobalStyle from '../styles/GlobalStyle';
 const CustomTextInput = (props) => {
     return (
         <TextInput
-            editable={props.editable}
+            {...props}
+            // editable={props.editable}
             style={[GlobalStyle.CustomFont, styles.textinput, props.style]}
             value={props.content}
             autoComplete={props.autoComplete}
