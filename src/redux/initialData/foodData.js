@@ -161,7 +161,7 @@ const data = [
   },
   {
     id: 19,
-    title: 'Nộm Bò Khôn',
+    title: 'Nộm Bò Khô',
     tags: [6, 101],
     ingredients: [403, 404, 106, 307, 110, 111],
     description:

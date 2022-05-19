@@ -70,7 +70,7 @@ const data = [
     },
   },
   {
-    id: 5,
+    id: 6,
     title: 'Bánh đa cua cô Hằng',
     tags: [4],
     address: '64 Nguyễn Văn Tuyết, Trung Liệt, Đống Đa, Hà Nội',
@@ -88,7 +88,7 @@ const data = [
     },
   },
   {
-    id: 5,
+    id: 7,
     title: 'Cơm thố - Tô Hiệu',
     tags: [5],
     address: '201 Tô Hiệu, Nghĩa Tân, Cầu Giấy, Hà Nội',
@@ -106,7 +106,7 @@ const data = [
     },
   },
   {
-    id: 6,
+    id: 8,
     title: 'Chè Trang',
     tags: [6],
     address: 'Ngõ 201 Trần Quốc Hoàn, Dịch Vọng Hậu, Cầu Giấy, Hà Nội',
@@ -125,7 +125,7 @@ const data = [
     },
   },
   {
-    id: 7,
+    id: 9,
     title: 'Bún đậu mắm tôm - Trần Quốc Vượng',
     tags: [5],
     address: 'Ngõ 63, Trần Quốc Vượng, Dịch Vọng Hậu, Cầu Giấy, Hà Nội',
@@ -142,7 +142,7 @@ const data = [
     },
   },
   {
-    id: 8,
+    id: 10,
     title: 'Dookki - Trần Duy Hưng',
     tags: [105],
     address: 'Lầu 5-08 Vincom Center Star City, Ngã tư đường Trần Duy Hưng – Hoàng Minh Giám, Quận Cầu Giấy, Hà Nội.',
@@ -156,7 +156,7 @@ const data = [
     },
   },
   {
-    id: 9,
+    id: 11,
     title: 'Hadilao',
     tags: [105],
     address: 'Tầng 5, TTTM Vincom Mega Mall Timescity, 458 Minh Khai, Vĩnh Tuy, Hai Bà Trưng, ​​Hà Nội',
@@ -175,7 +175,7 @@ const data = [
     },
   },
   {
-    id: 10,
+    id: 12,
     title: 'Pizza Company',
     tags: [102],
     address: '333 Đ. Cầu Giấy, Dịch Vọng, Cầu Giấy, Hà Nội',
