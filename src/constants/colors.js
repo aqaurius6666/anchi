@@ -1,8 +1,16 @@
-export default {
+export default Colors = {
     primary: '#6464af',
     secondary: '#7170D3',
     primaryDark: '#2759ff',
     primaryLite: '#637aff99',
+
+    home2: '#7170D3',
+    home1: '#D289FF',
+    dislike1: '#F40159',
+    dislike2: '#FFA06A',
+    like1: '#62F6FF',
+    like2: '#6AF25E',
+
     black: '#000',
     white: 'white',
     accent: '#112233',

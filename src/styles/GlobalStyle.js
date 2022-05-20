@@ -42,6 +42,13 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  
+  TitleBoxHeader: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '4%',
+  },
+
   Title: {
     fontFamily: 'iCielLudema-Bold',
     fontSize: 32,
