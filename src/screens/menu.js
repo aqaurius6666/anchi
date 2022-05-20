@@ -102,7 +102,7 @@ function MenuDetail({ navigation }) {
                     <View style={styles.bottomNav}>
                         <TouchableOpacity style={[styles.bottomNavDiv]}
                             onPress={() => {
-                                setEditing(!editing);
+                                setEditing(false);
                                 navigation.push('Settings', { detail: true, food: true });
                             }}
                         >

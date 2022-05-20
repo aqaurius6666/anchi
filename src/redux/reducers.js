@@ -11,7 +11,7 @@ import {
   SET_TAG,
 } from './actions';
 
-import { FAVORITE_DATA, BLACKLIST_DATA, InitialState } from './initialData/index';
+import {InitialState} from './initialData/index';
 
 const foodReducer = (state = InitialState.FOOD_DATA, action) => {
   switch (action.type) {
@@ -76,7 +76,7 @@ const ingredientsReducer = (state = InitialState.INGREDIENT_DATA, action) => {
   }
 };
 
-const favoriteReducer = (state = FAVORITE_DATA, action) => {
+const favoriteReducer = (state = InitialState.FAVORITE_DATA, action) => {
   switch (action.type) {
     default: {
       return state;
@@ -84,7 +84,7 @@ const favoriteReducer = (state = FAVORITE_DATA, action) => {
   }
 };
 
-const blacklistReducer = (state = BLACKLIST_DATA, action) => {
+const blacklistReducer = (state = InitialState.BLACKLIST_DATA, action) => {
   switch (action.type) {
     default: {
       return state;
