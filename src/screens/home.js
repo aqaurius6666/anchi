@@ -4,6 +4,8 @@ import CustomButton, { CustomButtonOutline } from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
 import { Icons } from '../components/icons';
 import CustomDialog, { DislikeDialog, LikeDialog } from '../components/CustomDialog';
+import { connect } from 'react-redux';
+import colors from '../constants/colors';
 
 const eg1 = {
   id: 1,
@@ -95,10 +97,12 @@ const StoreCard = (props) => {
   );
 };
 
-function Home({ navigation }) {
+function Home(props) {
+  const navigation = props.navigation;
+
   const window = useWindowDimensions();
   const [food, setFood] = useState(true);
-  const [eg, setEg] = useState(eg1);
+  const [eg, setEg] = useState(props.foods.data[0]);
   const [like, setLike] = useState(false);
   const [dislike, setDislike] = useState(false);
 
@@ -108,7 +112,7 @@ function Home({ navigation }) {
         icon_name={food ? "hamburger" : "store"}
         style={styles.typeIcon}
         onPress={() => {
-          food ? setEg(eg2) : setEg(eg1);
+          food ? setEg(props.restaurants.data[0]) : setEg(props.foods.data[0]);
           setFood(!food);
         }}
         colors={['#D289FF', '#7170D3', '#fff']}
@@ -120,7 +124,7 @@ function Home({ navigation }) {
           width: window.width,
           height: window.width,
         }}
-        source={food ? eg.image : eg.image}
+        source={eg.image}
       />
 
       {food ? <FoodCard navigation={navigation} eg={eg} /> : <StoreCard navigation={navigation} eg={eg} />}
@@ -130,7 +134,7 @@ function Home({ navigation }) {
         <CustomButtonOutline
           icon_name="md-close"
           type="ionicon"
-          colors={['#FFA06A', '#F40159', '#fff']}
+          colors={[colors.dislike2, colors.dislike1, colors.white]}
           size={36}
           onLongPress={() => setDislike(true)}
           onOK={() => setDislike(false)}
@@ -138,7 +142,7 @@ function Home({ navigation }) {
         <CustomButtonOutline
           icon_name="ios-heart"
           type="ionicon"
-          colors={['#62F6FF', '#6AF25E', '#fff']}
+          colors={[colors.like1, colors.like2, colors.white]}
           size={36}
           onLongPress={() => setLike(true)}
           onOK={() => setLike(false)}
@@ -210,4 +214,13 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
+// export default Home;
+
+const mapStateToProps = state => ({
+  foods: state.foods,
+  restaurants: state.restaurants,
+  ingredients: state.ingredients,
+  tags: state.tags,
+});
+
+export default connect(mapStateToProps, {})(Home);

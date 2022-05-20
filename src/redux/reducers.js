@@ -1,15 +1,17 @@
 /** @format */
 
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 
 import {
   CREATE_FOOD,
   CREATE_INGREDIENT,
   CREATE_TAG,
+  DELETE_TAG,
   FLUSH_LOCAL,
+  SET_TAG,
 } from './actions';
 
-import {FAVORITE_DATA, BLACKLIST_DATA, InitialState} from './initialData/index';
+import { FAVORITE_DATA, BLACKLIST_DATA, InitialState } from './initialData/index';
 
 const foodReducer = (state = InitialState.FOOD_DATA, action) => {
   switch (action.type) {
@@ -36,9 +38,23 @@ const tagsReducer = (state = InitialState.TAG_DATA, action) => {
       const newKey = state.lastKey + 1;
       return {
         lastKey: newKey,
-        data: [...state.data, {title: action.payload, id: newKey}],
+        data: [...state.data, { title: action.payload, id: newKey }],
       };
     }
+
+    case DELETE_TAG: {
+      return {
+        data: state.data.filter((x) => x.id !== action.payload),
+      };
+    }
+
+    case SET_TAG: {
+      return {
+        lastKey: action.payload.size,
+        data: action.payload,
+      };
+    }
+
     default: {
       return state;
     }
@@ -51,7 +67,7 @@ const ingredientsReducer = (state = InitialState.INGREDIENT_DATA, action) => {
       const newKey = state.lastKey + 1;
       return {
         lastKey: newKey,
-        data: [...state.data, {title: action.payload, id: newKey}],
+        data: [...state.data, { title: action.payload, id: newKey }],
       };
     }
     default: {
@@ -77,8 +93,8 @@ const blacklistReducer = (state = BLACKLIST_DATA, action) => {
 };
 
 const rootReducer = combineReducers({
-  food: foodReducer,
-  restaurant: restaurantReducer,
+  foods: foodReducer,
+  restaurants: restaurantReducer,
   tags: tagsReducer,
   ingredients: ingredientsReducer,
   favorite: favoriteReducer,
@@ -91,7 +107,7 @@ const reducer = (state, action) => {
       return rootReducer(undefined, action);
     }
     default: {
-      return rootReducer(undefined, action);
+      return rootReducer(state, action);
     }
   }
 };

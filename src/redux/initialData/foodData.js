@@ -5,6 +5,7 @@ const data = [
     tags: [1, 2],
     ingredients: [101, 301, 501],
     description: 'Bánh này ngonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',
+    image: require("../../../assets/eg/Mini-Apple-Pies.png"),
     restaurant: ['địa chỉ 1', 'địa chỉ 2'],
   },
   {
@@ -73,4 +74,4 @@ const data = [
 
 const lastKey = data.length;
 
-export const FOOD_DATA = {data, lastKey};
+export const FOOD_DATA = { data, lastKey };

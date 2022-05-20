@@ -17,14 +17,13 @@ import GlobalStyle from '../styles/GlobalStyle';
 import Settings from './settings';
 import { CustomButtonText } from '../components/CustomButton';
 import Colors from '../constants/colors';
+import colors from '../constants/colors';
 
 const Stack = createStackNavigator();
 
 function BottomEdit(props) {
-
-
     return (
-        props.editing ?
+        !props.editing ?
             <View style={styles.bottomEdit}>
                 <CustomButtonText content='Sửa' colors={[Colors.home1, Colors.home2]} onPress={() => props.setEditing(!props.editing)} />
             </View>
@@ -57,7 +56,7 @@ function MenuDetail({ navigation }) {
                             style={[styles.image]}
                         />
                         <CustomTextInput
-                            editable={!editing}
+                            editable={editing}
                             content={data.username}
                             style={[GlobalStyle.CustomFontBold, styles.username]}
                             onChangeText={text => setData({
@@ -66,7 +65,7 @@ function MenuDetail({ navigation }) {
                             })}
                         />
                         <CustomTextInput
-                            editable={!editing}
+                            editable={false}
                             content={data.email}
                             autoComplete={'email'}
                             onChangeText={text => setData({
@@ -75,7 +74,7 @@ function MenuDetail({ navigation }) {
                             })}
                         />
                         <CustomTextInput
-                            editable={!editing}
+                            editable={editing}
                             content={data.password}
                             autoComplete={'password'}
                             secureTextEntry={true}
@@ -85,8 +84,8 @@ function MenuDetail({ navigation }) {
                             })}
                         />
                         {
-                            !editing ? <CustomTextInput
-                                editable={!editing}
+                            editing ? <CustomTextInput
+                                editable={editing}
                                 content={data.repassword}
                                 autoComplete={'password'}
                                 secureTextEntry={true}
@@ -103,13 +102,14 @@ function MenuDetail({ navigation }) {
                     <View style={styles.bottomNav}>
                         <TouchableOpacity style={[styles.bottomNavDiv]}
                             onPress={() => {
+                                setEditing(!editing);
                                 navigation.push('Settings', { detail: true, food: true });
                             }}
                         >
                             <Icon
                                 type={Icons.Feather}
                                 name={'settings'}
-                                color={'#6464af80'}
+                                color={colors.primary80}
                                 size={32}
                             />
                             <Text style={[GlobalStyle.CustomFont, styles.text]}>    Cài đặt </Text>
@@ -119,7 +119,7 @@ function MenuDetail({ navigation }) {
                             <Icon
                                 type={Icons.Feather}
                                 name={'log-out'}
-                                color={'#6464af80'}
+                                color={colors.primary80}
                                 size={32}
                             />
                             <Text style={[GlobalStyle.CustomFont, styles.text]}>    Đăng xuất </Text>

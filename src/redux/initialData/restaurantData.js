@@ -5,6 +5,7 @@ const data = [
     tags: [1, 2, 3],
     address: '21 Cầu Giấy, Hà Nội',
     description: 'Quán này ngonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',
+    image: require("../../../assets/eg/R.jpg"),
     menu: ['Bánh táo', 'Bánh Chuối'],
     note: {
       'Thú cưng': true,
@@ -57,4 +58,4 @@ const data = [
 
 const lastKey = data.length;
 
-export const RESTAURANT_DATA = {data, lastKey};
+export const RESTAURANT_DATA = { data, lastKey };

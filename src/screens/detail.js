@@ -32,8 +32,8 @@ function FoodDetail({eg}) {
       </View>
       <View style={GlobalStyle.DetailSection}>
         <Text style={[GlobalStyle.Desc, styles.desc]}>
-          Nguyên liệu ({eg.ingre.length}) :
-          {eg.ingre.map(e => {
+          Nguyên liệu ({eg.ingredients.length}) :
+          {eg.ingredients.map(e => {
             return '\n- ' + e;
           })}
         </Text>

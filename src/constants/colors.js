@@ -1,18 +1,26 @@
 export default Colors = {
     primary: '#6464af',
+    primary80: '#6464af80',
+    primary20: '#6464af20',
+    primary40: '#6464af40',
+    disable: '#8989af',
     secondary: '#7170D3',
     primaryDark: '#2759ff',
     primaryLite: '#637aff99',
-
+    
     home2: '#7170D3',
+    home280: '#7170D380',
     home1: '#D289FF',
+    home180: '#D289FF80',
     dislike1: '#F40159',
     dislike2: '#FFA06A',
     like1: '#62F6FF',
     like2: '#6AF25E',
-
+    
+    darkGray: '#999999',
     black: '#000',
-    white: 'white',
+    white: '#fff',
+
     accent: '#112233',
     green: '#60c5a8',
     green2: '#039a83',
@@ -29,7 +37,6 @@ export default Colors = {
     gold: 'gold',
     line: '#282C35',
     gray: '#CCCCCC',
-    darkGray: '#999999',
 
     darkOverlayColor: 'rgba(0, 0, 0, 0.4)',
     darkOverlayColor2: 'rgba(0, 0, 0, 0.8)',
