@@ -1,19 +1,19 @@
 import React from 'react';
 import {View, FlatList} from 'react-native';
 import {connect} from 'react-redux';
-import {FoodCard} from '../components/FoodCard';
+import FoodCard from '../components/FoodCard';
 
 import GlobalStyle from '../styles/GlobalStyle';
 
 const renderItem = ({item}) => {
-  return <FoodCard data={item} />;
+  return <FoodCard food={item} />;
 };
 
 function SearchScreen(props) {
   return (
     <View style={[GlobalStyle.content]}>
       <FlatList
-        data={props.food.data}
+        data={props.foods.data}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
@@ -23,7 +23,7 @@ function SearchScreen(props) {
 }
 
 const mapStateToProps = state => ({
-  food: state.food,
+  foods: state.foods,
 });
 
 export default connect(mapStateToProps)(SearchScreen);

@@ -1,27 +1,23 @@
 import React from 'react';
-import {Text, View, Image, StyleSheet, useWindowDimensions} from 'react-native';
+import {Text, Image, View, StyleSheet, useWindowDimensions} from 'react-native';
 import {connect} from 'react-redux';
 
 import GlobalStyle from '../styles/GlobalStyle';
 import {CardImageFallback} from './CardImageFallback';
 
-function FoodCard(props) {
+const RestaurantCard = props => {
   const window = useWindowDimensions();
   const state = {
-    title: props.food.title ?? 'untitled',
+    title: props.restaurant.title ?? 'untitled',
     tags:
-      props.food.tags.map(
+      props.restaurant.tags.map(
         item => props.tags.data.find(tag => tag.id === item)?.title,
       ) ?? [],
-    ingredients:
-      props.food.ingredients.map(
-        item =>
-          props.ingredients.data.find(ingredient => ingredient.id === item)
-            ?.title,
-      ) ?? [],
-    image: props.food.image ?? null,
-    description: props.food.description ?? 'Mô tả món ăn.',
-    address: props.food.address ?? [],
+    image: props.restaurant.image ?? null,
+    address: props.restaurant.address ?? '',
+    description: props.restaurant.description ?? 'Mô tả quán.',
+    menu: props.restaurant.menu ?? [],
+    note: props.restaurant.note ?? [],
   };
 
   return (
@@ -53,20 +49,25 @@ function FoodCard(props) {
         <Text
           style={[GlobalStyle.CustomFont, styles.seeMore]}
           onPress={() => {
-            props.navigation.push('Detail', {detail: state, type: 'food'});
+            props.navigation.push('Detail', {
+              detail: state,
+              type: 'restaurant',
+            });
           }}>
           {'>>  '}Xem thêm
         </Text>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   content: {
     flexDirection: 'column',
-    // justifyContent: 'space-between',
+    justifyContent: 'space-between',
+    paddingBottom: 75, // as 60 for navbar, 15 for spacing
   },
+
   typeIcon: {
     position: 'absolute',
     top: 18,
@@ -84,7 +85,6 @@ const styles = StyleSheet.create({
     color: '#646464',
     textDecorationLine: 'underline',
   },
-
   bottomTab: {
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -95,8 +95,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  ingredients: state.ingredients,
   tags: state.tags,
 });
 
-export default connect(mapStateToProps, {})(FoodCard);
+export default connect(mapStateToProps, {})(RestaurantCard);

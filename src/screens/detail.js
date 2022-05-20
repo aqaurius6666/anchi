@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {
   Text,
   View,
@@ -9,39 +9,53 @@ import {
   SafeAreaView,
   Linking,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+
 import CustomButton, {CustomButtonOutline} from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
+import {CardImageFallback} from '../components/CardImageFallback';
 // import { Icons } from '../components/icons';
-import LinearGradient from 'react-native-linear-gradient';
 
 const ggMap = 'https://www.google.com/maps/search/';
 
-function FoodDetail({eg}) {
+function FoodDetail(props) {
+  const window = useWindowDimensions();
   return (
     <View style={styles.detailView}>
+      {props.food.image ? (
+        <Image
+          style={{
+            width: window.width,
+            height: window.width,
+          }}
+          source={props.food.image}
+        />
+      ) : (
+        <CardImageFallback />
+      )}
       <View style={GlobalStyle.DetailSection}>
-        <Text style={GlobalStyle.Title}>{eg.title}</Text>
+        <Text style={GlobalStyle.Title}>{props.food.title}</Text>
       </View>
       <View style={GlobalStyle.DetailSection}>
-        <Text style={GlobalStyle.Subtitle}>{eg.tags.join('・')}</Text>
+        <Text style={GlobalStyle.Subtitle}>{props.food.tags.join('・')}</Text>
       </View>
       <View style={GlobalStyle.DetailSection}>
         <Text style={[GlobalStyle.Desc, styles.desc]}>
-          {'      ' + eg.desc}
+          {'\t' + props.food.description}
         </Text>
       </View>
       <View style={GlobalStyle.DetailSection}>
         <Text style={[GlobalStyle.Desc, styles.desc]}>
-          Nguyên liệu ({eg.ingre.length}) :
-          {eg.ingre.map(e => {
+          Nguyên liệu ({props.food.ingredients.length}) :
+          {props.food.ingredients.map(e => {
             return '\n- ' + e;
           })}
         </Text>
       </View>
       <View style={GlobalStyle.DetailSection}>
         <Text style={[GlobalStyle.Desc, styles.desc, styles.bottomPad]}>
-          Địa chỉ ({eg.address.length}) : {'\n'}
-          {eg.address.map((e, index) => {
+          Địa chỉ ({props.food.address.length}) : {'\n'}
+          {props.food.address.map((e, index) => {
             return (
               <Text
                 style={styles.link}
@@ -61,34 +75,48 @@ function FoodDetail({eg}) {
   );
 }
 
-function StoreDetail({eg}) {
+function RestaurantDetail(props) {
+  const window = useWindowDimensions();
   return (
     <View style={styles.detailView}>
+      {props.restaurant.image ? (
+        <Image
+          style={{
+            width: window.width,
+            height: window.width,
+          }}
+          source={props.restaurant.image}
+        />
+      ) : (
+        <CardImageFallback />
+      )}
       <View style={GlobalStyle.DetailSection}>
-        <Text style={GlobalStyle.Title}>{eg.title}</Text>
+        <Text style={GlobalStyle.Title}>{props.restaurant.title}</Text>
       </View>
       <View style={GlobalStyle.DetailSection}>
-        <Text style={GlobalStyle.Subtitle}>{eg.tags.join('・')}</Text>
+        <Text style={GlobalStyle.Subtitle}>
+          {props.restaurant.tags.join('・')}
+        </Text>
       </View>
       <View style={GlobalStyle.DetailSection}>
         <Text
           style={[GlobalStyle.Desc, styles.desc, styles.link]}
           onPress={() => {
-            if (Linking.canOpenURL(ggMap + eg.address))
-              Linking.openURL(ggMap + eg.address);
+            if (Linking.canOpenURL(ggMap + props.restaurant.address))
+              Linking.openURL(ggMap + props.restaurant.address);
           }}>
-          Địa chỉ: {eg.address}
+          Địa chỉ: {props.restaurant.address}
         </Text>
       </View>
       <View style={GlobalStyle.DetailSection}>
         <Text style={[GlobalStyle.Desc, styles.desc]}>
-          {'      ' + eg.desc}
+          {'      ' + props.restaurant.description}
         </Text>
       </View>
       <View style={GlobalStyle.DetailSection}>
         <Text style={[GlobalStyle.Desc, styles.desc]}>
-          Thực đơn ({eg.menu.length}) :
-          {eg.menu.map(e => {
+          Thực đơn ({props.restaurant.menu.length}) :
+          {props.restaurant.menu.map(e => {
             return '\n- ' + e;
           })}
         </Text>
@@ -96,8 +124,8 @@ function StoreDetail({eg}) {
       <View style={GlobalStyle.DetailSection}>
         <Text style={[GlobalStyle.Desc, styles.desc, styles.bottomPad]}>
           Lưu ý:{'\n'}
-          {Object.keys(eg.note).map(e => {
-            return (eg.note[e] ? '✅ ' : '❌ ') + (e + '\n');
+          {Object.keys(props.restaurant.note).map(e => {
+            return (props.restaurant.note[e] ? '✅ ' : '❌ ') + (e + '\n');
           })}
         </Text>
       </View>
@@ -106,10 +134,7 @@ function StoreDetail({eg}) {
 }
 
 function Detail({navigation, route}) {
-  const window = useWindowDimensions();
-
-  const {detail, food} = route.params;
-  const eg = detail;
+  const {detail, type} = route.params;
 
   return (
     <SafeAreaView style={GlobalStyle.content}>
@@ -146,15 +171,11 @@ function Detail({navigation, route}) {
       </View>
 
       <ScrollView style={[styles.content]}>
-        <Image
-          style={{
-            width: window.width,
-            height: window.width,
-          }}
-          source={eg.image}
-        />
-
-        {food ? <FoodDetail eg={eg} /> : <StoreDetail eg={eg} />}
+        {type === 'food' ? (
+          <FoodDetail food={detail} />
+        ) : (
+          <RestaurantDetail restaurant={detail} />
+        )}
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,12 +1,12 @@
 // Tags and ingredients should have lowercased title
 
-// 1. Proteins
-// 2. Dairies
-// 3. Cereals
-// 4. Vegetable
-// 5. Fruits
-// 6. Alcohols
-// 7. Others
+// 1. Thịt trứng và các món protein
+// 2. Sản phẩm bơ sữa
+// 3. Ngũ cốc
+// 4. Rau củ
+// 5. Trái cây
+// 6. Rượu và các chất có cồn
+// 7. Khác
 const data = [
   {
     id: 101,
