@@ -18,7 +18,11 @@ const data = [
   },
   {
     id: 5,
-    title: 'món chay',
+    title: 'ngũ cốc',
+  },
+  {
+    id: 6,
+    title: 'ăn vặt',
   },
   {
     id: 101,
@@ -35,6 +39,14 @@ const data = [
   {
     id: 104,
     title: 'món Đức',
+  },
+  {
+    id: 105,
+    title: 'món Hàn',
+  },
+  {
+    id: 106,
+    title: 'món Trung',
   },
 ];
 
