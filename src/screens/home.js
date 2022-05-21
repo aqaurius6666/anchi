@@ -13,17 +13,21 @@ import FoodCard from '../components/FoodCard';
 import RestaurantCard from '../components/RestaurantCard';
 import colors from '../constants/colors';
 
-const randomGen = number => Math.random() * number;
+const randomGen = number => Math.floor(Math.random() * number);
+const randomGenExcept = (number, lastNum) => {
+  let nextNum = Math.random() * number;
+  while (Math.floor(nextNum) === lastNum) {
+    nextNum = Math.random() * number;
+  }
+  return Math.floor(nextNum);
+};
 
 function Home(props) {
-  const [seed1] = useState(
-    // 4,
-    Number(randomGen(props.foods.data.length)),
-  );
-  const [seed2] = useState(Number(randomGen(props.restaurants.data.length)));
-  const [currentFood] = useState(props.foods.data[Math.round(seed1)]);
-  const [currentRestaurant] = useState(
-    props.restaurants.data[Math.round(seed2)],
+  const [seed1, setSeed1] = useState(randomGen(props.foods.data.length));
+  const [seed2, setSeed2] = useState(randomGen(props.restaurants.data.length));
+  const [currentFood, setCurrentFood] = useState(props.foods.data[seed1]);
+  const [currentRestaurant, setCurrentRestaurant] = useState(
+    props.restaurants.data[seed2],
   );
   const [type, setType] = useState('food');
   const [like, setLike] = useState(false);
@@ -61,6 +65,21 @@ function Home(props) {
           colors={[colors.dislike2, colors.dislike1, colors.white]}
           size={36}
           onLongPress={() => setDislike(true)}
+          onPress={() => {
+            if (type === 'food') {
+              const newSeed = randomGenExcept(props.foods.data.length, seed1);
+              console.log(newSeed);
+              setSeed1(newSeed);
+              setCurrentFood(props.foods.data[newSeed]);
+            } else {
+              const newSeed = randomGenExcept(
+                props.restaurants.data.length,
+                seed2,
+              );
+              setSeed2(newSeed);
+              setCurrentRestaurant(props.restaurants.data[newSeed]);
+            }
+          }}
           onOK={() => setDislike(false)}
         />
         <CustomButtonOutline
@@ -69,6 +88,20 @@ function Home(props) {
           colors={[colors.like1, colors.like2, colors.white]}
           size={36}
           onLongPress={() => setLike(true)}
+          onPress={() => {
+            if (type === 'food') {
+              const newSeed = randomGenExcept(props.foods.data.length, seed1);
+              setSeed1(newSeed);
+              setCurrentFood(props.foods.data[newSeed]);
+            } else {
+              const newSeed = randomGenExcept(
+                props.restaurants.data.length,
+                seed2,
+              );
+              setSeed2(newSeed);
+              setCurrentRestaurant(props.restaurants.data[newSeed]);
+            }
+          }}
           onOK={() => setLike(false)}
         />
       </View>

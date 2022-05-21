@@ -5,16 +5,14 @@ import FoodCard from '../components/FoodCard';
 
 import GlobalStyle from '../styles/GlobalStyle';
 
-const renderItem = ({item}) => {
-  return <FoodCard food={item} />;
-};
-
 function SearchScreen(props) {
   return (
     <View style={[GlobalStyle.content]}>
       <FlatList
         data={props.foods.data}
-        renderItem={renderItem}
+        renderItem={item => {
+          return <FoodCard food={item.item} navigation={props.navigation} />;
+        }}
         keyExtractor={item => item.id}
       />
       <View style={{height: 36, width: 1}}></View>

@@ -10,11 +10,11 @@ function FoodCard(props) {
   const state = {
     title: props.food.title ?? 'untitled',
     tags:
-      props.food.tags.map(
+      props.food.tags?.map(
         item => props.tags.data.find(tag => tag.id === item)?.title,
       ) ?? [],
     ingredients:
-      props.food.ingredients.map(
+      props.food.ingredients?.map(
         item =>
           props.ingredients.data.find(ingredient => ingredient.id === item)
             ?.title,
