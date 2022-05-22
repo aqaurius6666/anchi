@@ -4,6 +4,10 @@ export const SET_TAG = 'SET_TAG';
 export const CREATE_TAG = 'CREATE_TAG';
 export const DELETE_TAG = 'DELETE_TAG';
 export const ADD_FOOD_TO_FAVORITE = 'ADD_FOOD_TO_FAVORITE';
+export const REMOVE_FOOD_FROM_FAVORITE = 'REMOVE_FOOD_FROM_FAVORITE';
+export const ADD_RESTAURANT_TO_FAVORITE = 'ADD_RESTAURANT_TO_FAVORITE';
+export const REMOVE_RESTAURANT_FROM_FAVORITE =
+  'REMOVE_RESTAURANT_FROM_FAVORITE';
 export const FLUSH_LOCAL = 'FLUSH_LOCAL';
 
 export const createFood = newFood => dispatch => {
@@ -45,6 +49,27 @@ export const addFoodToFavorite = foodId => dispatch => {
   dispatch({
     type: ADD_FOOD_TO_FAVORITE,
     payload: foodId,
+  });
+};
+
+export const removeFoodFromFavorite = foodId => dispatch => {
+  dispatch({
+    type: REMOVE_FOOD_FROM_FAVORITE,
+    payload: foodId,
+  });
+};
+
+export const addRestaurantToFavorite = restaurantId => dispatch => {
+  dispatch({
+    type: ADD_RESTAURANT_TO_FAVORITE,
+    payload: restaurantId,
+  });
+};
+
+export const removeRestaurantFromFavorite = restaurantId => dispatch => {
+  dispatch({
+    type: REMOVE_RESTAURANT_FROM_FAVORITE,
+    payload: restaurantId,
   });
 };
 

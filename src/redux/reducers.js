@@ -3,13 +3,16 @@
 import {combineReducers} from 'redux';
 
 import {
-  ADD_FOOD_TO_FAVORITE,
   CREATE_FOOD,
   CREATE_INGREDIENT,
   CREATE_TAG,
   DELETE_TAG,
-  FLUSH_LOCAL,
   SET_TAG,
+  ADD_FOOD_TO_FAVORITE,
+  REMOVE_FOOD_FROM_FAVORITE,
+  ADD_RESTAURANT_TO_FAVORITE,
+  REMOVE_RESTAURANT_FROM_FAVORITE,
+  FLUSH_LOCAL,
 } from './actions';
 
 import {InitialState} from './initialData/index';
@@ -88,6 +91,25 @@ const favoriteReducer = (state = InitialState.FAVORITE_DATA, action) => {
       } else {
         console.log('That food is already in the favorite list');
       }
+    }
+    case REMOVE_FOOD_FROM_FAVORITE: {
+      return {
+        ...state,
+        food: state.food.filter(item => item !== action.payload),
+      };
+    }
+    case ADD_RESTAURANT_TO_FAVORITE: {
+      if (!state.restaurant.some(item => item === action.payload)) {
+        return {...state, restaurant: [...state.restaurant, action.payload]};
+      } else {
+        console.log('That restaurant is already in the favorite list');
+      }
+    }
+    case REMOVE_RESTAURANT_FROM_FAVORITE: {
+      return {
+        ...state,
+        restaurant: state.restaurant.filter(item => item !== action.payload),
+      };
     }
     default: {
       return state;
