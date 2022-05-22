@@ -23,9 +23,9 @@ const styles = StyleSheet.create({
     marginTop: 24,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    bottom: 60,
-    right: 0,
+    // position: 'absolute',
+    // bottom: 60,
+    // right: 0,
   },
   buttonText: {
     color: '#fff',

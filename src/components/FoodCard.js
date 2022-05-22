@@ -24,6 +24,11 @@ function FoodCard(props) {
     address: props.food.address ?? [],
   };
 
+  if (state.title === 'Ahbd') {
+    console.log(state);
+    console.log(props.food.tags);
+  }
+
   return (
     <View style={styles.detailView}>
       {state.image ? (

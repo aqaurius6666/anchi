@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -7,16 +7,16 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import { CustomButtonText } from '../components/CustomButton';
+import {TextInput} from 'react-native-paper';
+import {CustomButtonText} from '../components/CustomButton';
 
 import MiniSearchbox from '../components/MiniSearchbox';
 import FlushButton from '../components/FlushButton';
 import GlobalStyle from '../styles/GlobalStyle';
 import colors from '../constants/colors';
 
-import { connect } from 'react-redux';
-import { createFood, createIngredient, createTag } from '../redux/actions';
+import {connect} from 'react-redux';
+import {createFood, createIngredient, createTag} from '../redux/actions';
 
 function add(props) {
   const [newFood, setNewFood] = useState({
@@ -26,14 +26,14 @@ function add(props) {
     tags: [],
   });
 
-  const [text, setText] = React.useState("");
+  const [text, setText] = React.useState('');
 
   function _onChangeTitle(text) {
-    setNewFood({ ...newFood, title: text });
+    setNewFood({...newFood, title: text});
   }
 
   function _onChangeDescription(text) {
-    setNewFood({ ...newFood, description: text });
+    setNewFood({...newFood, description: text});
   }
 
   function _onAddIngredientNewFood(newItem) {
@@ -46,7 +46,7 @@ function add(props) {
       if (newItemObj) {
         setNewFood({
           ...newFood,
-          ingredients: [...newFood.ingredients, newItemObj],
+          ingredients: [...newFood.ingredients, newItemObj.id],
         });
       } else {
         console.log("There's some bug prevent getting the ingredients needed.");
@@ -57,7 +57,9 @@ function add(props) {
   }
 
   function _onRemoveIngredient(removeItem) {
-    const fruits = newFood.ingredients.filter((item) => item.title !== removeItem);
+    const fruits = newFood.ingredients.filter(
+      item => item.title !== removeItem,
+    );
     setNewFood({
       ...newFood,
       ingredients: [...fruits],
@@ -65,7 +67,7 @@ function add(props) {
   }
 
   function _onRemoveTag(removeItem) {
-    const fruits = newFood.tags.filter((item) => item.title !== removeItem);
+    const fruits = newFood.tags.filter(item => item.title !== removeItem);
     setNewFood({
       ...newFood,
       tags: [...fruits],
@@ -86,7 +88,7 @@ function add(props) {
       if (newItemObj) {
         setNewFood({
           ...newFood,
-          tags: [...newFood.tags, newItemObj],
+          tags: [...newFood.tags, newItemObj.id],
         });
       } else {
         console.log("There's some bug prevent getting the tags needed.");
@@ -104,17 +106,30 @@ function add(props) {
 
   function _createFood() {
     props.createFood(newFood);
-    setNewFood({ title: '', description: '', ingredients: [], tags: [] });
+    setNewFood({title: '', description: '', ingredients: [], tags: []});
   }
 
+  const getFullTagList = list => {
+    return list.map(item => props.tags.data.find(tag => tag.id === item)) ?? [];
+  };
+
+  const getFullIngredientList = list => {
+    return (
+      list.map(item =>
+        props.ingredients.data.find(ingredient => ingredient.id === item),
+      ) ?? []
+    );
+  };
+
   return (
-    <View style={[
-      GlobalStyle.content,
-      { flex: 1, height: Dimensions.get('window').height },
-    ]}>
+    <View
+      style={[
+        GlobalStyle.content,
+        {flex: 1, height: Dimensions.get('window').height},
+      ]}>
       <Text style={GlobalStyle.Title}>Thêm</Text>
-      <View style={[GlobalStyle.content, { width: '80%' }]}>
-        <ScrollView>
+      <View style={[GlobalStyle.content, {width: '80%'}]}>
+        <ScrollView style={{paddingBottom: 64}}>
           <TextInput
             style={[GlobalStyle.textInput]}
             label="Tên"
@@ -137,7 +152,7 @@ function add(props) {
             title="Nguyên liệu"
             textAlignVertical="center"
             list={props.ingredients.data}
-            selected={newFood.ingredients}
+            selected={getFullIngredientList(newFood.ingredients)}
             onAddItem={_onAddIngredientNewFood}
             onCreateItem={_onCreateIngredient}
             onRemoveItem={_onRemoveIngredient}
@@ -146,17 +161,32 @@ function add(props) {
             list={props.tags.data}
             title="Thẻ tag"
             textAlignVertical="center"
-            selected={newFood.tags}
+            selected={getFullTagList(newFood.tags)}
             onAddItem={_onAddTagNewFood}
             onCreateItem={_onCreateTag}
             onRemoveItem={_onRemoveTag}
           />
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginVertical: '2%' }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              marginVertical: '2%',
+            }}>
             <CustomButtonText
-              disabled={newFood.title == '' || newFood.description == '' || newFood.ingredients == [] || newFood.tags == []}
-              content='Thêm'
-              colors={[colors.home1, colors.home2, colors.home180, colors.home280]}
+              disabled={
+                newFood.title == '' ||
+                newFood.description == '' ||
+                newFood.ingredients == [] ||
+                newFood.tags == []
+              }
+              content="Thêm"
+              colors={[
+                colors.home1,
+                colors.home2,
+                colors.home180,
+                colors.home280,
+              ]}
               onPress={() => _createFood()}
               padding={8}
             />
