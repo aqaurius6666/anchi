@@ -143,7 +143,6 @@ class MiniSearchbox extends React.Component {
               key={item.id}
               mode='outlined'
               onClose={() => {
-                // console.log(item.title);
                 this.props.onRemoveItem(item.title);
               }}
               selectedColor={colors.primary}

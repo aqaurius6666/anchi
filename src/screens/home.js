@@ -93,7 +93,6 @@ function Home(props) {
             if (type === 'food') {
               props.addFoodToFavorite(currentFood.id);
             } else {
-              console.log(currentRestaurant);
               props.addRestaurantToFavorite(currentRestaurant.id);
             }
             // props.addFoodToFavorite(type === 'food' ? seed1 : seed2);

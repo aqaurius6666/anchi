@@ -24,13 +24,17 @@ function add(props) {
     description: '',
     ingredients: [],
     tags: [],
+    address: [],
   });
+
   function _onChangeTitle(text) {
     setNewFood({ ...newFood, title: text });
   }
-
   function _onChangeDescription(text) {
     setNewFood({ ...newFood, description: text });
+  }
+  function _onChangeAddress(text) {
+    setNewFood({ ...newFood, address: [...text] });
   }
 
   function _onAddIngredientNewFood(newItem) {
@@ -71,12 +75,6 @@ function add(props) {
     });
   }
 
-  // TODO: check if item is already existed
-  function _onCreateIngredient(item) {
-    props.createIngredient(item);
-    console.log('create new ingredient');
-  }
-
   function _onAddTagNewFood(newItem) {
     if (!newFood.tags.some(item => item.title.toLowerCase() === newItem)) {
       const newItemObj = props.tags.data.find(
@@ -93,12 +91,6 @@ function add(props) {
     } else {
       console.log('The tag has already been added');
     }
-  }
-
-  // TODO: check if item is already existed
-  function _onCreateTag(item) {
-    props.createTag(item);
-    console.log('create new tag');
   }
 
   function _createFood() {
@@ -147,12 +139,21 @@ function add(props) {
             multiline
           />
 
+          <TextInput
+            style={[GlobalStyle.textInput]}
+            label="Địa chỉ"
+            textAlignVertical="center"
+            selectionColor={colors.primary40}
+            value={newFood.address}
+            onChangeText={_onChangeAddress}
+            multiline
+          />
+
           <MiniSearchbox
             title="Nguyên liệu"
             list={props.ingredients.data}
             selected={newFood.ingredients}
             onAddItem={_onAddIngredientNewFood}
-            onCreateItem={_onCreateIngredient}
             onRemoveItem={_onRemoveIngredient}
             createNew={true}
           />
@@ -161,7 +162,6 @@ function add(props) {
             title="Thẻ tag"
             selected={newFood.tags}
             onAddItem={_onAddTagNewFood}
-            onCreateItem={_onCreateTag}
             onRemoveItem={_onRemoveTag}
             createNew={true}
           />
