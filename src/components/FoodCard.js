@@ -107,7 +107,7 @@ function smallFoodCard(props) {
       )}
       <View style={{ paddingHorizontal: 8, width: '66%', }}>
 
-        <Text style={[GlobalStyle.Title, { fontSize: 24, }]}>{state.title}</Text>
+        <Text style={[GlobalStyle.Title, { fontSize: 20, }]} numberOfLines={1}>{state.title}</Text>
         <Text style={[GlobalStyle.Subtitle]} numberOfLines={2}>- {state.tags.join(', ')}</Text>
         <Text style={[GlobalStyle.Subtitle]} numberOfLines={2}>- {state.ingredients.join(', ')}</Text>
         <Text

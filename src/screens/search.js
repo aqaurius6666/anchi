@@ -13,6 +13,7 @@ function SearchScreen(props) {
   const [foodData, setFoodData] = React.useState(props.foods.data);
   const [searchQuery, setSearchQuery] = React.useState('');
   const [food, setFood] = React.useState(true);
+  
 
   const onChangeSearch = query => setSearchQuery(query);
 
@@ -36,6 +37,9 @@ function SearchScreen(props) {
           onChangeText={onChangeSearch}
           value={searchQuery}
         />
+        <View>
+          <Text></Text>
+        </View>
         <FlatList
           data={foodData}
           renderItem={item => {

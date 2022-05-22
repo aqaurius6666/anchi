@@ -3,8 +3,8 @@ import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import GlobalStyle from '../styles/GlobalStyle';
-import CustomButton, {CustomButtonOutline} from '../components/CustomButton';
-import {Icons} from '../components/icons';
+import CustomButton, { CustomButtonOutline } from '../components/CustomButton';
+import { Icons } from '../components/icons';
 import CustomDialog, {
   DislikeDialog,
   LikeDialog,
@@ -12,7 +12,7 @@ import CustomDialog, {
 import FoodCard from '../components/FoodCard';
 import RestaurantCard from '../components/RestaurantCard';
 import colors from '../constants/colors';
-import {addFoodToFavorite} from '../redux/actions';
+import { addFoodToFavorite } from '../redux/actions';
 
 const randomGen = number => Math.floor(Math.random() * number);
 const randomGenExcept = (number, lastNum) => {
@@ -49,7 +49,7 @@ function Home(props) {
   return (
     <View style={[GlobalStyle.content, styles.content]}>
       <CustomButton
-        icon_name={type ? 'hamburger' : 'store'}
+        icon_name={type == 'food' ? 'hamburger' : 'store'}
         style={styles.typeIcon}
         onPress={() => {
           if (type === 'food') {
@@ -63,7 +63,7 @@ function Home(props) {
       />
 
       {type === 'food' ? (
-          <FoodCard navigation={props.navigation} food={currentFood} />
+        <FoodCard navigation={props.navigation} food={currentFood} />
       ) : (
         <RestaurantCard
           navigation={props.navigation}
@@ -188,4 +188,4 @@ const mapStateToProps = state => ({
   tags: state.tags,
 });
 
-export default connect(mapStateToProps, {addFoodToFavorite})(Home);
+export default connect(mapStateToProps, { addFoodToFavorite })(Home);
