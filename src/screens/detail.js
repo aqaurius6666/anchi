@@ -10,6 +10,7 @@ import {
   Linking,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {connect} from 'react-redux';
 
 import CustomButton, {CustomButtonOutline} from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
@@ -18,8 +19,28 @@ import {CardImageFallback} from '../components/CardImageFallback';
 
 const ggMap = 'https://www.google.com/maps/search/';
 
-function FoodDetail(props) {
+function foodDetail(props) {
   const window = useWindowDimensions();
+
+  const getTagTitles = tags => {
+    console.log(
+      tags,
+      props.tags.data,
+      // tags.map(item => props.tags.data.find(tag => tag.id === item)?.title),
+    );
+    return (
+      tags.map(item => props.tags.data.find(tag => tag.id === item)?.title) ??
+      []
+    );
+  };
+
+  const getIngredientTitles = tags =>
+    tags.map(
+      item =>
+        props.ingredients.data.find(ingredient => ingredient.id === item)
+          ?.title,
+    ) ?? [];
+
   return (
     <View style={styles.detailView}>
       {props.food.image ? (
@@ -37,7 +58,9 @@ function FoodDetail(props) {
         <Text style={GlobalStyle.Title}>{props.food.title}</Text>
       </View>
       <View style={GlobalStyle.DetailSection}>
-        <Text style={GlobalStyle.Subtitle}>{props.food.tags.join('・')}</Text>
+        <Text style={GlobalStyle.Subtitle}>
+          {getTagTitles(props.food.tags).join('・')}
+        </Text>
       </View>
       <View style={GlobalStyle.DetailSection}>
         <Text style={[GlobalStyle.Desc, styles.desc]}>
@@ -47,7 +70,7 @@ function FoodDetail(props) {
       <View style={GlobalStyle.DetailSection}>
         <Text style={[GlobalStyle.Desc, styles.desc]}>
           Nguyên liệu ({props.food.ingredients.length}) :
-          {props.food.ingredients.map(e => {
+          {getIngredientTitles(props.food.ingredients).map(e => {
             return '\n- ' + e;
           })}
         </Text>
@@ -75,8 +98,19 @@ function FoodDetail(props) {
   );
 }
 
-function RestaurantDetail(props) {
+function restaurantDetail(props) {
   const window = useWindowDimensions();
+
+  const getTagTitles = tags =>
+    tags.map(item => props.tags.data.find(tag => tag.id === item)?.title) ?? [];
+
+  const getIngredientTitles = tags =>
+    tags.map(
+      item =>
+        props.ingredients.data.find(ingredient => ingredient.id === item)
+          ?.title,
+    ) ?? [];
+
   return (
     <View style={styles.detailView}>
       {props.restaurant.image ? (
@@ -133,9 +167,17 @@ function RestaurantDetail(props) {
   );
 }
 
+const mapStateToProps = state => ({
+  tags: state.tags,
+  ingredients: state.ingredients,
+});
+
+const FoodDetail = connect(mapStateToProps, {})(foodDetail);
+
+const RestaurantDetail = connect(mapStateToProps, {})(restaurantDetail);
+
 function Detail({navigation, route}) {
   const {detail, type} = route.params;
-
   return (
     <SafeAreaView style={GlobalStyle.content}>
       <CustomButtonOutline

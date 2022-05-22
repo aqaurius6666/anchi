@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet, useWindowDimensions } from 'react-native';
-import { connect } from 'react-redux';
+import {Text, View, Image, StyleSheet, useWindowDimensions} from 'react-native';
+import {connect} from 'react-redux';
 import colors from '../constants/colors';
 
 import GlobalStyle from '../styles/GlobalStyle';
-import { CardImageFallback } from './CardImageFallback';
+import {CardImageFallback} from './CardImageFallback';
 
 function FoodCard(props) {
   const window = useWindowDimensions();
@@ -54,7 +54,10 @@ function FoodCard(props) {
         <Text
           style={[GlobalStyle.CustomFont, styles.seeMore]}
           onPress={() => {
-            props.navigation.push('Detail', { detail: state, type: 'food' });
+            props.navigation.push('Detail', {
+              detail: props.food,
+              type: 'food',
+            });
           }}>
           {'>>  '}Xem thêm
         </Text>
@@ -86,29 +89,43 @@ function smallFoodCard(props) {
     <View style={styles.smallCard}>
       {state.image ? (
         <Image
-          style={[styles.smallCardImage, {
-            width: window.width / 3,
-            height: window.width / 2,
-          }]}
+          style={[
+            styles.smallCardImage,
+            {
+              width: window.width / 3,
+              height: window.width / 2,
+            },
+          ]}
           source={state.image}
         />
       ) : (
         <CardImageFallback
-          style={[styles.smallCardImage, {
-            width: window.width / 3,
-            height: window.width / 2,
-          }]}
+          style={[
+            styles.smallCardImage,
+            {
+              width: window.width / 3,
+              height: window.width / 2,
+            },
+          ]}
         />
       )}
-      <View style={{ paddingHorizontal: 8, width: '66%', }}>
-
-        <Text style={[GlobalStyle.Title, { fontSize: 20, }]} numberOfLines={1}>{state.title}</Text>
-        <Text style={[GlobalStyle.Subtitle]} numberOfLines={2}>- {state.tags.join(', ')}</Text>
-        <Text style={[GlobalStyle.Subtitle]} numberOfLines={2}>- {state.ingredients.join(', ')}</Text>
+      <View style={{paddingHorizontal: 8, width: '66%'}}>
+        <Text style={[GlobalStyle.Title, {fontSize: 20}]} numberOfLines={1}>
+          {state.title}
+        </Text>
+        <Text style={[GlobalStyle.Subtitle]} numberOfLines={2}>
+          - {state.tags.join(', ')}
+        </Text>
+        <Text style={[GlobalStyle.Subtitle]} numberOfLines={2}>
+          - {state.ingredients.join(', ')}
+        </Text>
         <Text
           style={[GlobalStyle.CustomFont, styles.seeMore]}
           onPress={() => {
-            props.navigation.push('Detail', { detail: state, type: 'food' });
+            props.navigation.push('Detail', {
+              detail: props.food,
+              type: 'food',
+            });
           }}>
           {'>>  '}Xem thêm
         </Text>
@@ -164,5 +181,5 @@ const mapStateToProps = state => ({
   tags: state.tags,
 });
 
-export const SmallFoodCard = connect(mapStateToProps, {})(smallFoodCard)
+export const SmallFoodCard = connect(mapStateToProps, {})(smallFoodCard);
 export default connect(mapStateToProps, {})(FoodCard);
