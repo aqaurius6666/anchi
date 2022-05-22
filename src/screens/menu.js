@@ -17,6 +17,7 @@ import GlobalStyle from '../styles/GlobalStyle';
 import Settings from './settings';
 import {CustomButtonText} from '../components/CustomButton';
 import Colors from '../constants/colors';
+import colors from '../constants/colors';
 
 const Stack = createStackNavigator();
 
