@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { connect } from 'react-redux';
+import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
 
 import GlobalStyle from '../styles/GlobalStyle';
-import CustomButton, { CustomButtonOutline } from '../components/CustomButton';
-import { Icons } from '../components/icons';
+import CustomButton, {CustomButtonOutline} from '../components/CustomButton';
+import {Icons} from '../components/icons';
 import CustomDialog, {
   DislikeDialog,
   LikeDialog,
@@ -12,7 +12,7 @@ import CustomDialog, {
 import FoodCard from '../components/FoodCard';
 import RestaurantCard from '../components/RestaurantCard';
 import colors from '../constants/colors';
-import { addFoodToFavorite } from '../redux/actions';
+import {addFoodToFavorite, addRestaurantToFavorite} from '../redux/actions';
 
 const randomGen = number => Math.floor(Math.random() * number);
 const randomGenExcept = (number, lastNum) => {
@@ -90,7 +90,13 @@ function Home(props) {
           size={36}
           onLongPress={() => setLike(true)}
           onPress={() => {
-            props.addFoodToFavorite(type === 'food' ? seed1 : seed2);
+            if (type === 'food') {
+              props.addFoodToFavorite(currentFood.id);
+            } else {
+              console.log(currentRestaurant);
+              props.addRestaurantToFavorite(currentRestaurant.id);
+            }
+            // props.addFoodToFavorite(type === 'food' ? seed1 : seed2);
             nextRandomItem();
           }}
           onOK={() => setLike(false)}
@@ -108,11 +114,11 @@ function Home(props) {
           content={
             type === 'food'
               ? 'Zô, vậy là bạn thích ' +
-              currentFood.title +
-              '. Chần chừ chi mà hông đi ăn thôi nào!'
+                currentFood.title +
+                '. Chần chừ chi mà hông đi ăn thôi nào!'
               : 'Zô, vậy là bạn thích ' +
-              currentRestaurant.title +
-              '. Chần chừ chi mà hông đi ăn thôi nào!'
+                currentRestaurant.title +
+                '. Chần chừ chi mà hông đi ăn thôi nào!'
           }
         />
       ) : null}
@@ -129,11 +135,11 @@ function Home(props) {
           content={
             type === 'food'
               ? 'Zô, vậy là bạn hông thích ' +
-              currentFood.title +
-              '. Vậy để mình thêm vào hố đen nhá!'
+                currentFood.title +
+                '. Vậy để mình thêm vào hố đen nhá!'
               : 'Zô, vậy là bạn hông thích ' +
-              currentRestaurant.title +
-              '. Vậy để mình thêm vào hố đen nhá!'
+                currentRestaurant.title +
+                '. Vậy để mình thêm vào hố đen nhá!'
           }
         />
       ) : null}
@@ -188,4 +194,7 @@ const mapStateToProps = state => ({
   tags: state.tags,
 });
 
-export default connect(mapStateToProps, { addFoodToFavorite })(Home);
+export default connect(mapStateToProps, {
+  addFoodToFavorite,
+  addRestaurantToFavorite,
+})(Home);
