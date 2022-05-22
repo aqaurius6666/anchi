@@ -64,6 +64,14 @@ function add(props) {
     });
   }
 
+  function _onRemoveTag(removeItem) {
+    const fruits = newFood.tags.filter((item) => item.title !== removeItem);
+    setNewFood({
+      ...newFood,
+      tags: [...fruits],
+    });
+  }
+
   // TODO: check if item is already existed
   function _onCreateIngredient(item) {
     props.createIngredient(item);
@@ -141,6 +149,7 @@ function add(props) {
             selected={newFood.tags}
             onAddItem={_onAddTagNewFood}
             onCreateItem={_onCreateTag}
+            onRemoveItem={_onRemoveTag}
           />
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginVertical: '2%' }}>
