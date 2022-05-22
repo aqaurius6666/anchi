@@ -34,7 +34,9 @@ function add(props) {
     setNewFood({ ...newFood, description: text });
   }
   function _onChangeAddress(text) {
-    setNewFood({ ...newFood, address: [...text] });
+    const add = text.split('\n').filter(e => e != '').map(e => e.replace(/\s+/g, ' ').trim());
+    console.log(add);
+    setNewFood({ ...newFood, address: [...add] });
   }
 
   function _onAddIngredientNewFood(newItem) {
@@ -144,7 +146,7 @@ function add(props) {
             label="Địa chỉ"
             textAlignVertical="center"
             selectionColor={colors.primary40}
-            value={newFood.address}
+            value={newFood.address.join['\n']}
             onChangeText={_onChangeAddress}
             multiline
           />
@@ -177,7 +179,8 @@ function add(props) {
                 newFood.title == '' ||
                 newFood.description == '' ||
                 newFood.ingredients == [] ||
-                newFood.tags == []
+                newFood.tags == [] ||
+                newFood.address == []
               }
               content="Thêm"
               colors={[
