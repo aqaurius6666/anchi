@@ -49,8 +49,13 @@ const RestaurantCard = props => {
         <Text
           style={[GlobalStyle.CustomFont, styles.seeMore]}
           onPress={() => {
+            const trimmedState = {
+              ...state,
+              tags: state.tags.map(item => item.id),
+              ingredient: state.ingredients.map(item => item.id),
+            };
             props.navigation.push('Detail', {
-              detail: state,
+              detail: trimmedState,
               type: 'restaurant',
             });
           }}>

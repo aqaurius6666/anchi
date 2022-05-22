@@ -54,7 +54,10 @@ function FoodCard(props) {
         <Text
           style={[GlobalStyle.CustomFont, styles.seeMore]}
           onPress={() => {
-            props.navigation.push('Detail', {detail: state, type: 'food'});
+            props.navigation.push('Detail', {
+              detail: props.food,
+              type: 'food',
+            });
           }}>
           {'>>  '}Xem thêm
         </Text>
@@ -119,7 +122,10 @@ function smallFoodCard(props) {
         <Text
           style={[GlobalStyle.CustomFont, styles.seeMore]}
           onPress={() => {
-            props.navigation.push('Detail', {detail: state, type: 'food'});
+            props.navigation.push('Detail', {
+              detail: props.food,
+              type: 'food',
+            });
           }}>
           {'>>  '}Xem thêm
         </Text>
