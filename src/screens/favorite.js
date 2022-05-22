@@ -1,121 +1,49 @@
-import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  FlatList,
-  Animated,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View, SafeAreaView, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 
 import CustomButton, {CustomButtonOutline} from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
 import {Icons} from '../components/icons';
-import FavList from '../components/FavList';
-
-const eg1 = [
-  {
-    id: 1,
-    title: 'Bánh táo 1',
-    image: require('../../assets/eg/Mini-Apple-Pies.png'),
-  },
-  {
-    id: 2,
-    title: 'Bánh táo 2',
-    image: require('../../assets/eg/Mini-Apple-Pies.png'),
-  },
-  {
-    id: 3,
-    title: 'Bánh táo 3',
-    image: require('../../assets/eg/Mini-Apple-Pies.png'),
-  },
-  {
-    id: 4,
-    title: 'Bánh táo 4',
-    image: require('../../assets/eg/Mini-Apple-Pies.png'),
-  },
-  {
-    id: 5,
-    title: 'Bánh táo 5',
-    image: require('../../assets/eg/Mini-Apple-Pies.png'),
-  },
-];
-
-const eg2 = [
-  {
-    id: 1,
-    title: 'Nam An Cake 1',
-    image: require('../../assets/eg/R.jpg'),
-  },
-  {
-    id: 2,
-    title: 'Nam An Cake 2',
-    image: require('../../assets/eg/R.jpg'),
-  },
-  {
-    id: 3,
-    title: 'Nam An Cake 3',
-    image: require('../../assets/eg/R.jpg'),
-  },
-  {
-    id: 4,
-    title: 'Nam An Cake 4',
-    image: require('../../assets/eg/R.jpg'),
-  },
-  {
-    id: 5,
-    title: 'Nam An Cake 5',
-    image: require('../../assets/eg/R.jpg'),
-  },
-  {
-    id: 6,
-    title: 'Nam An Cake 6',
-    image: require('../../assets/eg/R.jpg'),
-  },
-  {
-    id: 7,
-    title: 'Nam An Cake 7',
-    image: require('../../assets/eg/R.jpg'),
-  },
-  {
-    id: 8,
-    title: 'Nam An Cake 8',
-    image: require('../../assets/eg/R.jpg'),
-  },
-  {
-    id: 9,
-    title: 'Nam An Cake 9',
-    image: require('../../assets/eg/R.jpg'),
-  },
-];
+import FavoriteItem from '../components/FavoriteItem';
 
 function Favorite(props) {
-  const [food, setFood] = React.useState(true);
-
-  function onPressDetail() {}
-
-  function onPressDelete() {}
-
-  console.log('favorite:', props.favorite);
-
-  const renderItem = ({item}) => (
-    <FavList
-      title={item.title}
-      image={item.image}
-      onPressDelete={onPressDelete}
-      onPressDetail={onPressDetail}
-      navigation={props.navigation}
-    />
+  const [type, setType] = useState('food');
+  const [favoriteFood, setFavoriteFood] = useState(
+    props.foods.data.filter(item => props.favorite.food.includes(item.id)),
   );
+  const [favoriteRestaurant, setFavoriteRestaurant] = useState(
+    props.foods.data.filter(item =>
+      props.favorite.restaurant.includes(item.id),
+    ),
+  );
+  console.log(props.favorite.food);
+
+  useEffect(() => {
+    setFavoriteFood(state =>
+      props.foods.data.filter(item => props.favorite.food.includes(item.id)),
+    );
+  }, [props.favorite.food]);
+
+  useEffect(() => {
+    setFavoriteRestaurant(state =>
+      props.restaurants.data.filter(item =>
+        props.favorite.restaurant.includes(item.id),
+      ),
+    );
+  }, [props.favorite.restaurant]);
 
   return (
     <View style={GlobalStyle.content}>
       <CustomButton
-        icon_name={food ? 'hamburger' : 'store'}
+        icon_name={type === 'food' ? 'hamburger' : 'store'}
         style={styles.typeIcon}
         onPress={() => {
-          setFood(!food);
+          if (type === 'food') {
+            setType('restaurant');
+          } else {
+            setType('food');
+          }
         }}
         colors={['#D289FF', '#7170D3', '#fff']}
         type={Icons.FontAwesome5}
@@ -124,21 +52,33 @@ function Favorite(props) {
         <Text style={GlobalStyle.Title}>Yêu thích</Text>
       </View>
       <SafeAreaView style={styles.favBox}>
-        {food ? (
-          <Animated.FlatList
-            data={eg1}
-            renderItem={renderItem}
-            keyExtractor={e => e.id}
-            nestedScrollEnabled={false}
+        {type === 'food' ? (
+          <FlatList
+            data={favoriteFood}
+            renderItem={item => {
+              return (
+                <FavoriteItem
+                  data={item.item}
+                  navigation={props.navigation}
+                  type={'food'}
+                />
+              );
+            }}
+            keyExtractor={item => item.id}
           />
         ) : (
-          <Animated.FlatList
-            data={eg2}
-            renderItem={renderItem}
-            keyExtractor={e => e.id}
-            showsVerticalScrollIndicator={true}
-            fadingEdgeLength={10}
-            initialNumToRender={4}
+          <FlatList
+            data={favoriteRestaurant}
+            renderItem={item => {
+              return (
+                <FavoriteItem
+                  data={item.item}
+                  navigation={props.navigation}
+                  type={'restaurant'}
+                />
+              );
+            }}
+            keyExtractor={item => item.id}
           />
         )}
       </SafeAreaView>
@@ -148,10 +88,9 @@ function Favorite(props) {
 
 const styles = StyleSheet.create({
   favBox: {
-    backgroundColor: '#6464af20',
     marginTop: '6%',
     marginBottom: '26%',
-    width: '90%',
+    // width: '90%',
     flex: 1,
     paddingHorizontal: '2%',
     paddingVertical: '2%',
@@ -168,6 +107,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   favorite: state.favorite,
+  foods: state.foods,
+  restaurants: state.restaurants,
 });
 
 export default connect(mapStateToProps, {})(Favorite);
