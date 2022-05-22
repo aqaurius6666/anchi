@@ -3,8 +3,10 @@ import {
   Text,
   View,
   TextInput,
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {connect} from 'react-redux';
@@ -32,14 +34,20 @@ function add(props) {
   }
 
   function _onAddIngredientNewFood(newItem) {
-    if (!newFood.ingredients.some(item => item.title === newItem)) {
+    if (
+      !newFood.ingredients.some(item => item.title.toLowerCase() === newItem)
+    ) {
       const newItemObj = props.ingredients.data.find(
-        obj => obj.title === newItem,
+        obj => obj.title.toLowerCase() === newItem,
       );
-      setNewFood({
-        ...newFood,
-        ingredients: [...newFood.ingredients, newItemObj],
-      });
+      if (newItemObj) {
+        setNewFood({
+          ...newFood,
+          ingredients: [...newFood.ingredients, newItemObj],
+        });
+      } else {
+        console.log("There's some bug prevent getting the ingredients needed.");
+      }
     } else {
       console.log('The ingredient has already been added');
     }
@@ -52,12 +60,18 @@ function add(props) {
   }
 
   function _onAddTagNewFood(newItem) {
-    if (!newFood.tags.some(item => item.title === newItem)) {
-      const newItemObj = props.tags.data.find(obj => obj.title === newItem);
-      setNewFood({
-        ...newFood,
-        tags: [...newFood.tags, newItemObj],
-      });
+    if (!newFood.tags.some(item => item.title.toLowerCase() === newItem)) {
+      const newItemObj = props.tags.data.find(
+        obj => obj.title.toLowerCase() === newItem,
+      );
+      if (newItemObj) {
+        setNewFood({
+          ...newFood,
+          tags: [...newFood.tags, newItemObj],
+        });
+      } else {
+        console.log("There's some bug prevent getting the tags needed.");
+      }
     } else {
       console.log('The tag has already been added');
     }
@@ -75,55 +89,61 @@ function add(props) {
   }
 
   return (
-    <View style={GlobalStyle.content}>
-      <Text style={GlobalStyle.Title}>New food</Text>
-      <View>
-        <Text style={styles.inputLabel}>Title:</Text>
-        <TextInput
-          style={GlobalStyle.textField}
-          value={newFood.title}
-          onChangeText={_onChangeTitle}
-        />
-        <Text style={styles.inputLabel}>Description</Text>
-        <TextInput
-          style={[
-            GlobalStyle.textField,
-            {textAlignVertical: 'top', height: 64},
-          ]}
-          value={newFood.description}
-          onChangeText={_onChangeDescription}
-          multiline={true}
-        />
-        <Text style={styles.inputLabel}>Ingredients:</Text>
-        <MiniSearchbox
-          list={props.ingredients.data}
-          selected={newFood.ingredients}
-          onAddItem={_onAddIngredientNewFood}
-          onCreateItem={_onCreateIngredient}
-        />
-        <Text style={styles.inputLabel}>Tags:</Text>
-        <MiniSearchbox
-          list={props.tags.data}
-          selected={newFood.tags}
-          onAddItem={_onAddTagNewFood}
-          onCreateItem={_onCreateTag}
-        />
-        <TouchableOpacity
-          onPress={() => {
-            _createFood();
-          }}
-          style={styles.normalButton}>
-          <LinearGradient
-            colors={['#D289FF', '#7170D3']}
-            start={{x: 1, y: 0}}
-            end={{x: 0, y: 1}}
-            style={styles.normalButtonGradient}>
-            <Text style={styles.normalButtonText}>Add</Text>
-          </LinearGradient>
-        </TouchableOpacity>
+    <ScrollView>
+      <View
+        style={[
+          GlobalStyle.content,
+          {flex: 1, height: Dimensions.get('window').height},
+        ]}>
+        <Text style={GlobalStyle.Title}>New food</Text>
+        <View>
+          <Text style={styles.inputLabel}>Title:</Text>
+          <TextInput
+            style={GlobalStyle.textField}
+            value={newFood.title}
+            onChangeText={_onChangeTitle}
+          />
+          <Text style={styles.inputLabel}>Description</Text>
+          <TextInput
+            style={[
+              GlobalStyle.textField,
+              {textAlignVertical: 'top', height: 64},
+            ]}
+            value={newFood.description}
+            onChangeText={_onChangeDescription}
+            multiline={true}
+          />
+          <Text style={styles.inputLabel}>Ingredients:</Text>
+          <MiniSearchbox
+            list={props.ingredients.data}
+            selected={newFood.ingredients}
+            onAddItem={_onAddIngredientNewFood}
+            onCreateItem={_onCreateIngredient}
+          />
+          <Text style={styles.inputLabel}>Tags:</Text>
+          <MiniSearchbox
+            list={props.tags.data}
+            selected={newFood.tags}
+            onAddItem={_onAddTagNewFood}
+            onCreateItem={_onCreateTag}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              _createFood();
+            }}
+            style={styles.normalButton}>
+            <LinearGradient
+              colors={['#D289FF', '#7170D3']}
+              start={{x: 1, y: 0}}
+              end={{x: 0, y: 1}}
+              style={styles.normalButtonGradient}>
+              <Text style={styles.normalButtonText}>Add</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+        <FlushButton />
       </View>
-      <FlushButton />
-    </View>
+    </ScrollView>
   );
 }
 
