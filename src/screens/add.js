@@ -43,7 +43,7 @@ function add(props) {
       if (newItemObj) {
         setNewFood({
           ...newFood,
-          ingredients: [...newFood.ingredients, newItemObj.id],
+          ingredients: [...newFood.ingredients, newItemObj],
         });
       } else {
         console.log("There's some bug prevent getting the ingredients needed.");
@@ -85,7 +85,7 @@ function add(props) {
       if (newItemObj) {
         setNewFood({
           ...newFood,
-          tags: [...newFood.tags, newItemObj.id],
+          tags: [...newFood.tags, newItemObj],
         });
       } else {
         console.log("There's some bug prevent getting the tags needed.");
@@ -102,20 +102,22 @@ function add(props) {
   }
 
   function _createFood() {
-    props.createFood(newFood);
+    const simpleTags = getSimmpleTagList(newFood.tags);
+    const simpleIngredients = getSimpleIngredientList(newFood.ingredients);
+    props.createFood({
+      ...newFood,
+      tags: simpleTags,
+      ingredients: simpleIngredients,
+    });
     setNewFood({title: '', description: '', ingredients: [], tags: []});
   }
 
-  const getFullTagList = list => {
-    return list.map(item => props.tags.data.find(tag => tag.id === item)) ?? [];
+  const getSimmpleTagList = list => {
+    return list.map(item => item.id) ?? [];
   };
 
-  const getFullIngredientList = list => {
-    return (
-      list.map(item =>
-        props.ingredients.data.find(ingredient => ingredient.id === item),
-      ) ?? []
-    );
+  const getSimpleIngredientList = list => {
+    return list.map(item => item.id) ?? [];
   };
 
   return (
@@ -125,8 +127,8 @@ function add(props) {
         {flex: 1, height: Dimensions.get('window').height},
       ]}>
       <Text style={GlobalStyle.Title}>Thêm</Text>
-      <View style={[GlobalStyle.content, {width: '80%'}]}>
-        <ScrollView style={{paddingBottom: 64}}>
+      <View style={[GlobalStyle.content, {width: '80%', paddingBottom: 64}]}>
+        <ScrollView>
           <TextInput
             style={[GlobalStyle.textInput]}
             label="Tên"
@@ -149,7 +151,7 @@ function add(props) {
             title="Nguyên liệu"
             textAlignVertical="center"
             list={props.ingredients.data}
-            selected={getFullIngredientList(newFood.ingredients)}
+            selected={newFood.ingredients}
             onAddItem={_onAddIngredientNewFood}
             onCreateItem={_onCreateIngredient}
             onRemoveItem={_onRemoveIngredient}
@@ -158,7 +160,7 @@ function add(props) {
             list={props.tags.data}
             title="Thẻ tag"
             textAlignVertical="center"
-            selected={getFullTagList(newFood.tags)}
+            selected={newFood.tags}
             onAddItem={_onAddTagNewFood}
             onCreateItem={_onCreateTag}
             onRemoveItem={_onRemoveTag}
