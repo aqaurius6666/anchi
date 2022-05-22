@@ -18,7 +18,7 @@ function SearchScreen(props) {
         }}
         keyExtractor={item => item.id}
       />
-      <View style={{ height: 36, width: 1 }}></View>
+      <View style={{height: 64, width: 1}}></View>
     </View>
   );
 }

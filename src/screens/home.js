@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
-import CustomButton, { CustomButtonOutline } from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
-import { Icons } from '../components/icons';
+import CustomButton, {CustomButtonOutline} from '../components/CustomButton';
+import {Icons} from '../components/icons';
 import CustomDialog, {
   DislikeDialog,
   LikeDialog,
@@ -12,6 +12,7 @@ import CustomDialog, {
 import FoodCard from '../components/FoodCard';
 import RestaurantCard from '../components/RestaurantCard';
 import colors from '../constants/colors';
+import {addFoodToFavorite} from '../redux/actions';
 
 const randomGen = number => Math.floor(Math.random() * number);
 const randomGenExcept = (number, lastNum) => {
@@ -32,6 +33,18 @@ function Home(props) {
   const [type, setType] = useState('food');
   const [like, setLike] = useState(false);
   const [dislike, setDislike] = useState(false);
+
+  const nextRandomItem = () => {
+    if (type === 'food') {
+      const newSeed = randomGenExcept(props.foods.data.length, seed1);
+      setSeed1(newSeed);
+      setCurrentFood(props.foods.data[newSeed]);
+    } else {
+      const newSeed = randomGenExcept(props.restaurants.data.length, seed2);
+      setSeed2(newSeed);
+      setCurrentRestaurant(props.restaurants.data[newSeed]);
+    }
+  };
 
   return (
     <View style={[GlobalStyle.content, styles.content]}>
@@ -66,18 +79,7 @@ function Home(props) {
           size={36}
           onLongPress={() => setDislike(true)}
           onPress={() => {
-            if (type === 'food') {
-              const newSeed = randomGenExcept(props.foods.data.length, seed1);
-              setSeed1(newSeed);
-              setCurrentFood(props.foods.data[newSeed]);
-            } else {
-              const newSeed = randomGenExcept(
-                props.restaurants.data.length,
-                seed2,
-              );
-              setSeed2(newSeed);
-              setCurrentRestaurant(props.restaurants.data[newSeed]);
-            }
+            nextRandomItem();
           }}
           onOK={() => setDislike(false)}
         />
@@ -88,18 +90,9 @@ function Home(props) {
           size={36}
           onLongPress={() => setLike(true)}
           onPress={() => {
-            if (type === 'food') {
-              const newSeed = randomGenExcept(props.foods.data.length, seed1);
-              setSeed1(newSeed);
-              setCurrentFood(props.foods.data[newSeed]);
-            } else {
-              const newSeed = randomGenExcept(
-                props.restaurants.data.length,
-                seed2,
-              );
-              setSeed2(newSeed);
-              setCurrentRestaurant(props.restaurants.data[newSeed]);
-            }
+            // console.log(props);
+            props.addFoodToFavorite(type === 'food' ? seed1 : seed2);
+            nextRandomItem();
           }}
           onOK={() => setLike(false)}
         />
@@ -196,4 +189,4 @@ const mapStateToProps = state => ({
   tags: state.tags,
 });
 
-export default connect(mapStateToProps, {})(Home);
+export default connect(mapStateToProps, {addFoodToFavorite})(Home);

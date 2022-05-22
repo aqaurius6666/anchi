@@ -44,19 +44,21 @@ class MiniSearchbox extends React.Component {
     let newShowing = [];
     if (text !== '') {
       const startswith = this.state.list.filter(item =>
-        item.title.startsWith(normalisedText),
+        item.title?.toLowerCase().startsWith(normalisedText),
       );
       const includes = this.state.list.filter(
         item =>
-          item.title.includes(normalisedText) &&
-          !item.title.startsWith(normalisedText),
+          item.title?.toLowerCase().includes(normalisedText) &&
+          !item.title?.toLowerCase().startsWith(normalisedText),
       );
       newShowing = startswith.concat(includes);
     } else {
       newShowing = [];
     }
 
-    const ready = this.state.list.some(item => item.title === normalisedText);
+    const ready = this.state.list.some(
+      item => item.title.toLowerCase() === normalisedText,
+    );
 
     this.setState({
       ...this.state,

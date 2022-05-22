@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import {
   Text,
   View,
-  StyleSheet,
   ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { CustomButtonText } from '../components/CustomButton';
@@ -35,14 +37,20 @@ function add(props) {
   }
 
   function _onAddIngredientNewFood(newItem) {
-    if (!newFood.ingredients.some(item => item.title === newItem)) {
+    if (
+      !newFood.ingredients.some(item => item.title.toLowerCase() === newItem)
+    ) {
       const newItemObj = props.ingredients.data.find(
-        obj => obj.title === newItem,
+        obj => obj.title.toLowerCase() === newItem,
       );
-      setNewFood({
-        ...newFood,
-        ingredients: [...newFood.ingredients, newItemObj],
-      });
+      if (newItemObj) {
+        setNewFood({
+          ...newFood,
+          ingredients: [...newFood.ingredients, newItemObj],
+        });
+      } else {
+        console.log("There's some bug prevent getting the ingredients needed.");
+      }
     } else {
       console.log('The ingredient has already been added');
     }
@@ -63,12 +71,18 @@ function add(props) {
   }
 
   function _onAddTagNewFood(newItem) {
-    if (!newFood.tags.some(item => item.title === newItem)) {
-      const newItemObj = props.tags.data.find(obj => obj.title === newItem);
-      setNewFood({
-        ...newFood,
-        tags: [...newFood.tags, newItemObj],
-      });
+    if (!newFood.tags.some(item => item.title.toLowerCase() === newItem)) {
+      const newItemObj = props.tags.data.find(
+        obj => obj.title.toLowerCase() === newItem,
+      );
+      if (newItemObj) {
+        setNewFood({
+          ...newFood,
+          tags: [...newFood.tags, newItemObj],
+        });
+      } else {
+        console.log("There's some bug prevent getting the tags needed.");
+      }
     } else {
       console.log('The tag has already been added');
     }
@@ -86,7 +100,10 @@ function add(props) {
   }
 
   return (
-    <View style={GlobalStyle.content}>
+    <View style={[
+      GlobalStyle.content,
+      { flex: 1, height: Dimensions.get('window').height },
+    ]}>
       <Text style={GlobalStyle.Title}>Thêm</Text>
       <View style={[GlobalStyle.content, { width: '80%' }]}>
         <ScrollView>
@@ -109,9 +126,9 @@ function add(props) {
           />
 
           <MiniSearchbox
-            list={props.ingredients.data}
             title="Nguyên liệu"
             textAlignVertical="center"
+            list={props.ingredients.data}
             selected={newFood.ingredients}
             onAddItem={_onAddIngredientNewFood}
             onCreateItem={_onCreateIngredient}
@@ -137,7 +154,6 @@ function add(props) {
           </View>
         </ScrollView>
       </View>
-      <FlushButton />
     </View>
   );
 }
