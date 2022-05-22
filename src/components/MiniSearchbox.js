@@ -108,10 +108,11 @@ class MiniSearchbox extends React.Component {
           ) : (
             <CustomButtonText
               content='Tạo'
-              colors={[colors.home1, colors.home2]}
+              colors={[colors.home1, colors.home2, colors.home180, colors.home280]}
               onPress={() => this._onCreateSelection(this.state.searchText.toLowerCase())}
               style={{ width: '20%', padding: 8, }}
               textStyle={{ fontSize: 14, }}
+              disabled={this.state.searchText.trim() === ''}
             />
           )}
         </View>

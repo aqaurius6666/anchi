@@ -26,8 +26,6 @@ function add(props) {
     tags: [],
   });
 
-  const [text, setText] = React.useState("");
-
   function _onChangeTitle(text) {
     setNewFood({ ...newFood, title: text });
   }
