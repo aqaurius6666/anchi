@@ -1,4 +1,5 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
+import colors from '../constants/colors';
 
 export default StyleSheet.create({
   body: {
@@ -25,6 +26,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     backgroundColor: '#fff',
+    width: '100%',
   },
 
   CustomFont2: {
@@ -42,7 +44,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
+
   TitleBoxHeader: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -71,6 +73,8 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
+    paddingHorizontal: '4%',
+    width: '100%'
   },
   Desc: {
     fontFamily: 'iCielLudema-Regular',
@@ -96,5 +100,10 @@ export default StyleSheet.create({
     borderRadius: 4,
     paddingHorizontal: 8,
     paddingVertical: 4,
+  },
+  textInput: {
+    width: '100%',
+    backgroundColor: colors.white,
+    fontSize: 16,
   },
 });

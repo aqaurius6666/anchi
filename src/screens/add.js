@@ -1,19 +1,20 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
-  TextInput,
   StyleSheet,
-  TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {connect} from 'react-redux';
+import { TextInput } from 'react-native-paper';
+import { CustomButtonText } from '../components/CustomButton';
 
 import MiniSearchbox from '../components/MiniSearchbox';
 import FlushButton from '../components/FlushButton';
 import GlobalStyle from '../styles/GlobalStyle';
+import colors from '../constants/colors';
 
-import {createFood, createIngredient, createTag} from '../redux/actions';
+import { connect } from 'react-redux';
+import { createFood, createIngredient, createTag } from '../redux/actions';
 
 function add(props) {
   const [newFood, setNewFood] = useState({
@@ -23,12 +24,14 @@ function add(props) {
     tags: [],
   });
 
+  const [text, setText] = React.useState("");
+
   function _onChangeTitle(text) {
-    setNewFood({...newFood, title: text});
+    setNewFood({ ...newFood, title: text });
   }
 
   function _onChangeDescription(text) {
-    setNewFood({...newFood, description: text});
+    setNewFood({ ...newFood, description: text });
   }
 
   function _onAddIngredientNewFood(newItem) {
@@ -43,6 +46,14 @@ function add(props) {
     } else {
       console.log('The ingredient has already been added');
     }
+  }
+
+  function _onRemoveIngredient(removeItem) {
+    const fruits = newFood.ingredients.filter((item) => item.title !== removeItem);
+    setNewFood({
+      ...newFood,
+      ingredients: [...fruits],
+    });
   }
 
   // TODO: check if item is already existed
@@ -71,56 +82,60 @@ function add(props) {
 
   function _createFood() {
     props.createFood(newFood);
-    setNewFood({title: '', description: '', ingredients: [], tags: []});
+    setNewFood({ title: '', description: '', ingredients: [], tags: [] });
   }
 
   return (
     <View style={GlobalStyle.content}>
-      <Text style={GlobalStyle.Title}>New food</Text>
-      <View>
-        <Text style={styles.inputLabel}>Title:</Text>
-        <TextInput
-          style={GlobalStyle.textField}
-          value={newFood.title}
-          onChangeText={_onChangeTitle}
-        />
-        <Text style={styles.inputLabel}>Description</Text>
-        <TextInput
-          style={[
-            GlobalStyle.textField,
-            {textAlignVertical: 'top', height: 64},
-          ]}
-          value={newFood.description}
-          onChangeText={_onChangeDescription}
-          multiline={true}
-        />
-        <Text style={styles.inputLabel}>Ingredients:</Text>
-        <MiniSearchbox
-          list={props.ingredients.data}
-          selected={newFood.ingredients}
-          onAddItem={_onAddIngredientNewFood}
-          onCreateItem={_onCreateIngredient}
-        />
-        <Text style={styles.inputLabel}>Tags:</Text>
-        <MiniSearchbox
-          list={props.tags.data}
-          selected={newFood.tags}
-          onAddItem={_onAddTagNewFood}
-          onCreateItem={_onCreateTag}
-        />
-        <TouchableOpacity
-          onPress={() => {
-            _createFood();
-          }}
-          style={styles.normalButton}>
-          <LinearGradient
-            colors={['#D289FF', '#7170D3']}
-            start={{x: 1, y: 0}}
-            end={{x: 0, y: 1}}
-            style={styles.normalButtonGradient}>
-            <Text style={styles.normalButtonText}>Add</Text>
-          </LinearGradient>
-        </TouchableOpacity>
+      <Text style={GlobalStyle.Title}>Thêm</Text>
+      <View style={[GlobalStyle.content, { width: '80%' }]}>
+        <ScrollView>
+          <TextInput
+            style={[GlobalStyle.textInput]}
+            label="Tên"
+            textAlignVertical="center"
+            selectionColor={colors.primary40}
+            value={newFood.title}
+            onChangeText={_onChangeTitle}
+          />
+          <TextInput
+            style={[GlobalStyle.textInput]}
+            label="Miêu tả"
+            textAlignVertical="center"
+            selectionColor={colors.primary40}
+            value={newFood.description}
+            onChangeText={_onChangeDescription}
+            multiline
+          />
+
+          <MiniSearchbox
+            list={props.ingredients.data}
+            title="Nguyên liệu"
+            textAlignVertical="center"
+            selected={newFood.ingredients}
+            onAddItem={_onAddIngredientNewFood}
+            onCreateItem={_onCreateIngredient}
+            onRemoveItem={_onRemoveIngredient}
+          />
+          <MiniSearchbox
+            list={props.tags.data}
+            title="Thẻ tag"
+            textAlignVertical="center"
+            selected={newFood.tags}
+            onAddItem={_onAddTagNewFood}
+            onCreateItem={_onCreateTag}
+          />
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginVertical: '2%' }}>
+            <CustomButtonText
+              disabled={newFood.title == '' || newFood.description == '' || newFood.ingredients == [] || newFood.tags == []}
+              content='Thêm'
+              colors={[colors.home1, colors.home2, colors.home180, colors.home280]}
+              onPress={() => _createFood()}
+              padding={8}
+            />
+          </View>
+        </ScrollView>
       </View>
       <FlushButton />
     </View>
@@ -131,24 +146,6 @@ const styles = StyleSheet.create({
   inputLabel: {
     color: '#000',
     marginVertical: 4,
-  },
-  normalButton: {
-    height: 32,
-    width: 60,
-    marginHorizontal: 2,
-    marginVertical: 4,
-    marginTop: 32,
-  },
-  normalButtonGradient: {
-    height: '100%',
-    width: '100%',
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  normalButtonText: {
-    color: '#fff',
-    fontSize: 16,
   },
 });
 

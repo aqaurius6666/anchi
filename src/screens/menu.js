@@ -25,12 +25,12 @@ function BottomEdit(props) {
     return (
         !props.editing ?
             <View style={styles.bottomEdit}>
-                <CustomButtonText content='Sửa' colors={[Colors.home1, Colors.home2]} onPress={() => props.setEditing(!props.editing)} />
+                <CustomButtonText content='Sửa' colors={[Colors.home1, Colors.home2]} onPress={() => props.setEditing(!props.editing)} padding={8} />
             </View>
             :
             <View style={styles.bottomEdit}>
-                <CustomButtonText content='Hủy' colors={[Colors.dislike1, Colors.dislike2]} onPress={() => props.setEditing(!props.editing)} />
-                <CustomButtonText content='Lưu' colors={[Colors.like1, Colors.like2]} onPress={() => props.setEditing(!props.editing)} />
+                <CustomButtonText content='Hủy' colors={[Colors.dislike1, Colors.dislike2]} onPress={() => props.setEditing(!props.editing)} padding={8} />
+                <CustomButtonText content='Lưu' colors={[Colors.like1, Colors.like2]} onPress={() => props.setEditing(!props.editing)} padding={8} />
             </View>
     )
 }

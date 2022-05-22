@@ -101,13 +101,14 @@ export function CustomButtonText(props) {
     <TouchableOpacity
       style={[props.style]}
       onPress={props.onPress}
+      disabled={props.disabled}
     >
       <LinearGradient
-        colors={[props.colors[0], props.colors[1]]}
+        colors={!props.disabled ? [props.colors[0], props.colors[1]] : [props.colors[2], props.colors[3]]}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 1 }}
-        style={styles.linearGradientText}>
-        <Text style={[GlobalStyle.CustomFontBold, styles.text]}>
+        style={[styles.linearGradientText, { width: '100%', padding: props.padding, }]}>
+        <Text style={[GlobalStyle.CustomFontBold, styles.text, props.textStyle,]}>
           {props.content}
         </Text>
       </LinearGradient>

@@ -1,9 +1,8 @@
+
 import { NavigationContainer } from '@react-navigation/native';
 import { useColorScheme } from 'react-native';
-import {
-  DefaultTheme,
-  DarkTheme,
-} from '@react-navigation/native';
+import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -32,42 +31,41 @@ import GlobalStyle from './styles/GlobalStyle';
 //   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
 // ]);
 
+const fontConfig = {
+  web: {
+    regular: { fontFamily: 'iCielLudema-Regular' },
+    medium: { fontFamily: 'iCielLudema-Regular' },
+    light: { fontFamily: 'iCielLudema-Regular' },
+    thin: { fontFamily: 'iCielLudema-Regular' },
+    bold: { fontFamily: 'iCielLudema-Bold' },
+  },
+  ios: {
+    regular: { fontFamily: 'iCielLudema-Regular' },
+    medium: { fontFamily: 'iCielLudema-Regular' },
+    light: { fontFamily: 'iCielLudema-Regular' },
+    thin: { fontFamily: 'iCielLudema-Regular' },
+    bold: { fontFamily: 'iCielLudema-Bold' },
+  },
+  android: {
+    regular: { fontFamily: 'iCielLudema-Regular' },
+    medium: { fontFamily: 'iCielLudema-Regular' },
+    light: { fontFamily: 'iCielLudema-Regular' },
+    thin: { fontFamily: 'iCielLudema-Regular' },
+    bold: { fontFamily: 'iCielLudema-Bold' },
+  }
+};
+
+const theme = {
+  ...DefaultTheme,
+  fonts: configureFonts(fontConfig),
+};
+
 const TabArr = [
-  {
-    route: 'Add',
-    label: 'Add',
-    type: Icons.Feather,
-    icon: 'plus-square',
-    component: Add,
-  },
-  {
-    route: 'Favorite',
-    label: 'Favorite',
-    type: Icons.Feather,
-    icon: 'heart',
-    component: Favorite,
-  },
-  {
-    route: 'Home',
-    label: 'Home',
-    type: Icons.Feather,
-    icon: 'home',
-    component: Home,
-  },
-  {
-    route: 'Search',
-    label: 'Search',
-    type: Icons.Feather,
-    icon: 'search',
-    component: Search,
-  },
-  {
-    route: 'Menu',
-    label: 'Menu',
-    type: Icons.Feather,
-    icon: 'menu',
-    component: Menu,
-  },
+  { route: 'Add', label: 'Add', type: Icons.Feather, icon: 'plus-square', component: Add, },
+  { route: 'Favorite', label: 'Favorite', type: Icons.Feather, icon: 'heart', component: Favorite, },
+  { route: 'Home', label: 'Home', type: Icons.Feather, icon: 'home', component: Home, },
+  { route: 'Search', label: 'Search', type: Icons.Feather, icon: 'search', component: Search, },
+  { route: 'Menu', label: 'Menu', type: Icons.Feather, icon: 'menu', component: Menu, },
 ];
 
 const Tab = createBottomTabNavigator();
@@ -174,7 +172,6 @@ const App = () => {
       stiffness: 1000,
       damping: 500,
       mass: 10,
-      // overshootClamping: true,
       restDisplacementThreshold: 0.01,
       restSpeedThreshold: 0.01,
     },
@@ -216,7 +213,13 @@ const App = () => {
   );
 };
 
-export default App;
+export default function Main() {
+  return (
+    <PaperProvider theme={theme}>
+      <App />
+    </PaperProvider>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

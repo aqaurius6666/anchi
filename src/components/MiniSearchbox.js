@@ -1,13 +1,17 @@
 import React from 'react';
 
 import {
-  TextInput,
   Text,
   StyleSheet,
   View,
   TouchableOpacity,
 } from 'react-native';
 import Tag from './Tag';
+import { Chip, TextInput } from 'react-native-paper';
+import GlobalStyle from '../styles/GlobalStyle';
+import colors from '../constants/colors';
+import { CustomButtonText } from './CustomButton';
+
 
 class MiniSearchbox extends React.Component {
   constructor(props) {
@@ -64,64 +68,73 @@ class MiniSearchbox extends React.Component {
 
   _onAddSelection = newSelection => {
     this.props.onAddItem(newSelection);
+    this.setState({ ...this.state, searchText: '' });
   };
 
   _onCreateSelection = newSelection => {
     this.props.onCreateItem(newSelection);
+    this.setState({ ...this.state, searchText: '' });
   };
 
   _onChooseToAutofill = text => {
-    console.log('choose tag to autofill');
-    this.setState({...this.state, searchText: text, ready: true});
+    this.setState({ ...this.state, searchText: text, ready: true });
   };
 
   render() {
     return (
-      <View>
-        <View style={{flexDirection: 'row', flexWrap: 'wrap', width: 240}}>
+      <View style={{ width: '100%' }}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%', alignItems: 'center', justifyContent: 'space-evenly' }}>
           <TextInput
-            style={styles.textField}
+            style={[GlobalStyle.textInput, { width: '80%' }]}
+            textAlignVertical="bottom"
+            label={this.props.title}
             onChangeText={text => {
               this._onChange(text);
             }}
             value={this.state.searchText}
           />
           {this.state.ready ? (
-            <TouchableOpacity
-              style={[styles.confirmButton, styles.enabledButton]}
+            <CustomButtonText
+              content='Thêm'
+              colors={[colors.home1, colors.home2]}
               onPress={() => {
                 this._onAddSelection(this.state.searchText.toLowerCase());
-              }}>
-              <Text
-                style={[styles.confirmButtonText, styles.enabledButtonText]}>
-                Add
-              </Text>
-            </TouchableOpacity>
+              }}
+              style={{ width: '20%', padding: 8, }}
+              textStyle={{ fontSize: 14, }}
+            />
           ) : (
-            <TouchableOpacity
-              style={[styles.confirmButton, styles.createNewButton]}
-              onPress={() => {
-                this._onCreateSelection(this.state.searchText.toLowerCase());
-              }}>
-              <Text
-                style={[styles.confirmButtonText, styles.createNewButtonText]}>
-                New
-              </Text>
-            </TouchableOpacity>
+            <CustomButtonText
+              content='Tạo'
+              colors={[colors.home1, colors.home2]}
+              onPress={() => this._onCreateSelection(this.state.searchText.toLowerCase())}
+              style={{ width: '20%', padding: 8, }}
+              textStyle={{ fontSize: 14, }}
+            />
           )}
         </View>
         <View style={styles.tagContainer}>
           {this.state.showing.map(item => (
-            <Tag
-              title={item.title}
+            <Chip
               key={item.id}
-              onPress={() => this._onChooseToAutofill(item.title)}
-            />
+              mode='outlined'
+              onPress={() => { this._onChooseToAutofill(item.title) }}
+              style={{ margin: 2, }}
+            >{item.title}</Chip>
           ))}
         </View>
         <View style={styles.tagContainer}>
           {this.state.selected.map(item => (
-            <Tag title={item.title} key={item.id} type="tinted" />
+            <Chip
+              key={item.id}
+              mode='outlined'
+              onClose={() => {
+                // console.log(item.title);
+                this.props.onRemoveItem(item.title);
+              }}
+              selectedColor={colors.primary}
+              style={{ margin: 2, }}
+            >{item.title}</Chip>
           ))}
         </View>
       </View>
@@ -173,7 +186,8 @@ const styles = StyleSheet.create({
   tagContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    width: 240,
+    width: '100%',
+    paddingVertical: 4,
   },
 });
 

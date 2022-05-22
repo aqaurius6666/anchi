@@ -1,11 +1,14 @@
 import React from 'react';
-import {View, FlatList} from 'react-native';
-import {connect} from 'react-redux';
+import { View, FlatList } from 'react-native';
+import { connect } from 'react-redux';
 import FoodCard from '../components/FoodCard';
 
 import GlobalStyle from '../styles/GlobalStyle';
 
 function SearchScreen(props) {
+
+  const [data, setData] = React.useState(props.foods.data);
+
   return (
     <View style={[GlobalStyle.content]}>
       <FlatList
@@ -15,7 +18,7 @@ function SearchScreen(props) {
         }}
         keyExtractor={item => item.id}
       />
-      <View style={{height: 36, width: 1}}></View>
+      <View style={{ height: 36, width: 1 }}></View>
     </View>
   );
 }

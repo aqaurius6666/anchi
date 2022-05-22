@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {connect} from 'react-redux';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
-import CustomButton, {CustomButtonOutline} from '../components/CustomButton';
+import CustomButton, { CustomButtonOutline } from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
-import {Icons} from '../components/icons';
+import { Icons } from '../components/icons';
 import CustomDialog, {
   DislikeDialog,
   LikeDialog,
@@ -50,7 +50,7 @@ function Home(props) {
       />
 
       {type === 'food' ? (
-        <FoodCard navigation={props.navigation} food={currentFood} />
+          <FoodCard navigation={props.navigation} food={currentFood} />
       ) : (
         <RestaurantCard
           navigation={props.navigation}
@@ -68,7 +68,6 @@ function Home(props) {
           onPress={() => {
             if (type === 'food') {
               const newSeed = randomGenExcept(props.foods.data.length, seed1);
-              console.log(newSeed);
               setSeed1(newSeed);
               setCurrentFood(props.foods.data[newSeed]);
             } else {
@@ -117,11 +116,11 @@ function Home(props) {
           content={
             type === 'food'
               ? 'Zô, vậy là bạn thích ' +
-                currentFood.title +
-                '. Chần chừ chi mà hông đi ăn thôi nào!'
+              currentFood.title +
+              '. Chần chừ chi mà hông đi ăn thôi nào!'
               : 'Zô, vậy là bạn thích ' +
-                currentRestaurant.title +
-                '. Chần chừ chi mà hông đi ăn thôi nào!'
+              currentRestaurant.title +
+              '. Chần chừ chi mà hông đi ăn thôi nào!'
           }
         />
       ) : null}
@@ -138,11 +137,11 @@ function Home(props) {
           content={
             type === 'food'
               ? 'Zô, vậy là bạn hông thích ' +
-                currentFood.title +
-                '. Vậy để mình thêm vào hố đen nhá!'
+              currentFood.title +
+              '. Vậy để mình thêm vào hố đen nhá!'
               : 'Zô, vậy là bạn hông thích ' +
-                currentRestaurant.title +
-                '. Vậy để mình thêm vào hố đen nhá!'
+              currentRestaurant.title +
+              '. Vậy để mình thêm vào hố đen nhá!'
           }
         />
       ) : null}
