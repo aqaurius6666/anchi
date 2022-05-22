@@ -1,7 +1,7 @@
-import {FOOD_DATA} from './foodData';
-import {TAG_DATA} from './tagData';
-import {INGREDIENT_DATA} from './ingredientData';
-import {RESTAURANT_DATA} from './restaurantData';
+import { FOOD_DATA } from './foodData';
+import { TAG_DATA } from './tagData';
+import { INGREDIENT_DATA } from './ingredientData';
+import { RESTAURANT_DATA } from './restaurantData';
 
 const FAVORITE_DATA = {
   food: [1, 3],
@@ -13,6 +13,8 @@ const BLACKLIST_DATA = {
   restaurant: [],
 };
 
+const TAG_OUT_DATA = [1, 6];
+
 export const InitialState = {
   FOOD_DATA,
   TAG_DATA,
@@ -20,4 +22,5 @@ export const InitialState = {
   RESTAURANT_DATA,
   FAVORITE_DATA,
   BLACKLIST_DATA,
+  TAG_OUT_DATA,
 };

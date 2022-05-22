@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { Modal, StyleSheet, Text, Pressable, View, ScrollView } from "react-native";
+import { Modal, StyleSheet, Text, View, ScrollView } from "react-native";
 import { Chip } from "react-native-paper";
 import colors from "../constants/colors";
 import GlobalStyle from "../styles/GlobalStyle";
 import { CustomButtonText } from "./CustomButton";
+import { connect } from "react-redux";
+import MiniSearchbox from "./MiniSearchbox";
+import { createIngredient, createTag } from '../redux/actions';
 
 export function FilterOutDialog(props) {
     const [data, setData] = useState([...props.data]);
@@ -62,6 +65,138 @@ export function FilterOutDialog(props) {
                 </View>
             </Modal>
         </View>
+    );
+};
+
+const ingredientDialog = (props) => {
+    const [newFood, setNewFood] = useState({ ...props.newFood });
+
+    React.useEffect(() => {
+        props.setNewFood(newFood);
+    }, [newFood])
+
+    function _onAddIngredientNewFood(newItem) {
+        if (
+            !newFood.ingredients.some(item => item.title.toLowerCase() === newItem)
+        ) {
+            const newItemObj = props.ingredients.data.find(
+                obj => obj.title.toLowerCase() === newItem,
+            );
+            if (newItemObj) {
+                setNewFood({
+                    ...newFood,
+                    ingredients: [...newFood.ingredients, newItemObj],
+                });
+            }
+        }
+    }
+
+    function _onRemoveIngredient(removeItem) {
+        const fruits = newFood.ingredients.filter(
+            item => item.title !== removeItem,
+        );
+        setNewFood({
+            ...newFood,
+            ingredients: [...fruits],
+        });
+    }
+    return (
+        <View style={styles.centeredView}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={props.open}
+                onRequestClose={() => {
+                    props.onCancel();
+                }}
+            >
+
+                <View style={styles.centeredView}>
+                    <View style={styles.modal}>
+                        <ScrollView style={{ height: '50%' }}>
+                            <MiniSearchbox
+                                title="Nguyên liệu"
+                                list={props.ingredients.data}
+                                selected={newFood.ingredients}
+                                onAddItem={_onAddIngredientNewFood}
+                                onRemoveItem={_onRemoveIngredient}
+                                createNew={false}
+                            />
+                        </ScrollView>
+                        <CustomButtonText
+                            onPress={() => props.onCancel()}
+                            content={"Xonq"}
+                            colors={[colors.dislike1, colors.dislike2, colors.dislike1, colors.dislike2]}
+                            padding={4}
+                        />
+                    </View>
+                </View>
+            </Modal>
+        </View >
+    );
+};
+
+const tagDialog = (props) => {
+    const [newFood, setNewFood] = useState({ ...props.newFood });
+
+    React.useEffect(() => {
+        props.setNewFood(newFood);
+    }, [newFood])
+
+    function _onAddTagNewFood(newItem) {
+        if (!newFood.tags.some(item => item.title.toLowerCase() === newItem)) {
+            const newItemObj = props.tags.data.find(
+                obj => obj.title.toLowerCase() === newItem,
+            );
+            if (newItemObj) {
+                setNewFood({
+                    ...newFood,
+                    tags: [...newFood.tags, newItemObj],
+                });
+            }
+        }
+    }
+
+    function _onRemoveTag(removeItem) {
+        const fruits = newFood.tags.filter(item => item.title !== removeItem);
+        setNewFood({
+            ...newFood,
+            tags: [...fruits],
+        });
+    }
+    return (
+        <View style={styles.centeredView}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={props.open}
+                onRequestClose={() => {
+                    props.onCancel();
+                }}
+            >
+
+                <View style={styles.centeredView}>
+                    <View style={styles.modal}>
+                        <ScrollView style={{ height: '50%' }}>
+                            <MiniSearchbox
+                                title="Thẻ tags"
+                                list={props.tags.data}
+                                selected={newFood.tags}
+                                onAddItem={_onAddTagNewFood}
+                                onRemoveItem={_onRemoveTag}
+                                createNew={false}
+                            />
+                        </ScrollView>
+                        <CustomButtonText
+                            onPress={() => props.onCancel()}
+                            content={"Xonq"}
+                            colors={[colors.dislike1, colors.dislike2, colors.dislike1, colors.dislike2]}
+                            padding={4}
+                        />
+                    </View>
+                </View>
+            </Modal>
+        </View >
     );
 };
 
@@ -153,7 +288,7 @@ const styles = StyleSheet.create({
     centeredView: {
         width: '100%',
         height: '100%',
-        backgroundColor: '#6464af80',
+        backgroundColor: colors.primary80,
         zIndex: 3,
         position: 'absolute',
         padding: 'auto',
@@ -162,11 +297,11 @@ const styles = StyleSheet.create({
     },
     modal: {
         padding: 10,
-        borderColor: '#6464af',
+        borderColor: colors.primary,
         borderRadius: 30,
         borderWidth: 1,
         width: '70%',
-        backgroundColor: '#fff',
+        backgroundColor: colors.white,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -189,3 +324,16 @@ const styles = StyleSheet.create({
 });
 
 export default CustomDialog;
+
+const mapStateToProps = state => ({
+    ingredients: state.ingredients,
+    tags: state.tags,
+});
+
+export const TagDialog = connect(mapStateToProps, {
+    createTag,
+})(tagDialog);
+
+export const IngredientDialog = connect(mapStateToProps, {
+    createIngredient,
+})(ingredientDialog);

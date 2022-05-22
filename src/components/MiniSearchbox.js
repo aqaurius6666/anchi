@@ -6,7 +6,6 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import Tag from './Tag';
 import { Chip, TextInput } from 'react-native-paper';
 import GlobalStyle from '../styles/GlobalStyle';
 import colors from '../constants/colors';
@@ -88,7 +87,7 @@ class MiniSearchbox extends React.Component {
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%', alignItems: 'center', justifyContent: 'space-evenly' }}>
           <TextInput
             style={[GlobalStyle.textInput, { width: '80%' }]}
-            textAlignVertical="bottom"
+            textAlignVertical="center"
             label={this.props.title}
             onChangeText={text => {
               this._onChange(text);
@@ -96,7 +95,7 @@ class MiniSearchbox extends React.Component {
             value={this.state.searchText}
           />
           {this.state.ready ? (
-            <CustomButtonText
+            this.props.createNew && <CustomButtonText
               content='Thêm'
               colors={[colors.home1, colors.home2]}
               onPress={() => {
@@ -106,13 +105,25 @@ class MiniSearchbox extends React.Component {
               textStyle={{ fontSize: 14, }}
             />
           ) : (
-            <CustomButtonText
+            this.props.createNew && <CustomButtonText
               content='Tạo'
               colors={[colors.home1, colors.home2, colors.home180, colors.home280]}
               onPress={() => this._onCreateSelection(this.state.searchText.toLowerCase())}
               style={{ width: '20%', padding: 8, }}
               textStyle={{ fontSize: 14, }}
               disabled={this.state.searchText.trim() === ''}
+            />
+          )}
+          {!this.props.createNew && (
+            <CustomButtonText
+              content='+'
+              colors={[colors.home1, colors.home2, colors.home180, colors.home280,]}
+              onPress={() => {
+                this._onAddSelection(this.state.searchText.toLowerCase());
+              }}
+              style={{ width: '20%', padding: 8, }}
+              textStyle={{ fontSize: 14, }}
+              disabled={!this.state.ready}
             />
           )}
         </View>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -7,16 +7,16 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {TextInput} from 'react-native-paper';
-import {CustomButtonText} from '../components/CustomButton';
+import { TextInput } from 'react-native-paper';
+import { CustomButtonText } from '../components/CustomButton';
 
 import MiniSearchbox from '../components/MiniSearchbox';
 import FlushButton from '../components/FlushButton';
 import GlobalStyle from '../styles/GlobalStyle';
 import colors from '../constants/colors';
 
-import {connect} from 'react-redux';
-import {createFood, createIngredient, createTag} from '../redux/actions';
+import { connect } from 'react-redux';
+import { createFood, createIngredient, createTag } from '../redux/actions';
 
 function add(props) {
   const [newFood, setNewFood] = useState({
@@ -26,11 +26,11 @@ function add(props) {
     tags: [],
   });
   function _onChangeTitle(text) {
-    setNewFood({...newFood, title: text});
+    setNewFood({ ...newFood, title: text });
   }
 
   function _onChangeDescription(text) {
-    setNewFood({...newFood, description: text});
+    setNewFood({ ...newFood, description: text });
   }
 
   function _onAddIngredientNewFood(newItem) {
@@ -109,7 +109,7 @@ function add(props) {
       tags: simpleTags,
       ingredients: simpleIngredients,
     });
-    setNewFood({title: '', description: '', ingredients: [], tags: []});
+    setNewFood({ title: '', description: '', ingredients: [], tags: [] });
   }
 
   const getSimmpleTagList = list => {
@@ -124,10 +124,10 @@ function add(props) {
     <View
       style={[
         GlobalStyle.content,
-        {flex: 1, height: Dimensions.get('window').height},
+        { flex: 1, height: Dimensions.get('window').height },
       ]}>
       <Text style={GlobalStyle.Title}>Thêm</Text>
-      <View style={[GlobalStyle.content, {width: '80%', paddingBottom: 64}]}>
+      <View style={[GlobalStyle.content, { width: '80%', paddingBottom: 64 }]}>
         <ScrollView>
           <TextInput
             style={[GlobalStyle.textInput]}
@@ -149,21 +149,21 @@ function add(props) {
 
           <MiniSearchbox
             title="Nguyên liệu"
-            textAlignVertical="center"
             list={props.ingredients.data}
             selected={newFood.ingredients}
             onAddItem={_onAddIngredientNewFood}
             onCreateItem={_onCreateIngredient}
             onRemoveItem={_onRemoveIngredient}
+            createNew={true}
           />
           <MiniSearchbox
             list={props.tags.data}
             title="Thẻ tag"
-            textAlignVertical="center"
             selected={newFood.tags}
             onAddItem={_onAddTagNewFood}
             onCreateItem={_onCreateTag}
             onRemoveItem={_onRemoveTag}
+            createNew={true}
           />
 
           <View
