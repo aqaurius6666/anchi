@@ -118,7 +118,7 @@ const reducer = (state, action) => {
       return rootReducer(undefined, action);
     }
     default: {
-      return rootReducer(undefined, action);
+      return rootReducer(state, action);
     }
   }
 };

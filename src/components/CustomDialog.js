@@ -49,11 +49,13 @@ export function FilterOutDialog(props) {
                                 onPress={() => props.onCancel()}
                                 content={props.Cancel}
                                 colors={[colors.dislike1, colors.dislike2]}
+                                padding={4}
                             />
                             <CustomButtonText
                                 onPress={() => props.onOK()}
                                 content={props.OK}
                                 colors={[colors.like1, colors.like2]}
+                                padding={4}
                             />
                         </View>
                     </View>
@@ -89,11 +91,13 @@ const CustomDialog = (props) => {
                                 onPress={() => props.onCancel()}
                                 content={props.Cancel}
                                 colors={[colors.dislike1, colors.dislike2]}
+                                padding={4}
                             />
                             <CustomButtonText
                                 onPress={() => props.onOK()}
                                 content={props.OK}
                                 colors={[colors.like1, colors.like2]}
+                                padding={4}
                             />
                         </View>
                     </View>

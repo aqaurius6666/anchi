@@ -90,7 +90,6 @@ function Home(props) {
           size={36}
           onLongPress={() => setLike(true)}
           onPress={() => {
-            // console.log(props);
             props.addFoodToFavorite(type === 'food' ? seed1 : seed2);
             nextRandomItem();
           }}
