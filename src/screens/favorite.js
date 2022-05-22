@@ -17,7 +17,6 @@ function Favorite(props) {
       props.favorite.restaurant.includes(item.id),
     ),
   );
-  console.log(props.favorite);
 
   useEffect(() => {
     setFavoriteFood(state =>
