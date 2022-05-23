@@ -1,9 +1,10 @@
 /** @format */
 
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 
 import {
   CREATE_FOOD,
+  CREATE_RESTAURANT,
   CREATE_INGREDIENT,
   CREATE_TAG,
   DELETE_TAG,
@@ -15,13 +16,13 @@ import {
   FLUSH_LOCAL,
 } from './actions';
 
-import {InitialState} from './initialData/index';
+import { InitialState } from './initialData/index';
 
 const foodReducer = (state = InitialState.FOOD_DATA, action) => {
   switch (action.type) {
     case CREATE_FOOD: {
       return {
-        data: [...state.data, {...action.payload, id: state.lastKey + 1}],
+        data: [...state.data, { ...action.payload, id: state.lastKey + 1 }],
         lastKey: state.lastKey + 1,
       };
     }
@@ -33,6 +34,12 @@ const foodReducer = (state = InitialState.FOOD_DATA, action) => {
 
 const restaurantReducer = (state = InitialState.RESTAURANT_DATA, action) => {
   switch (action.type) {
+    case CREATE_RESTAURANT: {
+      return {
+        data: [...state.data, { ...action.payload, id: state.lastKey + 1 }],
+        lastKey: state.lastKey + 1,
+      };
+    }
     default: {
       return state;
     }
@@ -45,7 +52,7 @@ const tagsReducer = (state = InitialState.TAG_DATA, action) => {
       const newKey = state.lastKey + 1;
       return {
         lastKey: newKey,
-        data: [...state.data, {title: action.payload, id: newKey}],
+        data: [...state.data, { title: action.payload, id: newKey }],
       };
     }
 
@@ -74,7 +81,7 @@ const ingredientsReducer = (state = InitialState.INGREDIENT_DATA, action) => {
       const newKey = state.lastKey + 1;
       return {
         lastKey: newKey,
-        data: [...state.data, {title: action.payload, id: newKey}],
+        data: [...state.data, { title: action.payload, id: newKey }],
       };
     }
     default: {
@@ -87,10 +94,11 @@ const favoriteReducer = (state = InitialState.FAVORITE_DATA, action) => {
   switch (action.type) {
     case ADD_FOOD_TO_FAVORITE: {
       if (!state.food.some(item => item === action.payload)) {
-        return {...state, food: [...state.food, action.payload]};
-      } else {
-        console.log('That food is already in the favorite list');
+        return { ...state, food: [...state.food, action.payload] };
       }
+      // else {
+      //   console.log('That food is already in the favorite list');
+      // }
     }
     case REMOVE_FOOD_FROM_FAVORITE: {
       return {
@@ -100,10 +108,11 @@ const favoriteReducer = (state = InitialState.FAVORITE_DATA, action) => {
     }
     case ADD_RESTAURANT_TO_FAVORITE: {
       if (!state.restaurant.some(item => item === action.payload)) {
-        return {...state, restaurant: [...state.restaurant, action.payload]};
-      } else {
-        console.log('That restaurant is already in the favorite list');
+        return { ...state, restaurant: [...state.restaurant, action.payload] };
       }
+      //  else {
+      //   console.log('That restaurant is already in the favorite list');
+      // }
     }
     case REMOVE_RESTAURANT_FROM_FAVORITE: {
       return {

@@ -1,4 +1,5 @@
 export const CREATE_FOOD = 'CREATE_FOOD';
+export const CREATE_RESTAURANT = 'CREATE_RESTAURANT';
 export const CREATE_INGREDIENT = 'CREATE_INGREDIENT';
 export const SET_TAG = 'SET_TAG';
 export const CREATE_TAG = 'CREATE_TAG';
@@ -6,14 +7,20 @@ export const DELETE_TAG = 'DELETE_TAG';
 export const ADD_FOOD_TO_FAVORITE = 'ADD_FOOD_TO_FAVORITE';
 export const REMOVE_FOOD_FROM_FAVORITE = 'REMOVE_FOOD_FROM_FAVORITE';
 export const ADD_RESTAURANT_TO_FAVORITE = 'ADD_RESTAURANT_TO_FAVORITE';
-export const REMOVE_RESTAURANT_FROM_FAVORITE =
-  'REMOVE_RESTAURANT_FROM_FAVORITE';
+export const REMOVE_RESTAURANT_FROM_FAVORITE = 'REMOVE_RESTAURANT_FROM_FAVORITE';
 export const FLUSH_LOCAL = 'FLUSH_LOCAL';
 
 export const createFood = newFood => dispatch => {
   dispatch({
     type: CREATE_FOOD,
     payload: newFood,
+  });
+};
+
+export const createRestaurant = newRestaurant => dispatch => {
+  dispatch({
+    type: CREATE_RESTAURANT,
+    payload: newRestaurant,
   });
 };
 
@@ -27,7 +34,7 @@ export const createTag = newTag => dispatch => {
 export const setTag = tag => dispatch => {
   dispatch({
     type: SET_TAG,
-    payload: tag, // tag is already an array, eg [{"id": 104, "title": "món Đức"}]
+    payload: tag,
   });
 };
 

@@ -9,20 +9,29 @@ import {
   Image
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { CustomButtonText } from '../components/CustomButton';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import CustomButton, { CustomButtonText } from '../components/CustomButton';
+import { launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 
 import MiniSearchbox from '../components/MiniSearchbox';
-import FlushButton from '../components/FlushButton';
 import GlobalStyle from '../styles/GlobalStyle';
 import colors from '../constants/colors';
 
 import { connect } from 'react-redux';
-import { createFood, createIngredient, createTag } from '../redux/actions';
+import { createFood, createRestaurant, createIngredient, createTag, } from '../redux/actions';
+import { Icons } from '../components/icons';
+import { RadioButton } from 'react-native-paper';
+import RadioThree from '../components/RadioThree';
 
 function add(props) {
-  const initialSate = {
+  const note = {
+    'Ăn tại quán': 1,
+    'Hút thuốc': 3,
+    'Thú cưng': 2,
+    'Wife': 1,
+    'Chỉ mang đi': 1,
+  };
+  const initialFood = {
     title: '',
     description: '',
     ingredients: [],
@@ -30,41 +39,66 @@ function add(props) {
     address: [],
     image: null,
   };
-  const [newFood, setNewFood] = useState(initialSate);
+  const initialRestaurant = {
+    title: '',
+    tags: [],
+    image: null,
+    address: '',
+    description: '',
+    menu: [],
+    note: { ...note },
+  };
+  const [newFood, setNewFood] = useState(initialFood);
+  const [type, setType] = useState('food');
+  const [newRestaurant, setNewRestaurant] = useState(initialRestaurant);
 
   // React.useEffect(() => {
-  //   // const filepath = 'file:///storage/emulated/0/Android/data/com.app/files/1653287022176.jpg'.slice(7);
-  //   // RNFS.exists(filepath).then((result) => {
-  //   //   console.log("file exists: ", result);
-  //   //   if (result) {
-  //   //     return RNFS.unlink(filepath)
-  //   //       // .then(() => console.log('FILE DELETED'))
-  //   //       .catch(err => console.log(err.message)); // `unlink` will throw an error, if the item to unlink does not exist
-  //   //   }
-  //   // }).catch(err => console.log(err.message));
+  // }, [newRestaurant.note])
+
+  // React.useEffect(() => {
+  //   const filepath = 'file:///storage/emulated/0/Android/data/com.app/files/1653287022176.jpg'.slice(7);
+  //   RNFS.exists(filepath).then((result) => {
+  //     console.log("file exists: ", result);
+  //     if (result) {
+  //       return RNFS.unlink(filepath)
+  //         // .then(() => console.log('FILE DELETED'))
+  //         .catch(err => console.log(err.message)); // `unlink` will throw an error, if the item to unlink does not exist
+  //     }
+  //   }).catch(err => console.log(err.message));
   // }, [newFood.image])
 
   function _onChangeTitle(text) {
-    setNewFood({ ...newFood, title: text });
+    type === 'food' ? setNewFood({ ...newFood, title: text }) : setNewRestaurant({ ...newRestaurant, title: text });
   }
   function _onChangeDescription(text) {
-    setNewFood({ ...newFood, description: text });
+    type === 'food' ? setNewFood({ ...newFood, description: text }) : setNewRestaurant({ ...newRestaurant, description: text });
   }
   function _onChangeAddress(text) {
-    const add = text.split('\n').filter(e => e != '').map(e => e.replace(/\s+/g, ' ').trim());
-    setNewFood({ ...newFood, address: [...add] });
+    if (type === 'food') {
+      const add = text.split('\n').filter(e => e != '').map(e => e.replace(/\s+/g, ' ').trim());
+      setNewFood({ ...newFood, address: [...add] });
+    } else {
+      setNewRestaurant({ ...newRestaurant, address: text.trim() });
+    }
+
   }
   function _onChangeImage() {
     const options = {};
     launchImageLibrary(options, response => {
-      if (response.assets[0].uri) {
+      if (response && response.assets && response.assets[0].uri) {
         const oldPath = response.assets[0].uri;
         const newPath = RNFS.ExternalDirectoryPath + '/' + Date.now() + '.jpg';
         RNFS.moveFile(oldPath, newPath).then(() => {
           // console.log('Moved from ' + oldPath + ' -- to-- ' + 'file://' + newPath);
-          setNewFood({ ...newFood, image: { uri: 'file://' + newPath } });
-          if (newFood.image && newFood.image != '') {
-            const filepath = newFood.image.uri.slice(7);
+          type === 'food' ?
+            setNewFood({ ...newFood, image: { uri: 'file://' + newPath } })
+            :
+            setNewRestaurant({ ...newRestaurant, image: { uri: 'file://' + newPath } })
+
+          var filepath = ''; // unlink prev state image if exists
+          if (type === 'food' && newFood.image && newFood.image != '') filepath = newFood.image.uri.slice(7);
+          if (type === 'restaurant' && newRestaurant.image && newRestaurant.image != '') filepath = newRestaurant.image.uri.slice(7);
+          if (filepath && filepath.trim() != '') {
             RNFS.exists(filepath).then((result) => {
               console.log("image exists: ", result);
               if (result) {
@@ -76,6 +110,10 @@ function add(props) {
         }).catch(err => console.log(err));
       }
     })
+  }
+  function _onChangeMenuNewRestaurant(text) {
+    const add = text.split('\n').filter(e => e != '').map(e => e.replace(/\s+/g, ' ').trim());
+    setNewRestaurant({ ...newRestaurant, menu: [...add] });
   }
 
   function _onAddIngredientNewFood(newItem) {
@@ -115,6 +153,24 @@ function add(props) {
     }
   }
 
+  function _onAddTagNewRestaurant(newItem) {
+    if (!newRestaurant.tags.some(item => item.title.toLowerCase() === newItem)) {
+      const newItemObj = props.tags.data.find(
+        obj => obj.title.toLowerCase() === newItem,
+      );
+      if (newItemObj) {
+        setNewRestaurant({
+          ...newRestaurant,
+          tags: [...newRestaurant.tags, newItemObj],
+        });
+      } else {
+        console.log("There's some bug prevent getting the tags needed.");
+      }
+    } else {
+      console.log('The tag has already been added');
+    }
+  }
+
   // TODO: check if item is already existed
   function _onCreateIngredient(item) {
     props.createIngredient(item);
@@ -134,10 +190,17 @@ function add(props) {
       ingredients: [...fruits],
     });
   }
-  function _onRemoveTag(removeItem) {
+  function _onRemoveTagNewFood(removeItem) {
     const fruits = newFood.tags.filter(item => item.title !== removeItem);
     setNewFood({
       ...newFood,
+      tags: [...fruits],
+    });
+  }
+  function _onRemoveTagNewRestaurant(removeItem) {
+    const fruits = newRestaurant.tags.filter(item => item.title !== removeItem);
+    setNewRestaurant({
+      ...newRestaurant,
       tags: [...fruits],
     });
   }
@@ -151,9 +214,28 @@ function add(props) {
       ingredients: simpleIngredients,
     });
     setNewFood({
-      ...initialSate
+      ...initialFood
     });
+  }
+  function _createRestaurant() {
+    const simpleTags = getSimmpleTagList(newRestaurant.tags);
+    var newNote = [...Object.keys(newRestaurant.note)].reduce((newObj, i) => {
+      const value = newRestaurant.note[i];
+      if (value !== 1) {
+        newObj[i] = value;
+      }
+      return newObj;
+    }, {})
+    console.log(newNote);
 
+    props.createRestaurant({
+      ...newRestaurant,
+      tags: simpleTags,
+      note: newNote,
+    });
+    setNewRestaurant({
+      ...initialRestaurant
+    });
   }
 
   const getSimmpleTagList = list => {
@@ -169,38 +251,57 @@ function add(props) {
         GlobalStyle.content,
         { flex: 1, height: Dimensions.get('window').height },
       ]}>
-      <Text style={GlobalStyle.Title}>Thêm</Text>
+      <CustomButton
+        icon_name={type == 'food' ? 'hamburger' : 'store'}
+        style={styles.typeIcon}
+        onPress={() => {
+          if (type === 'food') {
+            setType('restaurant');
+          } else {
+            setType('food');
+          }
+        }}
+        colors={[colors.home1, colors.home2, colors.white]}
+        type={Icons.FontAwesome5}
+      />
+      <View style={[GlobalStyle.TitleBoxHeader]}>
+        <Text style={GlobalStyle.Title}>Thêm</Text>
+      </View>
       <View style={[GlobalStyle.content, { width: '80%', paddingBottom: 64 }]}>
         <ScrollView>
+          {/* title */}
           <TextInput
             style={[GlobalStyle.textInput]}
             label="Tên"
             textAlignVertical="center"
             selectionColor={colors.primary40}
-            value={newFood.title}
+            value={type === 'food' ? newFood.title : newRestaurant.title}
             onChangeText={_onChangeTitle}
           />
 
+          {/* description */}
           <TextInput
             style={[GlobalStyle.textInput]}
             label="Miêu tả"
             textAlignVertical="center"
             selectionColor={colors.primary40}
-            value={newFood.description}
+            value={type === 'food' ? newFood.description : newRestaurant.description}
             onChangeText={_onChangeDescription}
             multiline
           />
 
+          {/* address */}
           <TextInput
             style={[GlobalStyle.textInput]}
             label="Địa chỉ"
             textAlignVertical="center"
             selectionColor={colors.primary40}
-            value={newFood.address.join['\n']}
+            value={type === 'food' && newFood.address ? newFood.address.join('\n') : newRestaurant.address}
             onChangeText={_onChangeAddress}
-            multiline
+            multiline={type === 'food' ? true : false}
           />
 
+          {/* image */}
           <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-evenly', alignItems: 'center', marginTop: '4%' }}>
             <CustomButtonText
               onPress={_onChangeImage}
@@ -209,14 +310,22 @@ function add(props) {
               padding={'2%'}
             />
             {
-              newFood.image && newFood.image != '' &&
+              type === 'food' && newFood.image && newFood.image != '' &&
               <Image
                 source={newFood.image}
                 style={{ width: 200, height: 200, }}
               />
             }
+            {
+              type === 'restaurant' && newRestaurant.image && newRestaurant.image != '' &&
+              <Image
+                source={newRestaurant.image}
+                style={{ width: 200, height: 200, }}
+              />
+            }
           </View>
-          <MiniSearchbox
+
+          {type === 'food' && <MiniSearchbox
             title="Nguyên liệu"
             list={props.ingredients.data}
             selected={newFood.ingredients}
@@ -224,17 +333,62 @@ function add(props) {
             onCreateItem={_onCreateIngredient}
             onRemoveItem={_onRemoveIngredient}
             createNew={true}
-          />
+          />}
 
-          <MiniSearchbox
+          {type === 'food' && <MiniSearchbox
             list={props.tags.data}
             title="Thẻ tag"
             selected={newFood.tags}
             onAddItem={_onAddTagNewFood}
             onCreateItem={_onCreateTag}
-            onRemoveItem={_onRemoveTag}
+            onRemoveItem={_onRemoveTagNewFood}
             createNew={true}
-          />
+          />}
+
+          {type === 'restaurant' && <MiniSearchbox
+            list={props.tags.data}
+            title="Thẻ tag"
+            selected={newRestaurant.tags}
+            onAddItem={_onAddTagNewRestaurant}
+            onCreateItem={_onCreateTag}
+            onRemoveItem={_onRemoveTagNewRestaurant}
+            createNew={true}
+          />}
+
+          {type === 'restaurant' && <TextInput
+            style={[GlobalStyle.textInput]}
+            label="Thực đơn"
+            textAlignVertical="center"
+            selectionColor={colors.primary40}
+            value={newRestaurant.menu.join['\n']}
+            onChangeText={_onChangeMenuNewRestaurant}
+            multiline
+          />}
+
+          {type === 'restaurant' &&
+            <View style={{ width: '100%', padding: '2%' }}>
+              {Object.keys(newRestaurant.note).map((e, i) => {
+                return (
+                  <View
+                    key={e.toString()}                    >
+                    <Text style={[GlobalStyle.CustomFont, styles.halfnHalf]}>{e}</Text>
+                    <RadioThree
+                      keys={e}
+                      checked={newRestaurant.note[e]}
+                      setChecked={(checked) => {
+                        setNewRestaurant({
+                          ...newRestaurant,
+                          note: { ...newRestaurant.note, [e]: checked }
+                        })
+                      }
+                      }
+                      style={styles.halfnHalf}
+                    />
+                  </View>
+                )
+              })}
+            </View>
+          }
 
           <View
             style={{
@@ -242,24 +396,50 @@ function add(props) {
               justifyContent: 'space-evenly',
               marginVertical: '2%',
             }}>
-            <CustomButtonText
-              disabled={
-                newFood.title == '' ||
-                newFood.description == '' ||
-                newFood.ingredients == [] ||
-                newFood.tags == [] ||
-                newFood.address == []
-              }
-              content="Thêm"
-              colors={[
-                colors.home1,
-                colors.home2,
-                colors.home180,
-                colors.home280,
-              ]}
-              onPress={() => _createFood()}
-              padding={8}
-            />
+            {
+              type === 'food' &&
+              <CustomButtonText
+                disabled={
+                  newFood.title === '' ||
+                  newFood.description === '' ||
+                  newFood.ingredients === [] ||
+                  newFood.tags === [] ||
+                  newFood.address === []
+
+                }
+                content="Thêm"
+                colors={[
+                  colors.home1,
+                  colors.home2,
+                  colors.home180,
+                  colors.home280,
+                ]}
+                onPress={_createFood}
+                padding={8}
+              />
+            }
+            {
+              type === 'restaurant' &&
+              <CustomButtonText
+                disabled={
+                  newRestaurant.title === '' ||
+                  newRestaurant.tags === [] ||
+                  newRestaurant.address === '' ||
+                  newRestaurant.description === '' ||
+                  newRestaurant.menu === [] ||
+                  newRestaurant.note === {}
+                }
+                content="Thêm"
+                colors={[
+                  colors.home1,
+                  colors.home2,
+                  colors.home180,
+                  colors.home280,
+                ]}
+                onPress={_createRestaurant}
+                padding={8}
+              />
+            }
           </View>
         </ScrollView>
       </View>
@@ -272,6 +452,17 @@ const styles = StyleSheet.create({
     color: '#000',
     marginVertical: 4,
   },
+  typeIcon: {
+    position: 'absolute',
+    top: 18,
+    left: 18,
+    zIndex: 1,
+    elevation: 10,
+  },
+  halfnHalf: {
+    flexDirection: 'row',
+    flex: 1,
+  }
 });
 
 const mapStateToProps = state => ({
@@ -281,6 +472,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   createFood,
+  createRestaurant,
   createIngredient,
   createTag,
 })(add);

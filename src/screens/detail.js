@@ -23,11 +23,6 @@ function foodDetail(props) {
   const window = useWindowDimensions();
 
   const getTagTitles = tags => {
-    console.log(
-      tags,
-      props.tags.data,
-      // tags.map(item => props.tags.data.find(tag => tag.id === item)?.title),
-    );
     return (
       tags.map(item => props.tags.data.find(tag => tag.id === item)?.title) ??
       []
@@ -99,7 +94,7 @@ function foodDetail(props) {
 }
 
 function restaurantDetail(props) {
-  React.useEffect(() => console.log(props.restaurant), [props])
+  // React.useEffect(() => console.log(props.restaurant), [props])
 
   const window = useWindowDimensions();
 
