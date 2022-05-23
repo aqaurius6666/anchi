@@ -21,6 +21,8 @@ target 'app' do
 
   pod 'RNCMaskedView', :path => '../node_modules/@react-native-community/masked-view'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'appTests' do
     inherit! :complete
     # Pods for testing

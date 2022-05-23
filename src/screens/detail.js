@@ -10,11 +10,11 @@ import {
   Linking,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import CustomButton, {CustomButtonOutline} from '../components/CustomButton';
+import CustomButton, { CustomButtonOutline } from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
-import {CardImageFallback} from '../components/CardImageFallback';
+import { CardImageFallback } from '../components/CardImageFallback';
 // import { Icons } from '../components/icons';
 
 const ggMap = 'https://www.google.com/maps/search/';
@@ -99,17 +99,12 @@ function foodDetail(props) {
 }
 
 function restaurantDetail(props) {
+  React.useEffect(() => console.log(props.restaurant), [props])
+
   const window = useWindowDimensions();
 
   const getTagTitles = tags =>
     tags.map(item => props.tags.data.find(tag => tag.id === item)?.title) ?? [];
-
-  const getIngredientTitles = tags =>
-    tags.map(
-      item =>
-        props.ingredients.data.find(ingredient => ingredient.id === item)
-          ?.title,
-    ) ?? [];
 
   return (
     <View style={styles.detailView}>
@@ -129,7 +124,7 @@ function restaurantDetail(props) {
       </View>
       <View style={GlobalStyle.DetailSection}>
         <Text style={GlobalStyle.Subtitle}>
-          {props.restaurant.tags.join('・')}
+          {getTagTitles(props.restaurant.tags).join('・')}
         </Text>
       </View>
       <View style={GlobalStyle.DetailSection}>
@@ -176,8 +171,8 @@ const FoodDetail = connect(mapStateToProps, {})(foodDetail);
 
 const RestaurantDetail = connect(mapStateToProps, {})(restaurantDetail);
 
-function Detail({navigation, route}) {
-  const {detail, type} = route.params;
+function Detail({ navigation, route }) {
+  const { detail, type } = route.params;
   return (
     <SafeAreaView style={GlobalStyle.content}>
       <CustomButtonOutline
@@ -194,8 +189,8 @@ function Detail({navigation, route}) {
       <View style={styles.bottomTab}>
         <LinearGradient
           colors={['#ffffff60', '#ffffff']}
-          start={{x: 0, y: 0}}
-          end={{x: 0, y: 0.5}}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 0.5 }}
           style={styles.linearGradient}>
           <CustomButtonOutline
             icon_name="ios-heart"
