@@ -24,7 +24,6 @@ import {
   addFoodToBlacklist,
   addRestaurantToBlacklist,
 } from '../redux/actions';
-// import { Icons } from '../components/icons';
 
 const ggMap = 'https://www.google.com/maps/search/';
 
@@ -179,6 +178,9 @@ function Detail(props) {
         icon_name="md-arrow-back-sharp"
         style={styles.typeIcon}
         onPress={() => {
+          props.navigation.pop();
+        }}
+        onLongPress={() => {
           props.navigation.pop();
         }}
         colors={['#D289FF', '#7170D3', '#fff']}
