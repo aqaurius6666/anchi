@@ -43,7 +43,6 @@ function FavoriteItem(props) {
 const styles = StyleSheet.create({
   favList: {
     height: 64,
-    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',

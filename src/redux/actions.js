@@ -8,6 +8,8 @@ export const REMOVE_FOOD_FROM_FAVORITE = 'REMOVE_FOOD_FROM_FAVORITE';
 export const ADD_RESTAURANT_TO_FAVORITE = 'ADD_RESTAURANT_TO_FAVORITE';
 export const REMOVE_RESTAURANT_FROM_FAVORITE =
   'REMOVE_RESTAURANT_FROM_FAVORITE';
+export const ADD_FOOD_TO_BLACKLIST = 'ADD_FOOD_TO_BLACKLIST';
+export const ADD_RESTAURANT_TO_BLACKLIST = 'ADD_RESTAURANT_TO_BLACKLIST';
 export const FLUSH_LOCAL = 'FLUSH_LOCAL';
 
 export const createFood = newFood => dispatch => {
@@ -69,6 +71,20 @@ export const addRestaurantToFavorite = restaurantId => dispatch => {
 export const removeRestaurantFromFavorite = restaurantId => dispatch => {
   dispatch({
     type: REMOVE_RESTAURANT_FROM_FAVORITE,
+    payload: restaurantId,
+  });
+};
+
+export const addFoodToBlacklist = foodId => dispatch => {
+  dispatch({
+    type: ADD_FOOD_TO_BLACKLIST,
+    payload: foodId,
+  });
+};
+
+export const addRestaurantToBlacklist = restaurantId => dispatch => {
+  dispatch({
+    type: ADD_RESTAURANT_TO_BLACKLIST,
     payload: restaurantId,
   });
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -10,11 +10,20 @@ import {
   Linking,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import CustomButton, { CustomButtonOutline } from '../components/CustomButton';
+import {CustomButtonOutline} from '../components/CustomButton';
+import {DislikeDialog, LikeDialog} from '../components/CustomDialog';
 import GlobalStyle from '../styles/GlobalStyle';
-import { CardImageFallback } from '../components/CardImageFallback';
+import {CardImageFallback} from '../components/CardImageFallback';
+import {
+  addFoodToFavorite,
+  addRestaurantToFavorite,
+  removeFoodFromFavorite,
+  removeRestaurantFromFavorite,
+  addFoodToBlacklist,
+  addRestaurantToBlacklist,
+} from '../redux/actions';
 // import { Icons } from '../components/icons';
 
 const ggMap = 'https://www.google.com/maps/search/';
@@ -22,17 +31,8 @@ const ggMap = 'https://www.google.com/maps/search/';
 function foodDetail(props) {
   const window = useWindowDimensions();
 
-  const getTagTitles = tags => {
-    console.log(
-      tags,
-      props.tags.data,
-      // tags.map(item => props.tags.data.find(tag => tag.id === item)?.title),
-    );
-    return (
-      tags.map(item => props.tags.data.find(tag => tag.id === item)?.title) ??
-      []
-    );
-  };
+  const getTagTitles = tags =>
+    tags.map(item => props.tags.data.find(tag => tag.id === item)?.title) ?? [];
 
   const getIngredientTitles = tags =>
     tags.map(
@@ -99,8 +99,6 @@ function foodDetail(props) {
 }
 
 function restaurantDetail(props) {
-  React.useEffect(() => console.log(props.restaurant), [props])
-
   const window = useWindowDimensions();
 
   const getTagTitles = tags =>
@@ -171,15 +169,17 @@ const FoodDetail = connect(mapStateToProps, {})(foodDetail);
 
 const RestaurantDetail = connect(mapStateToProps, {})(restaurantDetail);
 
-function Detail({ navigation, route }) {
-  const { detail, type } = route.params;
+function Detail(props) {
+  const {detail, type} = props.route.params;
+  const [dislike, setDislike] = useState(false);
+
   return (
     <SafeAreaView style={GlobalStyle.content}>
       <CustomButtonOutline
         icon_name="md-arrow-back-sharp"
         style={styles.typeIcon}
         onPress={() => {
-          navigation.pop();
+          props.navigation.pop();
         }}
         colors={['#D289FF', '#7170D3', '#fff']}
         type="ionicon"
@@ -189,23 +189,71 @@ function Detail({ navigation, route }) {
       <View style={styles.bottomTab}>
         <LinearGradient
           colors={['#ffffff60', '#ffffff']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 0.5 }}
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 0.5}}
           style={styles.linearGradient}>
-          <CustomButtonOutline
-            icon_name="ios-heart"
-            type="ionicon"
-            colors={['#62F6FF', '#6AF25E', '#fff']}
-            size={36}
-          />
           <CustomButtonOutline
             icon_name="md-close"
             type="ionicon"
             colors={['#FFA06A', '#F40159', '#fff']}
             size={36}
+            onPress={() => {
+              if (type === 'food') {
+                props.removeFoodFromFavorite(detail.id);
+              } else {
+                props.removeRestaurantFromFavorite(detail.id);
+              }
+              props.navigation.pop();
+            }}
+            onLongPress={() => setDislike(true)}
+          />
+          <CustomButtonOutline
+            icon_name="ios-heart"
+            type="ionicon"
+            colors={['#62F6FF', '#6AF25E', '#fff']}
+            size={36}
+            onPress={() => {
+              if (type === 'food') {
+                props.addFoodToFavorite(detail.id);
+              } else {
+                props.addRestaurantToFavorite(detail.id);
+              }
+              props.navigation.pop();
+            }}
+            onLongPress={() => {
+              if (type === 'food') {
+                props.addFoodToFavorite(detail.id);
+              } else {
+                props.addRestaurantToFavorite(detail.id);
+              }
+              props.navigation.pop();
+            }}
           />
         </LinearGradient>
       </View>
+
+      {dislike ? (
+        <DislikeDialog
+          open={dislike}
+          onCancel={() => {
+            setDislike(false);
+          }}
+          onOK={() => {
+            if (type === 'food') {
+              props.addFoodToBlacklist(detail.id);
+            } else {
+              props.addRestaurantToBlacklist(detail.id);
+            }
+            props.navigation.pop();
+            setDislike(false);
+          }}
+          content={
+            'Zô, vậy là bạn hông thích ' +
+            detail.title +
+            '. Vậy để mình thêm vào hố đen nhá!'
+          }
+        />
+      ) : null}
 
       <ScrollView style={[styles.content]}>
         {type === 'food' ? (
@@ -263,4 +311,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Detail;
+export default connect(null, {
+  addFoodToFavorite,
+  addRestaurantToFavorite,
+  removeFoodFromFavorite,
+  removeRestaurantFromFavorite,
+  addFoodToBlacklist,
+  addRestaurantToBlacklist,
+})(Detail);

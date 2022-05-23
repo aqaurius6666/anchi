@@ -12,6 +12,8 @@ import {
   REMOVE_FOOD_FROM_FAVORITE,
   ADD_RESTAURANT_TO_FAVORITE,
   REMOVE_RESTAURANT_FROM_FAVORITE,
+  ADD_FOOD_TO_BLACKLIST,
+  ADD_RESTAURANT_TO_BLACKLIST,
   FLUSH_LOCAL,
 } from './actions';
 
@@ -91,6 +93,7 @@ const favoriteReducer = (state = InitialState.FAVORITE_DATA, action) => {
       } else {
         console.log('That food is already in the favorite list');
       }
+      return state;
     }
     case REMOVE_FOOD_FROM_FAVORITE: {
       return {
@@ -104,6 +107,7 @@ const favoriteReducer = (state = InitialState.FAVORITE_DATA, action) => {
       } else {
         console.log('That restaurant is already in the favorite list');
       }
+      return state;
     }
     case REMOVE_RESTAURANT_FROM_FAVORITE: {
       return {
@@ -119,6 +123,21 @@ const favoriteReducer = (state = InitialState.FAVORITE_DATA, action) => {
 
 const blacklistReducer = (state = InitialState.BLACKLIST_DATA, action) => {
   switch (action.type) {
+    case ADD_FOOD_TO_BLACKLIST:
+      if (!state.food.some(item => item === action.payload)) {
+        return {...state, food: [...state.food, action.payload]};
+      } else {
+        console.log('That food is already in the blacklist');
+      }
+      return state;
+    case ADD_RESTAURANT_TO_BLACKLIST: {
+      if (!state.restaurant.some(item => item === action.payload)) {
+        return {...state, restaurant: [...state.restaurant, action.payload]};
+      } else {
+        console.log('That restaurant is already in the blacklist');
+      }
+      return state;
+    }
     default: {
       return state;
     }

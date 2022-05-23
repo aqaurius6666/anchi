@@ -12,7 +12,12 @@ import CustomDialog, {
 import FoodCard from '../components/FoodCard';
 import RestaurantCard from '../components/RestaurantCard';
 import colors from '../constants/colors';
-import {addFoodToFavorite, addRestaurantToFavorite} from '../redux/actions';
+import {
+  addFoodToFavorite,
+  addRestaurantToFavorite,
+  addFoodToBlacklist,
+  addRestaurantToBlacklist,
+} from '../redux/actions';
 
 const randomGen = number => Math.floor(Math.random() * number);
 const randomGenExcept = (number, lastNum) => {
@@ -108,6 +113,19 @@ function Home(props) {
             setLike(false);
           }}
           onOK={() => {
+            if (type === 'food') {
+              props.addFoodToFavorite(currentFood.id);
+              props.navigation.push('Detail', {
+                detail: currentFood,
+                type: 'food',
+              });
+            } else {
+              props.addRestaurantToFavorite(currentRestaurant.id);
+              props.navigation.push('Detail', {
+                detail: currentRestaurant,
+                type: 'restaurant',
+              });
+            }
             setLike(false);
           }}
           content={
@@ -129,6 +147,12 @@ function Home(props) {
             setDislike(false);
           }}
           onOK={() => {
+            if (type === 'food') {
+              props.addFoodToBlacklist(currentFood.id);
+            } else {
+              props.addRestaurantToBlacklist(currentRestaurant.id);
+            }
+            nextRandomItem();
             setDislike(false);
           }}
           content={
@@ -196,4 +220,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   addFoodToFavorite,
   addRestaurantToFavorite,
+  addFoodToBlacklist,
+  addRestaurantToBlacklist,
 })(Home);
