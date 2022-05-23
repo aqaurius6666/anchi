@@ -211,8 +211,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  foods: state.foods,
-  restaurants: state.restaurants,
+  foods: state.filteredFoods,
+  restaurants: state.filteredRestaurants,
   ingredients: state.ingredients,
   tags: state.tags,
 });

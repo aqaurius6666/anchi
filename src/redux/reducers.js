@@ -144,6 +144,35 @@ const blacklistReducer = (state = InitialState.BLACKLIST_DATA, action) => {
   }
 };
 
+const filteredFoodReducer = (state = InitialState.FOOD_DATA, action) => {
+  switch (action.type) {
+    case ADD_FOOD_TO_BLACKLIST:
+      return {
+        ...state,
+        data: state.data.filter(item => item.id !== action.payload),
+      };
+    default: {
+      return state;
+    }
+  }
+};
+
+const filteredRestaurantReducer = (
+  state = InitialState.RESTAURANT_DATA,
+  action,
+) => {
+  switch (action.type) {
+    case ADD_RESTAURANT_TO_BLACKLIST:
+      return {
+        ...state,
+        data: state.data.filter(item => item.id !== action.payload),
+      };
+    default: {
+      return state;
+    }
+  }
+};
+
 const rootReducer = combineReducers({
   foods: foodReducer,
   restaurants: restaurantReducer,
@@ -151,6 +180,8 @@ const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   favorite: favoriteReducer,
   blacklist: blacklistReducer,
+  filteredFoods: filteredFoodReducer,
+  filteredRestaurants: filteredRestaurantReducer,
 });
 
 const reducer = (state, action) => {

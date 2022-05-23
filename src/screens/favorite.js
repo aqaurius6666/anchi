@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   favorite: state.favorite,
-  foods: state.foods,
-  restaurants: state.restaurants,
+  foods: state.filteredFoods,
+  restaurants: state.filteredRestaurants,
 });
 
 export default connect(mapStateToProps, {})(Favorite);
