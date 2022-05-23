@@ -1,7 +1,7 @@
-import { FOOD_DATA } from './foodData';
-import { TAG_DATA } from './tagData';
-import { INGREDIENT_DATA } from './ingredientData';
-import { RESTAURANT_DATA } from './restaurantData';
+import {FOOD_DATA} from './foodData';
+import {TAG_DATA} from './tagData';
+import {INGREDIENT_DATA} from './ingredientData';
+import {RESTAURANT_DATA} from './restaurantData';
 
 const FAVORITE_DATA = {
   food: [1, 3],
@@ -9,7 +9,7 @@ const FAVORITE_DATA = {
 };
 
 const BLACKLIST_DATA = {
-  food: [2, 4],
+  food: [],
   restaurant: [],
 };
 

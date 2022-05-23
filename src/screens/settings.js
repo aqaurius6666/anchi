@@ -195,7 +195,9 @@ function Settings(props) {
               Danh sách đen
             </Text>
           </View>
-          <TouchableOpacity hitSlop={4}>
+          <TouchableOpacity
+            hitSlop={4}
+            onPress={() => console.log(props.blacklist)}>
             <Icon
               type={Icons.Feather}
               name={'arrow-down-circle'}
@@ -244,6 +246,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   ingredients: state.ingredients,
   tags: state.tags,
+  blacklist: state.blacklist,
 });
 
 export default connect(mapStateToProps, {

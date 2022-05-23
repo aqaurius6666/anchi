@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   favBox: {
     marginTop: '6%',
     marginBottom: '26%',
-    // width: '90%',
+    width: '96%',
     flex: 1,
     paddingHorizontal: '2%',
     paddingVertical: '2%',
