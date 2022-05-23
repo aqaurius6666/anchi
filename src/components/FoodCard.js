@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet, useWindowDimensions } from 'react-native';
-import { connect } from 'react-redux';
-import colors from '../constants/colors';
+import {Text, View, Image, StyleSheet, useWindowDimensions} from 'react-native';
+import {connect} from 'react-redux';
 
+import colors from '../constants/colors';
 import GlobalStyle from '../styles/GlobalStyle';
-import { CardImageFallback } from './CardImageFallback';
+import {CardImageFallback} from './CardImageFallback';
 
 function FoodCard(props) {
   const window = useWindowDimensions();
@@ -81,8 +81,6 @@ function smallFoodCard(props) {
             ?.title,
       ) ?? [],
     image: props.food.image ?? null,
-    description: props.food.description ?? 'Mô tả món ăn.',
-    address: props.food.address ?? [],
   };
 
   return (
@@ -109,8 +107,8 @@ function smallFoodCard(props) {
           ]}
         />
       )}
-      <View style={{ paddingHorizontal: 8, width: '66%' }}>
-        <Text style={[GlobalStyle.Title, { fontSize: 20 }]} numberOfLines={1}>
+      <View style={{paddingHorizontal: 8, width: '66%'}}>
+        <Text style={[GlobalStyle.Title, {fontSize: 20}]} numberOfLines={1}>
           {state.title}
         </Text>
         <Text style={[GlobalStyle.Subtitle]} numberOfLines={2}>
