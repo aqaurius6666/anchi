@@ -1,8 +1,6 @@
 
 import { NavigationContainer } from '@react-navigation/native';
-import { useColorScheme } from 'react-native';
-import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-
+import { configureFonts, DefaultTheme, DarkTheme, Provider as PaperProvider } from 'react-native-paper';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,11 +24,7 @@ import Detail from './screens/detail';
 import GlobalStyle from './styles/GlobalStyle';
 import colors from './constants/colors';
 
-// import { LogBox } from 'react-native';
-
-// LogBox.ignoreLogs([
-//   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
-// ]);
+import { connect } from 'react-redux';
 
 const fontConfig = {
   web: {
@@ -60,6 +54,12 @@ const theme = {
   ...DefaultTheme,
   fonts: configureFonts(fontConfig),
 };
+
+const darkTheme = {
+  ...DarkTheme,
+  fonts: configureFonts(fontConfig),
+
+}
 
 const TabArr = [
   { route: 'Add', label: 'Add', type: Icons.Feather, icon: 'plus-square', component: Add, },
@@ -166,7 +166,8 @@ export function AnimTab1() {
   );
 }
 
-const App = () => {
+const app = (props) => {
+  console.log(darkTheme);
   const config = {
     animation: 'spring',
     config: {
@@ -178,47 +179,46 @@ const App = () => {
     },
   };
 
-  const scheme = useColorScheme();
-
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <NavigationContainer>
-          <RootStack.Navigator
-            initialRouteName="Splash"
-            screenOptions={{
+
+    <PaperProvider theme={!props.config.darkTheme ? theme : darkTheme}>
+      <NavigationContainer>
+        <RootStack.Navigator
+          initialRouteName="Splash"
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <RootStack.Screen
+            name="Splash"
+            component={Splash}
+            options={{
               headerShown: false,
-            }}>
-            <RootStack.Screen
-              name="Splash"
-              component={Splash}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <RootStack.Screen name="AnimTab1" component={AnimTab1} />
-            <RootStack.Screen
-              name="Detail"
-              component={Detail}
-              options={{
-                transitionSpec: {
-                  open: config,
-                  close: config,
-                },
-              }}
-            />
-          </RootStack.Navigator>
-        </NavigationContainer>
-      </PersistGate>
-    </Provider>
+            }}
+          />
+          <RootStack.Screen name="AnimTab1" component={AnimTab1} />
+          <RootStack.Screen
+            name="Detail"
+            component={Detail}
+            options={{
+              transitionSpec: {
+                open: config,
+                close: config,
+              },
+            }}
+          />
+        </RootStack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 };
 
-export default function Main() {
+function Main() {
   return (
-    <PaperProvider theme={theme}>
-      <App />
-    </PaperProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
   );
 }
 
@@ -261,3 +261,11 @@ const styles = StyleSheet.create({
     color: Colors.secondary,
   },
 });
+
+
+const mapStateToProps = state => ({
+  config: state.config,
+});
+
+export const App = connect(mapStateToProps, {})(app);
+export default Main;

@@ -3,22 +3,19 @@ import {
   SafeAreaView,
   View,
   Text,
-  Dimensions,
   Switch,
-  Platform,
-  Button,
   TouchableOpacity,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
-import {CustomButtonOutline} from '../components/CustomButton';
+import React, { useState } from 'react';
+import { CustomButtonOutline } from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
-import Icon, {Icons} from '../components/icons';
+import Icon, { Icons } from '../components/icons';
 import colors from '../constants/colors';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {ConfirmDialog, FilterOutDialog} from '../components/CustomDialog';
-import {connect} from 'react-redux';
+import { FilterOutDialog } from '../components/CustomDialog';
+import { connect } from 'react-redux';
 
-import {deleteTag, setTag} from '../redux/actions';
+import { deleteTag, setTag, setDarkTheme } from '../redux/actions';
 import FlushButton from '../components/FlushButton';
 
 const STATE = {
@@ -50,7 +47,6 @@ function FilterOut(props) {
 
 function Settings(props) {
   const navigation = props.navigation;
-  const [darkTheme, setDarkTheme] = useState(STATE.darkTheme);
   const [alarm, setAlarm] = useState(STATE.alarm);
 
   const [time, setTime] = useState(STATE.time);
@@ -59,6 +55,7 @@ function Settings(props) {
   const [showAlarm, setShowAlarm] = useState(false);
   const [showFilterOut, setShowFilterOut] = useState(false);
   const [showBlackList, setShowBlackList] = useState(false);
+
 
   return (
     <SafeAreaView style={GlobalStyle.content}>
@@ -86,7 +83,7 @@ function Settings(props) {
         />
       ) : null}
 
-      <View style={{width: '90%', paddingTop: '10%'}}>
+      <View style={{ width: '90%', paddingTop: '10%' }}>
         <View style={[styles.list]}>
           <View style={[styles.row]}>
             <Icon
@@ -99,7 +96,7 @@ function Settings(props) {
           </View>
           <View>
             <Switch
-              trackColor={{false: colors.home280, true: colors.home180}}
+              trackColor={{ false: colors.home280, true: colors.home180 }}
               thumbColor={!alarm ? colors.home2 : colors.home1}
               onValueChange={() => {
                 setAlarm(!alarm);
@@ -112,15 +109,13 @@ function Settings(props) {
                   setShowAlarm(true);
                 }}>
                 <Text style={GlobalStyle.CustomFont}>
-                  {`${
-                    time.getHours() < 10
-                      ? '0' + time.getHours()
-                      : time.getHours()
-                  } : ${
-                    time.getMinutes() < 10
+                  {`${time.getHours() < 10
+                    ? '0' + time.getHours()
+                    : time.getHours()
+                    } : ${time.getMinutes() < 10
                       ? '0' + time.getMinutes()
                       : time.getMinutes()
-                  }`}
+                    }`}
                 </Text>
               </TouchableOpacity>
             )}
@@ -150,12 +145,12 @@ function Settings(props) {
             </Text>
           </View>
           <Switch
-            trackColor={{false: colors.home280, true: colors.home180}}
-            thumbColor={!darkTheme ? colors.home2 : colors.home1}
+            trackColor={{ false: colors.home280, true: colors.home180 }}
+            thumbColor={!props.config.darkTheme ? colors.home2 : colors.home1}
             onValueChange={() => {
-              setDarkTheme(!darkTheme);
+              props.setDarkTheme();
             }}
-            value={darkTheme}
+            value={props.config.darkTheme}
           />
         </View>
 
@@ -247,9 +242,11 @@ const mapStateToProps = state => ({
   ingredients: state.ingredients,
   tags: state.tags,
   blacklist: state.blacklist,
+  config: state.config,
 });
 
 export default connect(mapStateToProps, {
   deleteTag,
   setTag,
+  setDarkTheme,
 })(Settings);

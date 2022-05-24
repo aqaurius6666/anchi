@@ -55,6 +55,7 @@ function Favorite(props) {
         {type === 'food' ? (
           <FlatList
             data={favoriteFood}
+            initialNumToRender={10}
             renderItem={item => {
               return (
                 <FavoriteItem
@@ -69,6 +70,7 @@ function Favorite(props) {
         ) : (
           <FlatList
             data={favoriteRestaurant}
+            initialNumToRender={10}
             renderItem={item => {
               return (
                 <FavoriteItem

@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   StyleSheet,
@@ -10,29 +10,28 @@ import {
   SafeAreaView,
   Dimensions,
 } from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import CustomTextInput from '../components/CustomTextInput';
-import Icon, {Icons} from '../components/icons';
+import Icon, { Icons } from '../components/icons';
 import GlobalStyle from '../styles/GlobalStyle';
 import Settings from './settings';
-import {CustomButtonText} from '../components/CustomButton';
-import Colors from '../constants/colors';
+import { CustomButtonText } from '../components/CustomButton';
 import colors from '../constants/colors';
 
 const Stack = createStackNavigator();
 
 function BottomEdit(props) {
-    return (
-        !props.editing ?
-            <View style={styles.bottomEdit}>
-                <CustomButtonText content='Sửa' colors={[Colors.home1, Colors.home2]} onPress={() => props.setEditing(!props.editing)} padding={8} />
-            </View>
-            :
-            <View style={styles.bottomEdit}>
-                <CustomButtonText content='Hủy' colors={[Colors.dislike1, Colors.dislike2]} onPress={() => props.setEditing(!props.editing)} padding={8} />
-                <CustomButtonText content='Lưu' colors={[Colors.like1, Colors.like2]} onPress={() => props.setEditing(!props.editing)} padding={8} />
-            </View>
-    )
+  return (
+    !props.editing ?
+      <View style={styles.bottomEdit}>
+        <CustomButtonText content='Sửa' colors={[colors.home1, colors.home2]} onPress={() => props.setEditing(!props.editing)} padding={8} />
+      </View>
+      :
+      <View style={styles.bottomEdit}>
+        <CustomButtonText content='Hủy' colors={[colors.dislike1, colors.dislike2]} onPress={() => props.setEditing(!props.editing)} padding={8} />
+        <CustomButtonText content='Lưu' colors={[colors.like1, colors.like2]} onPress={() => props.setEditing(!props.editing)} padding={8} />
+      </View>
+  )
 }
 
 const DATA = {
@@ -42,7 +41,7 @@ const DATA = {
   repassword: '',
 };
 
-function MenuDetail({navigation}) {
+function MenuDetail({ navigation }) {
   const [editing, setEditing] = React.useState(false);
   const [data, setData] = React.useState(DATA);
 
@@ -112,7 +111,7 @@ function MenuDetail({navigation}) {
               style={[styles.bottomNavDiv]}
               onPress={() => {
                 setEditing(false);
-                navigation.push('Settings', {detail: true, food: true});
+                navigation.push('Settings', { detail: true, food: true });
               }}>
               <Icon
                 type={Icons.Feather}
@@ -144,7 +143,7 @@ function MenuDetail({navigation}) {
   );
 }
 
-function Menu({navigation}) {
+function Menu({ navigation }) {
   return (
     <Stack.Navigator
       initialRouteName="MenuDetail"

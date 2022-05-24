@@ -12,6 +12,7 @@ export const REMOVE_RESTAURANT_FROM_FAVORITE =
 export const ADD_FOOD_TO_BLACKLIST = 'ADD_FOOD_TO_BLACKLIST';
 export const ADD_RESTAURANT_TO_BLACKLIST = 'ADD_RESTAURANT_TO_BLACKLIST';
 export const FLUSH_LOCAL = 'FLUSH_LOCAL';
+export const SET_DARKTHEME = 'SET_DARKTHEME';
 
 export const createFood = newFood => dispatch => {
   dispatch({
@@ -100,6 +101,13 @@ export const addRestaurantToBlacklist = restaurantId => dispatch => {
 export const flushLocal = () => dispatch => {
   dispatch({
     type: FLUSH_LOCAL,
+    payload: null,
+  });
+};
+
+export const setDarkTheme = () => dispatch => {
+  dispatch({
+    type: SET_DARKTHEME,
     payload: null,
   });
 };

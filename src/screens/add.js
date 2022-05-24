@@ -75,7 +75,7 @@ function add(props) {
   }
   function _onChangeAddress(text) {
     if (type === 'food') {
-      const add = text.split('\n').filter(e => e != '').map(e => e.replace(/\s+/g, ' ').trim());
+      const add = text.split('\n');
       setNewFood({ ...newFood, address: [...add] });
     } else {
       setNewRestaurant({ ...newRestaurant, address: text.trim() });
@@ -112,7 +112,7 @@ function add(props) {
     })
   }
   function _onChangeMenuNewRestaurant(text) {
-    const add = text.split('\n').filter(e => e != '').map(e => e.replace(/\s+/g, ' ').trim());
+    const add = text.split('\n');
     setNewRestaurant({ ...newRestaurant, menu: [...add] });
   }
 
@@ -208,10 +208,12 @@ function add(props) {
   function _createFood() {
     const simpleTags = getSimmpleTagList(newFood.tags);
     const simpleIngredients = getSimpleIngredientList(newFood.ingredients);
+    const newAddress = newFood.address.filter(e => e != '').map(el => el.replace(/\s+/g, ' ').trim());
     props.createFood({
       ...newFood,
       tags: simpleTags,
       ingredients: simpleIngredients,
+      address: newAddress
     });
     setNewFood({
       ...initialFood
@@ -226,12 +228,14 @@ function add(props) {
       }
       return newObj;
     }, {})
-    console.log(newNote);
+
+    const newMenu = newRestaurant.address.filter(e => e != '').map(el => el.replace(/\s+/g, ' ').trim());
 
     props.createRestaurant({
       ...newRestaurant,
       tags: simpleTags,
       note: newNote,
+      menu: newMenu,
     });
     setNewRestaurant({
       ...initialRestaurant
@@ -402,10 +406,9 @@ function add(props) {
                 disabled={
                   newFood.title === '' ||
                   newFood.description === '' ||
-                  newFood.ingredients === [] ||
-                  newFood.tags === [] ||
+                  newFood.ingredients.length === 0 ||
+                  newFood.tags.length === 0 ||
                   newFood.address === []
-
                 }
                 content="Thêm"
                 colors={[
@@ -423,10 +426,10 @@ function add(props) {
               <CustomButtonText
                 disabled={
                   newRestaurant.title === '' ||
-                  newRestaurant.tags === [] ||
+                  newRestaurant.tags.length === 0 ||
                   newRestaurant.address === '' ||
                   newRestaurant.description === '' ||
-                  newRestaurant.menu === [] ||
+                  newRestaurant.menu.length === 0 ||
                   newRestaurant.note === {}
                 }
                 content="Thêm"

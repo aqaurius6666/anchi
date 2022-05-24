@@ -16,6 +16,7 @@ import {
   ADD_FOOD_TO_BLACKLIST,
   ADD_RESTAURANT_TO_BLACKLIST,
   FLUSH_LOCAL,
+  SET_DARKTHEME
 } from './actions';
 
 import { InitialState } from './initialData/index';
@@ -128,14 +129,14 @@ const blacklistReducer = (state = InitialState.BLACKLIST_DATA, action) => {
   switch (action.type) {
     case ADD_FOOD_TO_BLACKLIST:
       if (!state.food.some(item => item === action.payload)) {
-        return {...state, food: [...state.food, action.payload]};
+        return { ...state, food: [...state.food, action.payload] };
       } else {
         console.log('That food is already in the blacklist');
       }
       return state;
     case ADD_RESTAURANT_TO_BLACKLIST: {
       if (!state.restaurant.some(item => item === action.payload)) {
-        return {...state, restaurant: [...state.restaurant, action.payload]};
+        return { ...state, restaurant: [...state.restaurant, action.payload] };
       } else {
         console.log('That restaurant is already in the blacklist');
       }
@@ -176,6 +177,19 @@ const filteredRestaurantReducer = (
   }
 };
 
+const configReducer = (state = InitialState.CONFIG_DATA, action) => {
+  switch (action.type) {
+    case SET_DARKTHEME:
+      return {
+        ...state,
+        darkTheme: !state.darkTheme,
+      };
+    default: {
+      return state;
+    }
+  }
+}
+
 const rootReducer = combineReducers({
   foods: foodReducer,
   restaurants: restaurantReducer,
@@ -185,6 +199,7 @@ const rootReducer = combineReducers({
   blacklist: blacklistReducer,
   filteredFoods: filteredFoodReducer,
   filteredRestaurants: filteredRestaurantReducer,
+  config: configReducer,
 });
 
 const reducer = (state, action) => {
