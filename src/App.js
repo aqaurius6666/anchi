@@ -56,7 +56,7 @@ const theme = {
 };
 
 const darkTheme = {
-  ...DarkTheme,
+  ...DefaultTheme,
   fonts: configureFonts(fontConfig),
 
 }
