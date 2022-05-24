@@ -63,7 +63,7 @@ function Home(props) {
             setType('food');
           }
         }}
-        colors={['#D289FF', '#7170D3', '#fff']}
+        colors={[colors.home1, colors.home2, colors.white]}
         type={Icons.FontAwesome5}
       />
 
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
   },
 
   seeMore: {
-    color: '#646464',
+    color: colors.gray,
     textDecorationLine: 'underline',
   },
 

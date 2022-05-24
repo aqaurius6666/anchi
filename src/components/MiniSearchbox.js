@@ -161,8 +161,8 @@ const styles = StyleSheet.create({
     width: 180,
     height: 20,
     marginVertical: 4,
-    color: '#000',
-    borderColor: '#000',
+    color: colors.black,
+    borderColor: colors.black,
     borderWidth: 1,
     borderRadius: 4,
     paddingHorizontal: 8,
@@ -178,23 +178,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  enabledButton: {
-    borderColor: '#D289FF',
-  },
-  createNewButton: {
-    backgroundColor: '#62ffc6',
-    borderColor: '#62ffc6',
-  },
   confirmButtonText: {
     fontSize: 12,
     fontWeight: 'bold',
-  },
-  enabledButtonText: {
-    color: '#D289FF',
-  },
-  createNewButtonText: {
-    color: '#000',
-    fontWeight: 'normal',
   },
   tagContainer: {
     flexDirection: 'row',

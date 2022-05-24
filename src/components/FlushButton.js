@@ -1,6 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
+import colors from '../constants/colors';
 
 import {flushLocal} from '../redux/actions';
 
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
   button: {
     height: 32,
     borderRadius: 8,
-    backgroundColor: '#f88',
+    backgroundColor: colors.dislike1,
     paddingHorizontal: 12,
     marginHorizontal: 2,
     marginVertical: 4,
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     // right: 0,
   },
   buttonText: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 16,
   },
 });

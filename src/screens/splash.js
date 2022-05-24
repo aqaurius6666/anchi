@@ -5,6 +5,7 @@ import {
     View,
     Image
 } from 'react-native';
+import colors from '../constants/colors';
 import GlobalStyle from '../styles/GlobalStyle';
 
 function Splash({ navigation }) {
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#6464af',
+        backgroundColor: colors.primary,
     },
     logo: {
         width: 100,
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 56,
-        color: '#fff',
+        color: colors.white,
     },
 });
 

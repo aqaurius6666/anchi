@@ -12,20 +12,20 @@ export default StyleSheet.create({
     // fontFamily: 'SVNChickenNoodleSoup-Regular',
     fontFamily: 'iCielLudema-Regular',
     fontSize: 18,
-    color: '#000',
+    color: colors.black,
   },
   CustomFontBold: {
     // fontFamily: 'SVNChickenNoodleSoup-Regular',
     fontFamily: 'iCielLudema-Bold',
     fontSize: 18,
-    color: '#000',
+    color: colors.black,
   },
 
   content: {
     flex: 1,
     alignItems: 'center',
     alignContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     width: '100%',
   },
 
@@ -54,7 +54,7 @@ export default StyleSheet.create({
   Title: {
     fontFamily: 'iCielLudema-Bold',
     fontSize: 32,
-    color: '#000',
+    color: colors.black,
     marginTop: 4,
   },
 
@@ -65,7 +65,7 @@ export default StyleSheet.create({
   Subtitle: {
     fontFamily: 'iCielLudema-Regular',
     fontSize: 16,
-    color: '#646464',
+    color: colors.gray,
     // padding: 4,
   },
 
@@ -79,13 +79,13 @@ export default StyleSheet.create({
   Desc: {
     fontFamily: 'iCielLudema-Regular',
     fontSize: 18,
-    color: '#000',
+    color: colors.black,
     lineHeight: 24,
   },
 
   DetailSection: {
     borderBottomWidth: 1,
-    borderBottomColor: '#8686b7',
+    borderBottomColor: colors.disable,
     padding: '2%',
   },
 
@@ -94,8 +94,8 @@ export default StyleSheet.create({
     width: 240,
     height: 28,
     marginVertical: 4,
-    color: '#000',
-    borderColor: '#000',
+    color: colors.black,
+    borderColor: colors.black,
     borderWidth: 1,
     borderRadius: 4,
     paddingHorizontal: 8,

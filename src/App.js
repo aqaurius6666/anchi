@@ -24,6 +24,7 @@ import Menu from './screens/menu';
 import Splash from './screens/splash';
 import Detail from './screens/detail';
 import GlobalStyle from './styles/GlobalStyle';
+import colors from './constants/colors';
 
 // import { LogBox } from 'react-native';
 
@@ -118,7 +119,7 @@ const TabButton = props => {
         <View style={styles.btn}>
           <Animatable.View ref={circleRef} style={styles.circle}>
             <LinearGradient
-              colors={['#D289FF', '#7170D3']}
+              colors={[colors.home1, colors.home2]}
               start={{ x: 1, y: 0 }}
               end={{ x: 0, y: 1 }}
               style={styles.linearGradient}

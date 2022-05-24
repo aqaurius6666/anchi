@@ -449,7 +449,7 @@ function add(props) {
 
 const styles = StyleSheet.create({
   inputLabel: {
-    color: '#000',
+    color: colors.black,
     marginVertical: 4,
   },
   typeIcon: {

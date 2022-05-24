@@ -8,6 +8,7 @@ import {
   removeFoodFromFavorite,
   removeRestaurantFromFavorite,
 } from '../redux/actions';
+import colors from '../constants/colors';
 
 function FavoriteItem(props) {
   function _onPressDetail() {
@@ -34,7 +35,7 @@ function FavoriteItem(props) {
         onPress={() => _onPressDelete()}
         hitSlop={10}
         style={styles.delete}>
-        <Icon type={Icons.Feather} name="x-circle" color="#8686b7" size={22} />
+        <Icon type={Icons.Feather} name="x-circle" color={colors.disable} size={22} />
       </TouchableOpacity>
     </TouchableOpacity>
   );
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     elevation: 4,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     margin: 10,
     borderRadius: 10,
   },

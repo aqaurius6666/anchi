@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   seeMore: {
-    color: '#646464',
+    color: colors.gray,
     textDecorationLine: 'underline',
   },
 

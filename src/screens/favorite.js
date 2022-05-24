@@ -6,6 +6,7 @@ import CustomButton, {CustomButtonOutline} from '../components/CustomButton';
 import GlobalStyle from '../styles/GlobalStyle';
 import {Icons} from '../components/icons';
 import FavoriteItem from '../components/FavoriteItem';
+import colors from '../constants/colors';
 
 function Favorite(props) {
   const [type, setType] = useState('food');
@@ -44,7 +45,7 @@ function Favorite(props) {
             setType('food');
           }
         }}
-        colors={['#D289FF', '#7170D3', '#fff']}
+        colors={[colors.home1, colors.home2, colors.white]}
         type={Icons.FontAwesome5}
       />
       <View style={[GlobalStyle.TitleBoxHeader]}>

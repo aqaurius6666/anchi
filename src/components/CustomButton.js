@@ -11,6 +11,7 @@ import GlobalStyle from '../styles/GlobalStyle';
 import Icon from './icons';
 import { Icon as GIcon } from 'react-native-gradient-icon';
 import * as Animatable from 'react-native-animatable';
+import colors from '../constants/colors';
 
 export default function CustomButton(props) {
   return (
@@ -25,7 +26,7 @@ export default function CustomButton(props) {
         <Icon
           type={props.type}
           name={props.icon_name}
-          color="#fff"
+          color={colors.white}
           size={props.size ? props.size : 26}
         />
       </LinearGradient>
@@ -120,7 +121,7 @@ export function CustomButtonText(props) {
 var styles = StyleSheet.create({
   text: {
     fontSize: 16,
-    color: '#fff'
+    color: colors.white
   },
   linearGradient: {
     height: 60,

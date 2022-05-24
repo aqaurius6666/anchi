@@ -68,7 +68,7 @@ function Settings(props) {
         onPress={() => {
           navigation.pop();
         }}
-        colors={['#D289FF', '#7170D3', '#fff']}
+        colors={[colors.home1, colors.home2, colors.white]}
         type="ionicon"
         size={36}
       />

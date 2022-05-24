@@ -24,6 +24,7 @@ import {
   addFoodToBlacklist,
   addRestaurantToBlacklist,
 } from '../redux/actions';
+import colors from '../constants/colors';
 
 const ggMap = 'https://www.google.com/maps/search/';
 
@@ -183,21 +184,21 @@ function Detail(props) {
         onLongPress={() => {
           props.navigation.pop();
         }}
-        colors={['#D289FF', '#7170D3', '#fff']}
+        colors={[colors.home1, colors.home2, colors.white]}
         type="ionicon"
         size={36}
       />
 
       <View style={styles.bottomTab}>
         <LinearGradient
-          colors={['#ffffff60', '#ffffff']}
+          colors={[colors.white60, colors.white]}
           start={{x: 0, y: 0}}
           end={{x: 0, y: 0.5}}
           style={styles.linearGradient}>
           <CustomButtonOutline
             icon_name="md-close"
             type="ionicon"
-            colors={['#FFA06A', '#F40159', '#fff']}
+            colors={[colors.dislike2, colors.dislike1, colors.white]}
             size={36}
             onPress={() => {
               if (type === 'food') {
@@ -212,7 +213,7 @@ function Detail(props) {
           <CustomButtonOutline
             icon_name="ios-heart"
             type="ionicon"
-            colors={['#62F6FF', '#6AF25E', '#fff']}
+            colors={[colors.like1, colors.like2, colors.white]}
             size={36}
             onPress={() => {
               if (type === 'food') {
@@ -309,7 +310,7 @@ const styles = StyleSheet.create({
   },
   link: {
     textDecorationLine: 'underline',
-    color: '#6464af',
+    color: colors.primary,
   },
 });
 

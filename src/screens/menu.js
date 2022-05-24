@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
     paddingTop: '6%',
     flex: 1,
     height: Dimensions.get('window').height,
-    // backgroundColor: '#123abc'
   },
   bottomEdit: {
     alignItems: 'center',
@@ -180,10 +179,10 @@ const styles = StyleSheet.create({
     height: 180,
     borderRadius: 90,
     borderWidth: 4,
-    borderColor: '#6464af',
+    borderColor: colors.primary,
   },
   seeMore: {
-    color: '#646464',
+    color: colors.gray,
     textDecorationLine: 'underline',
   },
   username: {
@@ -191,26 +190,25 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     textAlign: 'center',
     fontSize: 24,
-    color: '#6464af',
+    color: colors.primary,
     paddingBottom: 0,
   },
   text: {
     fontSize: 20,
-    color: '#000',
+    color: colors.black,
   },
   bottomNav: {
     bottom: 10,
-    // backgroundColor: '#aaa',
     flex: 1,
     width: '100%',
   },
   bottomNavDiv: {
     flexDirection: 'row',
-    borderColor: '#6464af',
+    borderColor: colors.primary,
     borderTopWidth: 1,
     paddingHorizontal: 10,
     paddingVertical: 20,
-    backgroundColor: '#6464af10',
+    backgroundColor: colors.primary10,
   },
   BottomMenuDetail: {
     paddingTop: '10%',

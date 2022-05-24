@@ -6,6 +6,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import GlobalStyle from '../styles/GlobalStyle';
+import colors from '../constants/colors';
 
 const CustomTextInput = (props) => {
     return (
@@ -25,9 +26,9 @@ export default CustomTextInput;
 const styles = StyleSheet.create({
     textinput: {
         borderBottomWidth: 1,
-        borderBottomColor: '#6464af',
+        borderBottomColor: colors.primary,
         // paddingHorizontal: 16,
         width: '90%',
-        color: '#000',
+        color: colors.black,
     }
 })
