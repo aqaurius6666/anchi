@@ -1,6 +1,6 @@
 /** @format */
 
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 
 import {
   CREATE_FOOD,
@@ -19,13 +19,13 @@ import {
   SET_DARKTHEME
 } from './actions';
 
-import { InitialState } from './initialData/index';
+import {InitialState} from './initialData/index';
 
 const foodReducer = (state = InitialState.FOOD_DATA, action) => {
   switch (action.type) {
     case CREATE_FOOD: {
       return {
-        data: [...state.data, { ...action.payload, id: state.lastKey + 1 }],
+        data: [...state.data, {...action.payload, id: state.lastKey + 1}],
         lastKey: state.lastKey + 1,
       };
     }
@@ -39,7 +39,7 @@ const restaurantReducer = (state = InitialState.RESTAURANT_DATA, action) => {
   switch (action.type) {
     case CREATE_RESTAURANT: {
       return {
-        data: [...state.data, { ...action.payload, id: state.lastKey + 1 }],
+        data: [...state.data, {...action.payload, id: state.lastKey + 1}],
         lastKey: state.lastKey + 1,
       };
     }
@@ -55,7 +55,7 @@ const tagsReducer = (state = InitialState.TAG_DATA, action) => {
       const newKey = state.lastKey + 1;
       return {
         lastKey: newKey,
-        data: [...state.data, { title: action.payload, id: newKey }],
+        data: [...state.data, {title: action.payload, id: newKey}],
       };
     }
 
@@ -84,7 +84,7 @@ const ingredientsReducer = (state = InitialState.INGREDIENT_DATA, action) => {
       const newKey = state.lastKey + 1;
       return {
         lastKey: newKey,
-        data: [...state.data, { title: action.payload, id: newKey }],
+        data: [...state.data, {title: action.payload, id: newKey}],
       };
     }
     default: {
@@ -97,7 +97,7 @@ const favoriteReducer = (state = InitialState.FAVORITE_DATA, action) => {
   switch (action.type) {
     case ADD_FOOD_TO_FAVORITE: {
       if (!state.food.some(item => item === action.payload)) {
-        return { ...state, food: [...state.food, action.payload] };
+        return {...state, food: [...state.food, action.payload]};
       }
       return state;
     }
@@ -109,7 +109,7 @@ const favoriteReducer = (state = InitialState.FAVORITE_DATA, action) => {
     }
     case ADD_RESTAURANT_TO_FAVORITE: {
       if (!state.restaurant.some(item => item === action.payload)) {
-        return { ...state, restaurant: [...state.restaurant, action.payload] };
+        return {...state, restaurant: [...state.restaurant, action.payload]};
       }
       return state;
     }
@@ -155,6 +155,12 @@ const filteredFoodReducer = (state = InitialState.FOOD_DATA, action) => {
         ...state,
         data: state.data.filter(item => item.id !== action.payload),
       };
+    case CREATE_FOOD: {
+      return {
+        data: [...state.data, {...action.payload, id: state.lastKey + 1}],
+        lastKey: state.lastKey + 1,
+      };
+    }
     default: {
       return state;
     }
@@ -171,6 +177,12 @@ const filteredRestaurantReducer = (
         ...state,
         data: state.data.filter(item => item.id !== action.payload),
       };
+    case CREATE_RESTAURANT: {
+      return {
+        data: [...state.data, {...action.payload, id: state.lastKey + 1}],
+        lastKey: state.lastKey + 1,
+      };
+    }
     default: {
       return state;
     }
