@@ -78,7 +78,7 @@ function add(props) {
       const add = text.split('\n');
       setNewFood({ ...newFood, address: [...add] });
     } else {
-      setNewRestaurant({ ...newRestaurant, address: text.trim() });
+      setNewRestaurant({ ...newRestaurant, address: text });
     }
 
   }
@@ -229,13 +229,14 @@ function add(props) {
       return newObj;
     }, {})
 
-    const newMenu = newRestaurant.address.filter(e => e != '').map(el => el.replace(/\s+/g, ' ').trim());
+    const newMenu = newRestaurant.menu.filter(e => e != '').map(el => el.replace(/\s+/g, ' ').trim());
 
     props.createRestaurant({
       ...newRestaurant,
       tags: simpleTags,
       note: newNote,
       menu: newMenu,
+      address: newRestaurant.address.trim(),
     });
     setNewRestaurant({
       ...initialRestaurant

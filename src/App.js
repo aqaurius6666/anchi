@@ -167,7 +167,7 @@ export function AnimTab1() {
 }
 
 const app = (props) => {
-  console.log(darkTheme);
+  // console.log(darkTheme);
   const config = {
     animation: 'spring',
     config: {

@@ -34,8 +34,8 @@ function FilterOut(props) {
       OK="Lưu vô"
       Cancel="Hừm..."
       onOK={() => {
-        props.setData[0](newData);
-        props.setData[1](newData);
+        // props.setData[0](newData);
+        // props.setData[1](newData);
         props.setShowFilterOut(!props.showFilterOut);
       }}
       onCancel={() => props.setShowFilterOut(!props.showFilterOut)}
