@@ -4,7 +4,8 @@ const data = [
     title: 'Bánh táo',
     tags: [1, 2],
     ingredients: [101, 301, 501],
-    image: require('../../../assets/foods/Mini-Apple-Pies.png'),
+    // image: require('../../../assets/foods/Mini-Apple-Pies.png'),
+    image: require('../../../assets/foods/bun-bo-Hue.jpg'),
     description:
       'Apple Pie - bánh Pie nhân táo là một món bánh bảo dễ cũng đúng mà bảo khó cũng không sai. Dễ là bởi vì làm rất nhanh, không có nhiều thao tác, chỉ nhồi, cán bột rồi cho nhân vào, mang đi nướng. Khả năng hỏng (theo nghĩa không ăn được) – là cực thấp. Còn khó là bởi vì tuy không có nhiều khâu, nhưng ở mỗi khâu đều cần cẩn thận và kĩ thuật tốt, lệch đi một tẹo thôi là bánh có thể không đạt yêu cầu rồi.',
     address: ['địa chỉ 1', 'địa chỉ 2'],
